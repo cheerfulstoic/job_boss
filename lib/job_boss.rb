@@ -1,3 +1,6 @@
+require 'activerecord'
+require 'job_boss/job'
+
 class JobBoss
 
   def initialize(options = {})

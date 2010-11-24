@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'daemons'
+require 'job_boss'
+
+Daemons.run do
+  boss = JobBoss.new(:sleep_interval => , :child_limit => )
+  boss.start
+end
