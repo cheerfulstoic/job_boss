@@ -2,9 +2,9 @@
 
 require 'rubygems'
 require 'daemons'
-require 'job_boss'
+require 'lib/job_boss'
 
 Daemons.run do
-  boss = JobBoss.new(:sleep_interval => , :child_limit => )
+  boss = JobBoss.new(:sleep_interval => 0.5, :child_limit => 4)
   boss.start
 end

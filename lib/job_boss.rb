@@ -1,4 +1,4 @@
-require 'activerecord'
+require 'active_record'
 require 'job_boss/job'
 
 class JobBoss
