@@ -1,4 +1,3 @@
-require 'active_record'
 
 module JobBoss
   class Job < ActiveRecord::Base

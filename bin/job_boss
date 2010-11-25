@@ -2,9 +2,20 @@
 
 require 'rubygems'
 require 'daemons'
-require 'lib/job_boss'
 
-Daemons.run do
-  boss = JobBoss.new(:sleep_interval => 0.5, :child_limit => 4)
-  boss.start
+working_dir = Dir.pwd
+
+daemons_options = {
+  :dir_mode   => :script,
+  :dir        => 'pids',
+}
+
+Daemons.run_proc('job_boss', daemons_options) do
+  require 'job_boss'
+
+  command, daemon_options, app_options = Daemons::Controller.split_argv(ARGV)
+
+  JobBoss::Boss.config.parse_args(app_options, :working_dir => working_dir)
+
+  JobBoss::Boss.new.start
 end
