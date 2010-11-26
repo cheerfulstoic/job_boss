@@ -12,31 +12,36 @@ module JobBoss
     scope :completed, where('completed_at IS NOT NULL')
 
     def dispatch
-      self.mark_as_started
+      mark_as_started
       puts "Dispatching Job ##{self.id}"
 
-      fork do
-        self.mark_employee
+      pid = fork do
+        $0 = "job_boss - employee (job ##{self.id})"
         Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
         begin
-          $0 = "job_employee (job ##{self.id})"
+          mark_employee
 
           Signal.trap("HUP") do
-            self.mark_for_redo
+            mark_for_redo
           end
 
           result = self.class.call_path(self.path, *self.args)
           self.update_attribute(:result, result)
         rescue Exception => exception
-          self.mark_exception(exception)
+          mark_exception(exception)
           puts "Error running job ##{self.id}!"
         ensure
-          self.mark_as_completed
+          until mark_as_completed
+            sleep(1)
+          end
+
           puts "Job ##{self.id} completed, exiting..."
           Kernel.exit
         end
       end
+
+      Process.detach(pid)
     end
 
     def mark_for_redo
@@ -86,27 +91,26 @@ private
       self.save
     end
 
-      class << self
-        def call_path(path, *args)
-          require 'active_support'
-
-          raise ArgumentError, "Invalid path (must have #)" unless path.match(/.#./)
-          controller, action = path.split('#')
-
-          controller_object = begin
-            Kernel.const_get("#{controller.classify}Jobs").new
-          rescue NameError
-            raise ArgumentError, "Invalid controller"
-          end
-
-          raise ArgumentError, "Invalid path action" unless controller_object.respond_to?(action)
-
-          controller_object.send(action, *args)
+    class << self
+      def call_path(path, *args)
+        require 'active_support'
+    
+        raise ArgumentError, "Invalid path (must have #)" unless path.match(/.#./)
+        controller, action = path.split('#')
+    
+        controller_object = begin
+          Kernel.const_get("#{controller.classify}Jobs").new
+        rescue NameError
+          raise ArgumentError, "Invalid controller"
         end
-
-        def pending_paths
-          self.pending.except(:order).select('DISTINCT path').collect(&:path)
-        end
+    
+        raise ArgumentError, "Invalid path action" unless controller_object.respond_to?(action)
+    
+        controller_object.send(action, *args)
+      end
+    
+      def pending_paths
+        self.pending.except(:order).select('DISTINCT path').collect(&:path)
       end
     end
   end

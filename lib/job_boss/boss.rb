@@ -25,6 +25,15 @@ module JobBoss
     def cleanup_running_jobs
       Job.uncached do
         @running_jobs = Job.running.where('id in (?)', @running_jobs)
+
+        # Clean out any jobs whos processes have stopped running for some reason
+        @running_jobs = @running_jobs.select do |job|
+          begin
+            Process.kill(0, job.employee_pid.to_i)
+          rescue Errno::ESRCH
+            nil
+          end
+        end
       end
     end
 
@@ -76,7 +85,7 @@ module JobBoss
       end
 
       at_exit do
-        boss.stop if Process.pid == BOSS_PID
+        stop if Process.pid == BOSS_PID
       end
 
       puts "Job Boss started"
@@ -103,7 +112,7 @@ module JobBoss
 
     def kill_job(job)
       begin
-        Process.kill("HUP", job.employee_pid)
+        Process.kill("HUP", job.employee_pid.to_i)
       rescue Errno::ESRCH
         nil
       end

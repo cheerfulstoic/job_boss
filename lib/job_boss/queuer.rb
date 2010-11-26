@@ -12,6 +12,9 @@ module JobBoss
           require 'job_boss/job'
           Job.create(:path => "#{@controller}##{method_name}",
                       :args => args)
+
+          @class = nil
+          @controller = nil
         else
           raise ArgumentError, "Invalid action"
         end
