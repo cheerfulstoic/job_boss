@@ -85,6 +85,24 @@ module JobBoss
       completed_at - started_at if completed_at && started_at
     end
 
+    class << self
+      def wait_for_jobs(jobs, sleep_interval = 0.5)
+        running_jobs = jobs.dup
+
+        until Job.running.find_all_by_id(running_jobs.collect(&:id)).empty?
+          sleep(sleep_interval)
+        end
+
+        true
+      end
+
+      def result_hash(jobs)
+        jobs.inject({}) do |hash, job|
+          hash.merge(job.args => job.result)
+        end
+      end
+    end
+
 private
 
     def mark_as_started

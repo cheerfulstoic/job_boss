@@ -5,6 +5,7 @@ class CreateJobs < ActiveRecord::Migration
       t.text :args
       t.text :result
       t.datetime :started_at
+      t.datetime :cancelled_at
       t.datetime :completed_at
       t.string :status
       t.string :error_message

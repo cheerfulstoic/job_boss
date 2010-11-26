@@ -38,9 +38,6 @@ From your Rails code or in a console (this functionality should probably be enca
         JobBoss::Boss.queue.math.is_prime?(i)
     end
 
-    until jobs.all?(&:completed?)
-        jobs.reject(&:completed).each(&:reload)
-        sleep(1)
-    end
+    JobBoss::Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
 
-    jobs.collect {|job| job.result }
+    JobBoss::Job.result_hash(jobs) # => {[0]=>"f", [1]=>"f", [2]=>true, [3]=>true, [4]=>"f", ... }

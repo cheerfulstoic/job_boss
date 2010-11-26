@@ -33,7 +33,7 @@ module JobBoss
       require 'active_record'
       require 'yaml'
 
-      connect
+      establish_active_record_connection
 
       require_job_classes
 
@@ -42,7 +42,7 @@ module JobBoss
       migrate
 
       Signal.trap("HUP") do
-        self.stop
+        stop
       end
 
       at_exit do
@@ -78,77 +78,76 @@ module JobBoss
 
       puts "Job Boss stopped"
     end
-  end
 
 private
-  # Cleans up @running_jobs variable, getting rid of jobs which have
-  # completed, which have been cancelled, or which went MIA
-  def cleanup_running_jobs
-    Job.uncached do
-      @running_jobs = Job.running.where('id in (?)', @running_jobs)
+    # Cleans up @running_jobs variable, getting rid of jobs which have
+    # completed, which have been cancelled, or which went MIA
+    def cleanup_running_jobs
+      Job.uncached do
+        @running_jobs = Job.running.where('id in (?)', @running_jobs)
 
-      cancelled_jobs = @running_jobs.select(&:cancelled?)
-      cancelled_jobs.each {|job| kill_job(job) }
-      @running_jobs -= cancelled_jobs
+        cancelled_jobs = @running_jobs.select(&:cancelled?)
+        cancelled_jobs.each {|job| kill_job(job) }
+        @running_jobs -= cancelled_jobs
 
-      # Clean out any jobs whos processes have stopped running for some reason
-      @running_jobs = @running_jobs.select do |job|
-        begin
-          Process.kill(0, job.employee_pid.to_i)
-        rescue Errno::ESRCH
-          nil
+        # Clean out any jobs whos processes have stopped running for some reason
+        @running_jobs = @running_jobs.select do |job|
+          begin
+            Process.kill(0, job.employee_pid.to_i)
+          rescue Errno::ESRCH
+            nil
+          end
         end
       end
     end
-  end
 
-  # Total number of employees which can be run
-  def available_employees
-    cleanup_running_jobs
+    # Total number of employees which can be run
+    def available_employees
+      cleanup_running_jobs
 
-    @@config.employee_limit - @running_jobs.size
-  end
+      @@config.employee_limit - @running_jobs.size
+    end
 
-  def connect
-    @@config.database_yaml_path = File.join(@@config.working_dir, @@config.database_yaml_path) unless @@config.database_yaml_path[0] == ?/
+    def establish_active_record_connection
+      @@config.database_yaml_path = File.join(@@config.working_dir, @@config.database_yaml_path) unless @@config.database_yaml_path[0] == ?/
 
-    raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
+      raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
 
-    config = YAML.load(File.read(@@config.database_yaml_path))
+      config = YAML.load(File.read(@@config.database_yaml_path))
 
-    ActiveRecord::Base.establish_connection(config[@@config.environment])
-  end
+      ActiveRecord::Base.establish_connection(config[@@config.environment])
+    end
 
-  def require_job_classes
-    @@config.jobs_path = File.join(@@config.working_dir, @@config.jobs_path) unless @@config.jobs_path[0] == ?/
+    def require_job_classes
+      @@config.jobs_path = File.join(@@config.working_dir, @@config.jobs_path) unless @@config.jobs_path[0] == ?/
 
-    raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
+      raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
 
-    Dir.glob(File.join(@@config.jobs_path, '*.rb')).each {|job_class| require job_class }
-  end
+      Dir.glob(File.join(@@config.jobs_path, '*.rb')).each {|job_class| require job_class }
+    end
 
-  def migrate
-    unless Job.table_exists?
-      require 'migrate'
-      CreateJobs.up
+    def migrate
+      unless Job.table_exists?
+        require 'migrate'
+        CreateJobs.up
+      end
+    end
+
+    def kill_job(job)
+      begin
+        Process.kill("HUP", job.employee_pid.to_i)
+      rescue Errno::ESRCH
+        nil
+      end
+    end
+
+    def shutdown_running_jobs
+      cleanup_running_jobs
+
+      @running_jobs.each do |job|
+        kill_job(job)
+        job.mark_for_redo
+      end
     end
   end
-
-  def kill_job(job)
-    begin
-      Process.kill("HUP", job.employee_pid.to_i)
-    rescue Errno::ESRCH
-      nil
-    end
-  end
-
-  def shutdown_running_jobs
-    cleanup_running_jobs
-
-    @running_jobs.each do |job|
-      kill_job(job)
-      job.mark_for_redo
-    end
-  end
-
 end

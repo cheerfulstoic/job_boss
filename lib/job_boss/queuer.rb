@@ -10,11 +10,13 @@ module JobBoss
 
         if @class.respond_to?(method_name)
           require 'job_boss/job'
-          Job.create(:path => "#{@controller}##{method_name}",
-                      :args => args)
+          path = "#{@controller}##{method_name}"
 
           @class = nil
           @controller = nil
+
+          Job.create(:path => path,
+                     :args => args)
         else
           raise ArgumentError, "Invalid action"
         end
