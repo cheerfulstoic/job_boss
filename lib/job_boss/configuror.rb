@@ -1,5 +1,5 @@
 module JobBoss
-  class Configuror
+  class Config
     attr_accessor :working_dir, :database_yaml_path, :jobs_path, :sleep_interval, :employee_limit, :environment
 
     def parse_args(argv, options = {})

@@ -2,11 +2,13 @@ module JobBoss
   class Boss
     class << self
       def config
-        @@config ||= Configuror.new
+        require 'job_boss/config'
+        @@config ||= Config.new
       end
 
       def queue
-        @@queuer ||= ClassQueuer.new
+        require 'job_boss/queuer'
+        @@queuer ||= Queuer.new
       end
     end
 

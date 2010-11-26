@@ -1,5 +1,5 @@
 module JobBoss
-  class ClassQueuer
+  class Queuer
     def method_missing(method_id, *args)
       require 'active_support'
 
