@@ -75,7 +75,9 @@ module JobBoss
         self.stop
       end
 
-      at_exit { self.stop }
+      at_exit do
+        boss.stop if Process.pid == BOSS_PID
+      end
 
       puts "Job Boss started"
 

@@ -3,12 +3,13 @@
 require 'rubygems'
 require 'daemons'
 
+BOSS_PID = Process.pid
+
 working_dir = Dir.pwd
 
 daemons_options = {
   :dir_mode   => :script,
-  :dir        => 'pids',
-  :stop_proc  => proc { boss.stop }
+  :dir        => 'pids'
 }
 
 Daemons.run_proc('job_boss', daemons_options) do
@@ -21,5 +22,6 @@ Daemons.run_proc('job_boss', daemons_options) do
   JobBoss::Boss.config.parse_args(app_options, :working_dir => working_dir)
 
   boss = JobBoss::Boss.new
+
   boss.start
 end
