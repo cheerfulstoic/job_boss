@@ -2,7 +2,7 @@ class CreateJobs < ActiveRecord::Migration
   def self.up
     create_table :jobs do |t|
       t.string :path
-      t.text :options
+      t.text :args
       t.text :result
       t.datetime :started_at
       t.datetime :completed_at

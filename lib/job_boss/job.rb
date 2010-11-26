@@ -3,7 +3,7 @@ module JobBoss
   class Job < ActiveRecord::Base
     default_scope order('created_at')
 
-    serialize :options
+    serialize :args
     serialize :result
     serialize :error_backtrace
 
@@ -24,7 +24,7 @@ module JobBoss
             self.mark_for_redo
           end
 
-          result = self.class.call_path(self.path, self.options)
+          result = self.class.call_path(self.path, *self.args)
           self.update_attribute(:result, result)
         rescue Exception => exception
           self.mark_exception(exception)
@@ -61,7 +61,9 @@ module JobBoss
     end
 
     class << self
-      def call_path(path, options)
+      def call_path(path, *args)
+        require 'active_support'
+
         raise ArgumentError, _("Invalid path (must have #)") unless path.match(/.#./)
         controller, action = path.split('#')
 
@@ -73,7 +75,7 @@ module JobBoss
 
         raise ArgumentError, _("Invalid path action") unless controller_object.respond_to?(action)
 
-        controller_object.send(action, options)
+        controller_object.send(action, *args)
       end
 
       def pending_paths
