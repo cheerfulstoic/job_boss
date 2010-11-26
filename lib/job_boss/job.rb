@@ -18,9 +18,10 @@ module JobBoss
       extend Spawn
       spawn_block(:nice => 19) do
         begin
-          $0 = "job_worker - Job ##{self.id}"
+          $0 = "job_employee (job ##{self.id})"
+
           Signal.trap("HUP") do
-            self.mark_as_redo
+            self.mark_for_redo
           end
 
           result = self.class.call_path(self.path, self.options)
@@ -36,7 +37,17 @@ module JobBoss
     end
 
     def mark_as_started
-      update_attribute(:started_at, Time.now)
+      update_attributes(:started_at       => Time.now,
+                        :employee_host    => Socket.gethostname,
+                        :employee_pid     => Process.pid)
+    end
+
+    def kill
+      begin
+        Process.kill("HUP", self.employee_pid)
+      rescue Errno::ESRCH
+        nil
+      end
     end
 
     def mark_exception(exception)
@@ -49,7 +60,7 @@ module JobBoss
       self.save
     end
 
-    def mark_as_redo
+    def mark_for_redo
       update_attributes(:started_at => nil, :completed_at => nil, :status => nil, :error_message => nil, :error_backtrace => nil)
     end
 

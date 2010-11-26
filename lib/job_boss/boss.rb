@@ -119,7 +119,20 @@ module JobBoss
       end
     end
 
+    def shutdown_running_jobs
+      cleanup_running_jobs
+
+      @running_jobs.each do |job|
+        job.kill
+        job.mark_for_redo
+      end
+    end
+
     def stop
+      puts "Stopping #{@running_jobs.size} running employees..."
+
+      shutdown_running_jobs
+
       puts "Job Boss stopped"
     end
   end

@@ -10,6 +10,9 @@ class CreateJobs < ActiveRecord::Migration
       t.string :error_message
       t.text :error_backtrace
 
+      t.string :employee_host
+      t.string :employee_pid
+
       t.timestamps
     end
 
