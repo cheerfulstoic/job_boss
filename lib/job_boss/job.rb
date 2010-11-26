@@ -42,14 +42,6 @@ module JobBoss
                         :employee_pid     => Process.pid)
     end
 
-    def kill
-      begin
-        Process.kill("HUP", self.employee_pid)
-      rescue Errno::ESRCH
-        nil
-      end
-    end
-
     def mark_exception(exception)
       update_attributes(:status => :error, :error_message => exception.message, :error_backtrace => exception.backtrace)
     end

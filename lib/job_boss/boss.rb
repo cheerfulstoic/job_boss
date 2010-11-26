@@ -119,11 +119,19 @@ module JobBoss
       end
     end
 
+    def kill_job(job)
+      begin
+        Process.kill("HUP", job.employee_pid)
+      rescue Errno::ESRCH
+        nil
+      end
+    end
+
     def shutdown_running_jobs
       cleanup_running_jobs
 
       @running_jobs.each do |job|
-        job.kill
+        kill_job(job)
         job.mark_for_redo
       end
     end
