@@ -47,7 +47,16 @@ module JobBoss
     def require_job_classes
       @@config.jobs_path = File.join(@@config.working_dir, @@config.jobs_path) unless @@config.jobs_path[0] == ?/
 
+      raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
+
       Dir.glob(File.join(@@config.jobs_path, '*.rb')).each {|job_class| require job_class }
+    end
+
+    def migrate
+      unless Job.table_exists?
+        require 'migrate'
+        CreateJobs.up
+      end
     end
 
     def start
@@ -59,6 +68,8 @@ module JobBoss
       require_job_classes
 
       require 'job_boss/job'
+
+      migrate
 
       Signal.trap("HUP") do
         self.stop

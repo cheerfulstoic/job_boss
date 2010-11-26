@@ -9,19 +9,20 @@ module JobBoss
         # In here, we've already figured out the class, so assume the method_missing call is to the method
 
         if @class.respond_to?(method_name)
+          require 'job_boss/job'
           Job.create(:path => "#{@controller}##{method_name}",
                       :args => args)
         else
-          raise ArgumentError, _("Invalid action")
+          raise ArgumentError, "Invalid action"
         end
       else
         # Check to see if there's a jobs class
-        @class = begin
-          Kernel.const_get("#{method_name.classify}Jobs").new
+        begin
+          @class = Kernel.const_get("#{method_name.classify}Jobs").new
 
           @controller = method_name
         rescue NameError
-          raise ArgumentError, _("Invalid controller")
+          raise ArgumentError, "Invalid controller"
         end
 
         self

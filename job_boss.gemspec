@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.test_files         = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables        = %w(job_boss)
   s.default_executable = "job_boss"
-  s.require_paths      = ["lib"]
+  s.require_paths      = ["lib", "vendor", "vendor/spawn/lib"]
 end

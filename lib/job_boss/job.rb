@@ -15,8 +15,8 @@ module JobBoss
       self.mark_as_started
       puts "Dispatching Job ##{self.id}"
       require 'spawn'
-      extend Spawn
-      spawn_block(:nice => 19) do
+
+      spawn(:nice => 19) do
         begin
           $0 = "job_employee (job ##{self.id})"
 
@@ -33,10 +33,10 @@ module JobBoss
           Kernel.exit
         end
       end
-      ActiveRecord::Base.connection.reconnect!
     end
 
     def mark_as_started
+      require 'socket'
       update_attributes(:started_at       => Time.now,
                         :employee_host    => Socket.gethostname,
                         :employee_pid     => Process.pid)
@@ -64,22 +64,22 @@ module JobBoss
       def call_path(path, *args)
         require 'active_support'
 
-        raise ArgumentError, _("Invalid path (must have #)") unless path.match(/.#./)
+        raise ArgumentError, "Invalid path (must have #)" unless path.match(/.#./)
         controller, action = path.split('#')
 
         controller_object = begin
           Kernel.const_get("#{controller.classify}Jobs").new
         rescue NameError
-          raise ArgumentError, _("Invalid controller")
+          raise ArgumentError, "Invalid controller"
         end
 
-        raise ArgumentError, _("Invalid path action") unless controller_object.respond_to?(action)
+        raise ArgumentError, "Invalid path action" unless controller_object.respond_to?(action)
 
         controller_object.send(action, *args)
       end
 
       def pending_paths
-        self.pending.reorder('').select('DISTINCT path').collect(&:path)
+        self.pending.except(:order).select('DISTINCT path').collect(&:path)
       end
     end
   end
