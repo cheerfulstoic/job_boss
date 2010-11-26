@@ -1,14 +1,15 @@
 module JobBoss
   class Boss
     class JobBossConfig
-      attr_accessor :working_dir, :database_yaml_path, :sleep_interval, :employee_limit, :environment
+      attr_accessor :working_dir, :database_yaml_path, :jobs_path, :sleep_interval, :employee_limit, :environment
 
       def parse_args(argv, options = {})
-        @working_dir = options[:working_dir] || Dir.pwd
-        @database_yaml_path = 'config/database.yml'
-        @sleep_interval = 0.5
-        @employee_limit = 4
-        @environment = 'development'
+        @working_dir          = options[:working_dir] || Dir.pwd
+        @database_yaml_path   = 'config/database.yml'
+        @jobs_path            = 'app/jobs'
+        @sleep_interval       = 0.5
+        @employee_limit       = 4
+        @environment          = 'development'
 
         require 'optparse'
 
@@ -16,6 +17,10 @@ module JobBoss
           opts.banner = "Usage: job_boss [start|stop|restart|status|watch] [-- <options>]"
 
           opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to ./config/database.yml)") do |path|
+            @database_yaml_path = path
+          end
+
+          opts.on("-j", "--jobs-path PATH", "Path to folder with job classes (defaults to ./app/jobs)") do |path|
             @database_yaml_path = path
           end
 
@@ -40,9 +45,10 @@ module JobBoss
 
     def initialize(options = {})
       @@config.working_dir          ||= options[:working_dir]
-      @@config.sleep_interval       ||= options[:employee_limit]
+      @@config.sleep_interval       ||= options[:sleep_interval]
       @@config.employee_limit       ||= options[:employee_limit]
       @@config.database_yaml_path   ||= options[:database_yaml_path]
+      @@config.jobs_path            ||= options[:jobs_path]
 
       @running_jobs = []
     end
@@ -69,11 +75,19 @@ module JobBoss
       ActiveRecord::Base.establish_connection(config[@@config.environment])
     end
 
+    def require_job_classes
+      @@config.jobs_path = File.join(@@config.working_dir, @@config.jobs_path) unless @@config.jobs_path[0] == ?/
+
+      Dir.glob(File.join(@@config.jobs_path, '*.rb')).each {|job_class| require job_class }
+    end
+
     def start
       require 'active_record'
       require 'yaml'
 
       connect
+
+      require_job_classes
 
       require 'job_boss/job'
 
