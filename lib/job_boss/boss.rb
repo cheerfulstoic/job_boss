@@ -2,7 +2,7 @@ module JobBoss
   class Boss
     class << self
       def config
-        @@config ||= Config.new
+        @@config ||= Configuror.new
       end
 
       def queue
