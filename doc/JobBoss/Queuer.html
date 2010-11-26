@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: JobBoss::Queuer</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/job_boss/queuer_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/job_boss/queuer.rb">lib/job_boss/queuer.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-method_missing">#method_missing</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../Rakefile.html">Rakefile</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="../JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="../JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="../JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">JobBoss::Queuer</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="method-missing-method" class="method-detail ">
+				<a name="method-i-method_missing"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">method_missing</span><span
+						class="method-args">(method_id, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="method-missing-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/queuer.rb, line 3</span>
+ 3:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method_id</span>, *<span class="ruby-identifier">args</span>)
+ 4:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'active_support'</span>
+ 5: 
+ 6:       <span class="ruby-identifier">method_name</span> = <span class="ruby-identifier">method_id</span>.<span class="ruby-identifier">id2name</span>
+ 7: 
+ 8:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@controller</span>
+ 9:         <span class="ruby-comment cmt"># In here, we've already figured out the class, so assume the method_missing call is to the method</span>
+10: 
+11:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">method_name</span>)
+12:           <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/job'</span>
+13:           <span class="ruby-constant">Job</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@controller}##{method_name}&quot;</span>,
+14:                       <span class="ruby-value">:args</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">args</span>)
+15: 
+16:           <span class="ruby-ivar">@class</span> = <span class="ruby-keyword kw">nil</span>
+17:           <span class="ruby-ivar">@controller</span> = <span class="ruby-keyword kw">nil</span>
+18:         <span class="ruby-keyword kw">else</span>
+19:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid action&quot;</span>
+20:         <span class="ruby-keyword kw">end</span>
+21:       <span class="ruby-keyword kw">else</span>
+22:         <span class="ruby-comment cmt"># Check to see if there's a jobs class</span>
+23:         <span class="ruby-keyword kw">begin</span>
+24:           <span class="ruby-ivar">@class</span> = <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;#{method_name.classify}Jobs&quot;</span>).<span class="ruby-identifier">new</span>
+25: 
+26:           <span class="ruby-ivar">@controller</span> = <span class="ruby-identifier">method_name</span>
+27:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+28:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid controller&quot;</span>
+29:         <span class="ruby-keyword kw">end</span>
+30: 
+31:         <span class="ruby-keyword kw">self</span>
+32:       <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

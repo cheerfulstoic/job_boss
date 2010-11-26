@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: CreateJobs</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./lib/migrate_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/migrate.rb">lib/migrate.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">ActiveRecord::Migration</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-down">::down</a></li>
+					
+					<li><a href="#method-c-up">::up</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./Rakefile.html">Rakefile</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="./JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="./JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="./JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="./JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="./CreateJobs.html">CreateJobs</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">CreateJobs</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="down-method" class="method-detail ">
+				<a name="method-c-down"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">down</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="down-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/migrate.rb, line 23</span>
+23:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">down</span>
+24:     <span class="ruby-identifier">drop_table</span> <span class="ruby-value">:jobs</span>
+25:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="up-method" class="method-detail ">
+				<a name="method-c-up"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">up</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="up-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/migrate.rb, line 2</span>
+ 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">up</span>
+ 3:     <span class="ruby-identifier">create_table</span> <span class="ruby-value">:jobs</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+ 4:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:path</span>
+ 5:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:args</span>
+ 6:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:result</span>
+ 7:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:started_at</span>
+ 8:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:completed_at</span>
+ 9:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:status</span>
+10:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:error_message</span>
+11:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:error_backtrace</span>
+12: 
+13:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_host</span>
+14:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_pid</span>
+15: 
+16:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
+17:     <span class="ruby-keyword kw">end</span>
+18: 
+19:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:path</span>
+20:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:status</span>
+21:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

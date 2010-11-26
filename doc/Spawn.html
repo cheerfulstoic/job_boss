@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Spawn</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./vendor/spawn/lib/spawn_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/spawn/lib/spawn.rb">vendor/spawn/lib/spawn.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+			<div id="namespace-list-section" class="section">
+				<h3 class="section-header">Namespace</h3>
+				<ul class="link-list">
+					
+					<li><span class="type">CLASS</span> <a href="Spawn/SpawnId.html">Spawn::SpawnId</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-alive%3F">::alive?</a></li>
+					
+					<li><a href="#method-c-close_resources">::close_resources</a></li>
+					
+					<li><a href="#method-c-default_options">::default_options</a></li>
+					
+					<li><a href="#method-c-kill_punks">::kill_punks</a></li>
+					
+					<li><a href="#method-c-method">::method</a></li>
+					
+					<li><a href="#method-c-resources_to_close">::resources_to_close</a></li>
+					
+					<li><a href="#method-i-fork_it">#fork_it</a></li>
+					
+					<li><a href="#method-i-spawn">#spawn</a></li>
+					
+					<li><a href="#method-i-thread_it">#thread_it</a></li>
+					
+					<li><a href="#method-i-wait">#wait</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./Rakefile.html">Rakefile</a></li>
+				
+					<li class="file"><a href="./vendor/spawn/CHANGELOG.html">CHANGELOG</a></li>
+				
+					<li class="file"><a href="./vendor/spawn/LICENSE.html">LICENSE</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="./JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="./JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="./JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="./JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="./PhusionPassenger.html">PhusionPassenger</a></li>
+				
+					<li><a href="./PhusionPassenger/Rack.html">PhusionPassenger::Rack</a></li>
+				
+					<li><a href="./PhusionPassenger/Rack/RequestHandler.html">PhusionPassenger::Rack::RequestHandler</a></li>
+				
+					<li><a href="./PhusionPassenger/Railz.html">PhusionPassenger::Railz</a></li>
+				
+					<li><a href="./PhusionPassenger/Railz/RequestHandler.html">PhusionPassenger::Railz::RequestHandler</a></li>
+				
+					<li><a href="./Passenger.html">Passenger</a></li>
+				
+					<li><a href="./Passenger/Railz.html">Passenger::Railz</a></li>
+				
+					<li><a href="./Passenger/Railz/RequestHandler.html">Passenger::Railz::RequestHandler</a></li>
+				
+					<li><a href="./ActiveRecord.html">ActiveRecord</a></li>
+				
+					<li><a href="./ActiveRecord/Base.html">ActiveRecord::Base</a></li>
+				
+					<li><a href="./Mongrel.html">Mongrel</a></li>
+				
+					<li><a href="./Mongrel/HttpServer.html">Mongrel::HttpServer</a></li>
+				
+					<li><a href="./Spawn.html">Spawn</a></li>
+				
+					<li><a href="./Spawn/SpawnId.html">Spawn::SpawnId</a></li>
+				
+					<li><a href="./CreateJobs.html">CreateJobs</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">Spawn</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+		<div id="constants-list" class="section">
+			<h3 class="section-header">Constants</h3>
+			<dl>
+			
+				<dt><a name="RAILS_1_x">RAILS_1_x</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="RAILS_2_2">RAILS_2_2</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+			</dl>
+		</div>
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="alive--method" class="method-detail ">
+				<a name="method-c-alive%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">alive?</span><span
+						class="method-args">(pid)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="alive--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 62</span>
+62:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">alive?</span>(<span class="ruby-identifier">pid</span>)
+63:     <span class="ruby-keyword kw">begin</span>
+64:       <span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-identifier">kill</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">pid</span>
+65:       <span class="ruby-comment cmt"># if the process is alive then kill won't throw an exception</span>
+66:       <span class="ruby-keyword kw">true</span>
+67:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ESRCH</span>
+68:       <span class="ruby-keyword kw">false</span>
+69:     <span class="ruby-keyword kw">end</span>
+70:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="close-resources-method" class="method-detail ">
+				<a name="method-c-close_resources"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">close_resources</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+close all the resources added by calls to resource_to_close
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="close-resources-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 54</span>
+54:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">close_resources</span>
+55:     <span class="ruby-identifier">@@resources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span>
+56:       <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resource</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:close</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">resource</span>.<span class="ruby-identifier">closed?</span>
+57:     <span class="ruby-keyword kw">end</span>
+58:     <span class="ruby-comment cmt"># in case somebody spawns recursively</span>
+59:     <span class="ruby-identifier">@@resources</span>.<span class="ruby-identifier">clear</span>
+60:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="default-options-method" class="method-detail ">
+				<a name="method-c-default_options"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">default_options</span><span
+						class="method-args">(options = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Set the options to use every time spawn is called unless specified
+otherwise.  For example, in your environment, do something like this:
+</p>
+<pre>
+  Spawn::default_options = {:nice =&gt; 5}
+</pre>
+<p>
+to default to using the :nice option with a value of 5 on every call. Valid
+options are:
+</p>
+<pre>
+  :method =&gt; (:thread | :fork | :yield)
+  :nice   =&gt; nice value of the forked process
+  :kill   =&gt; whether or not the parent process will kill the
+             spawned child process when the parent exits
+  :argv   =&gt; changes name of the spawned process as seen in ps</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="default-options-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_options</span>(<span class="ruby-identifier">options</span> = {})
+32:     <span class="ruby-identifier">@@default_options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">options</span>)
+33:     <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;spawn&gt; default options = #{options.inspect}&quot;</span>
+34:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="kill-punks-method" class="method-detail ">
+				<a name="method-c-kill_punks"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">kill_punks</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="kill-punks-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 72</span>
+72:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kill_punks</span>
+73:     <span class="ruby-identifier">@@punks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">punk</span><span class="ruby-operator">|</span>
+74:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">alive?</span>(<span class="ruby-identifier">punk</span>)
+75:         <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;spawn&gt; parent(#{Process.pid}) killing child(#{punk})&quot;</span>
+76:         <span class="ruby-keyword kw">begin</span>
+77:           <span class="ruby-constant">Process</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-value str">&quot;TERM&quot;</span>, <span class="ruby-identifier">punk</span>)
+78:         <span class="ruby-keyword kw">rescue</span>
+79:         <span class="ruby-keyword kw">end</span>
+80:       <span class="ruby-keyword kw">end</span>
+81:     <span class="ruby-keyword kw">end</span>
+82:     <span class="ruby-identifier">@@punks</span> = []
+83:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="method-method" class="method-detail ">
+				<a name="method-c-method"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">method</span><span
+						class="method-args">(method, env = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+@deprecated - please use <a
+href="Spawn.html#method-c-default_options">Spawn::default_options</a>(:method
+=> ) instead add calls to this in your environment.rb to set your
+configuration, for example, to use forking everywhere except your
+&#8216;development&#8217; environment:
+</p>
+<pre>
+  Spawn::method :fork
+  Spawn::method :thread, 'development'</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="method-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 41</span>
+41:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">env</span> = <span class="ruby-keyword kw">nil</span>)
+42:     <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;spawn&gt; please use Spawn::default_options(:method =&gt; #{method}) instead of Spawn::method&quot;</span>
+43:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">env</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">env</span> <span class="ruby-operator">==</span> <span class="ruby-constant">RAILS_ENV</span>
+44:       <span class="ruby-identifier">default_options</span> <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>
+45:     <span class="ruby-keyword kw">end</span>
+46:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="resources-to-close-method" class="method-detail ">
+				<a name="method-c-resources_to_close"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">resources_to_close</span><span
+						class="method-args">(*resources)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+set the resources to disconnect from in the child process (when forking)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="resources-to-close-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">resources_to_close</span>(*<span class="ruby-identifier">resources</span>)
+50:     <span class="ruby-identifier">@@resources</span> = <span class="ruby-identifier">resources</span>
+51:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="spawn-method" class="method-detail ">
+				<a name="method-i-spawn"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">spawn</span><span
+						class="method-args">(opts = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Spawns a long-running section of code and returns the ID of the spawned
+process. By default the process will be a forked process.   To use
+threading, pass :method => :thread or override the default behavior in the
+environment by setting &#8216;<a
+href="Spawn.html#method-c-method">Spawn::method</a> :thread&#8217;.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="spawn-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 91</span>
+ 91:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spawn</span>(<span class="ruby-identifier">opts</span> = {})
+ 92:     <span class="ruby-identifier">options</span> = <span class="ruby-identifier">@@default_options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>.<span class="ruby-identifier">symbolize_keys</span>)
+ 93:     <span class="ruby-comment cmt"># setting options[:method] will override configured value in default_options[:method]</span>
+ 94:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:method</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:yield</span>
+ 95:       <span class="ruby-keyword kw">yield</span>
+ 96:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:method</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:thread</span>
+ 97:       <span class="ruby-comment cmt"># for versions before 2.2, check for allow_concurrency</span>
+ 98:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RAILS_2_2</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">allow_concurrency</span>
+ 99:         <span class="ruby-identifier">thread_it</span>(<span class="ruby-identifier">options</span>) { <span class="ruby-keyword kw">yield</span> }
+100:       <span class="ruby-keyword kw">else</span>
+101:         <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;spawn(:method=&gt;:thread) only allowed when allow_concurrency=true&quot;</span>)
+102:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;spawn requires config.active_record.allow_concurrency=true when used with :method=&gt;:thread&quot;</span>
+103:       <span class="ruby-keyword kw">end</span>
+104:     <span class="ruby-keyword kw">else</span>
+105:       <span class="ruby-identifier">fork_it</span>(<span class="ruby-identifier">options</span>) { <span class="ruby-keyword kw">yield</span> }
+106:     <span class="ruby-keyword kw">end</span>
+107:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="wait-method" class="method-detail ">
+				<a name="method-i-wait"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">wait</span><span
+						class="method-args">(sids = [])</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="wait-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 109</span>
+109:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait</span>(<span class="ruby-identifier">sids</span> = [])
+110:     <span class="ruby-comment cmt"># wait for all threads and/or forks (if a single sid passed in, convert to array first)</span>
+111:     <span class="ruby-constant">Array</span>(<span class="ruby-identifier">sids</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sid</span><span class="ruby-operator">|</span>
+112:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sid</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:thread</span>
+113:         <span class="ruby-identifier">sid</span>.<span class="ruby-identifier">handle</span>.<span class="ruby-identifier">join</span>()
+114:       <span class="ruby-keyword kw">else</span>
+115:         <span class="ruby-keyword kw">begin</span>
+116:           <span class="ruby-constant">Process</span>.<span class="ruby-identifier">wait</span>(<span class="ruby-identifier">sid</span>.<span class="ruby-identifier">handle</span>)
+117:         <span class="ruby-keyword kw">rescue</span>
+118:           <span class="ruby-comment cmt"># if the process is already done, ignore the error</span>
+119:         <span class="ruby-keyword kw">end</span>
+120:       <span class="ruby-keyword kw">end</span>
+121:     <span class="ruby-keyword kw">end</span>
+122:     <span class="ruby-comment cmt"># clean up connections from expired threads</span>
+123:     <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">verify_active_connections!</span>()
+124:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="protected-instance-method-details" class="method-section section">
+			<h3 class="section-header">Protected Instance Methods</h3>
+
+		
+			<div id="fork-it-method" class="method-detail ">
+				<a name="method-i-fork_it"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">fork_it</span><span
+						class="method-args">(options)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="fork-it-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 136</span>
+136:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fork_it</span>(<span class="ruby-identifier">options</span>)
+137:     <span class="ruby-comment cmt"># The problem with rails is that it only has one connection (per class),</span>
+138:     <span class="ruby-comment cmt"># so when we fork a new process, we need to reconnect.</span>
+139:     <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;spawn&gt; parent PID = #{Process.pid}&quot;</span>
+140:     <span class="ruby-identifier">child</span> = <span class="ruby-identifier">fork</span> <span class="ruby-keyword kw">do</span>
+141:       <span class="ruby-keyword kw">begin</span>
+142:         <span class="ruby-identifier">start</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+143:         <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;spawn&gt; child PID = #{Process.pid}&quot;</span>
+144: 
+145:         <span class="ruby-comment cmt"># this child has no children of it's own to kill (yet)</span>
+146:         <span class="ruby-identifier">@@punks</span> = []
+147: 
+148:         <span class="ruby-comment cmt"># set the nice priority if needed</span>
+149:         <span class="ruby-constant">Process</span>.<span class="ruby-identifier">setpriority</span>(<span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-constant">PRIO_PROCESS</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:nice</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:nice</span>]
+150: 
+151:         <span class="ruby-comment cmt"># disconnect from the listening socket, et al</span>
+152:         <span class="ruby-constant">Spawn</span>.<span class="ruby-identifier">close_resources</span>
+153:         <span class="ruby-comment cmt"># get a new connection so the parent can keep the original one</span>
+154:         <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">spawn_reconnect</span>
+155:         
+156:         <span class="ruby-comment cmt"># set the process name</span>
+157:         <span class="ruby-identifier">$0</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:argv</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:argv</span>]
+158: 
+159:         <span class="ruby-comment cmt"># run the block of code that takes so long</span>
+160:         <span class="ruby-keyword kw">yield</span>
+161: 
+162:       <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+163:         <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-node">&quot;spawn&gt; Exception in child[#{Process.pid}] - #{ex.class}: #{ex.message}&quot;</span>
+164:       <span class="ruby-keyword kw">ensure</span>
+165:         <span class="ruby-keyword kw">begin</span>
+166:           <span class="ruby-comment cmt"># to be safe, catch errors on closing the connnections too</span>
+167:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RAILS_2_2</span>
+168:             <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection_handler</span>.<span class="ruby-identifier">clear_all_connections!</span>
+169:           <span class="ruby-keyword kw">else</span>
+170:             <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">disconnect!</span>
+171:             <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">remove_connection</span>
+172:           <span class="ruby-keyword kw">end</span>
+173:         <span class="ruby-keyword kw">ensure</span>
+174:           <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;spawn&gt; child[#{Process.pid}] took #{Time.now - start} sec&quot;</span>
+175:           <span class="ruby-comment cmt"># ensure log is flushed since we are using exit!</span>
+176:           <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">flush</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:flush</span>)
+177:           <span class="ruby-comment cmt"># this child might also have children to kill if it called spawn</span>
+178:           <span class="ruby-constant">Spawn</span><span class="ruby-operator">::</span><span class="ruby-identifier">kill_punks</span>
+179:           <span class="ruby-comment cmt"># this form of exit doesn't call at_exit handlers</span>
+180:           <span class="ruby-identifier">exit!</span>(<span class="ruby-value">0</span>)
+181:         <span class="ruby-keyword kw">end</span>
+182:       <span class="ruby-keyword kw">end</span>
+183:     <span class="ruby-keyword kw">end</span>
+184: 
+185:     <span class="ruby-comment cmt"># detach from child process (parent may still wait for detached process if they wish)</span>
+186:     <span class="ruby-constant">Process</span>.<span class="ruby-identifier">detach</span>(<span class="ruby-identifier">child</span>)
+187: 
+188:     <span class="ruby-comment cmt"># remove dead children from the target list to avoid memory leaks</span>
+189:     <span class="ruby-identifier">@@punks</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">punk</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-constant">Spawn</span><span class="ruby-operator">::</span><span class="ruby-identifier">alive?</span>(<span class="ruby-identifier">punk</span>)}
+190: 
+191:     <span class="ruby-comment cmt"># mark this child for death when this process dies</span>
+192:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:kill</span>]
+193:       <span class="ruby-identifier">@@punks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child</span>
+194:       <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;spawn&gt; death row = #{@@punks.inspect}&quot;</span>
+195:     <span class="ruby-keyword kw">end</span>
+196: 
+197:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">SpawnId</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:fork</span>, <span class="ruby-identifier">child</span>)
+198:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="thread-it-method" class="method-detail ">
+				<a name="method-i-thread_it"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">thread_it</span><span
+						class="method-args">(options)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="thread-it-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/spawn/lib/spawn.rb, line 200</span>
+200:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">thread_it</span>(<span class="ruby-identifier">options</span>)
+201:     <span class="ruby-comment cmt"># clean up stale connections from previous threads</span>
+202:     <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">verify_active_connections!</span>()
+203:     <span class="ruby-identifier">thr</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span>
+204:       <span class="ruby-comment cmt"># run the long-running code block</span>
+205:       <span class="ruby-keyword kw">yield</span>
+206:     <span class="ruby-keyword kw">end</span>
+207:     <span class="ruby-identifier">thr</span>.<span class="ruby-identifier">priority</span> = <span class="ruby-operator">-</span><span class="ruby-identifier">options</span>[<span class="ruby-value">:nice</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:nice</span>]
+208:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">SpawnId</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:thread</span>, <span class="ruby-identifier">thr</span>)
+209:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

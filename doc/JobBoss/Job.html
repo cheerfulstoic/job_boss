@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: JobBoss::Job</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/job_boss/job_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/job_boss/job.rb">lib/job_boss/job.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">ActiveRecord::Base</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-call_path">::call_path</a></li>
+					
+					<li><a href="#method-c-pending_paths">::pending_paths</a></li>
+					
+					<li><a href="#method-i-cancel">#cancel</a></li>
+					
+					<li><a href="#method-i-cancelled%3F">#cancelled?</a></li>
+					
+					<li><a href="#method-i-completed%3F">#completed?</a></li>
+					
+					<li><a href="#method-i-dispatch">#dispatch</a></li>
+					
+					<li><a href="#method-i-mark_as_cancelled">#mark_as_cancelled</a></li>
+					
+					<li><a href="#method-i-mark_as_completed">#mark_as_completed</a></li>
+					
+					<li><a href="#method-i-mark_as_started">#mark_as_started</a></li>
+					
+					<li><a href="#method-i-mark_employee">#mark_employee</a></li>
+					
+					<li><a href="#method-i-mark_exception">#mark_exception</a></li>
+					
+					<li><a href="#method-i-mark_for_redo">#mark_for_redo</a></li>
+					
+					<li><a href="#method-i-succeeded%3F">#succeeded?</a></li>
+					
+					<li><a href="#method-i-time_taken">#time_taken</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../Rakefile.html">Rakefile</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="../JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="../JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="../JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">JobBoss::Job</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="private-class-method-details" class="method-section section">
+			<h3 class="section-header">Private Class Methods</h3>
+
+		
+			<div id="call-path-method" class="method-detail ">
+				<a name="method-c-call_path"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">call_path</span><span
+						class="method-args">(path, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="call-path-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 115</span>
+115:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call_path</span>(<span class="ruby-identifier">path</span>, *<span class="ruby-identifier">args</span>)
+116:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'active_support'</span>
+117:     
+118:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Invalid path (must have #)&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">match</span>(<span class="ruby-node">/.#./</span>)
+119:         <span class="ruby-identifier">controller</span>, <span class="ruby-identifier">action</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'#'</span>)
+120:     
+121:         <span class="ruby-identifier">controller_object</span> = <span class="ruby-keyword kw">begin</span>
+122:           <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;#{controller.classify}Jobs&quot;</span>).<span class="ruby-identifier">new</span>
+123:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+124:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid controller&quot;</span>
+125:         <span class="ruby-keyword kw">end</span>
+126:     
+127:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid path action&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">controller_object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">action</span>)
+128:     
+129:         <span class="ruby-identifier">controller_object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">action</span>, *<span class="ruby-identifier">args</span>)
+130:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="pending-paths-method" class="method-detail ">
+				<a name="method-c-pending_paths"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">pending_paths</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="pending-paths-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 132</span>
+132:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pending_paths</span>
+133:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">except</span>(<span class="ruby-value">:order</span>).<span class="ruby-identifier">select</span>(<span class="ruby-value str">'DISTINCT path'</span>).<span class="ruby-identifier">collect</span>(&amp;<span class="ruby-value">:path</span>)
+134:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="cancel-method" class="method-detail ">
+				<a name="method-i-cancel"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">cancel</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Mark the job as cancelled so that the boss won&#8217;t run the job and so
+that the employee running the job gets stopped (if it&#8217;s been
+dispatched)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="cancel-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 69</span>
+69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cancel</span>
+70:       <span class="ruby-identifier">mark_as_cancelled</span>
+71:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="cancelled--method" class="method-detail ">
+				<a name="method-i-cancelled%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">cancelled?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Has the job been cancelled?
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="cancelled--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 74</span>
+74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cancelled?</span>
+75:       <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">cancelled_at</span>
+76:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="completed--method" class="method-detail ">
+				<a name="method-i-completed%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">completed?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Is the job complete?
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="completed--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 63</span>
+63:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">completed?</span>
+64:       <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">completed_at</span>
+65:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="dispatch-method" class="method-detail ">
+				<a name="method-i-dispatch"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">dispatch</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Method used by the boss to dispatch an employee
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="dispatch-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dispatch</span>
+16:       <span class="ruby-identifier">mark_as_started</span>
+17:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Dispatching Job ##{self.id}&quot;</span>
+18: 
+19:       <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">fork</span> <span class="ruby-keyword kw">do</span>
+20:         <span class="ruby-identifier">$0</span> = <span class="ruby-node">&quot;job_boss - employee (job ##{self.id})&quot;</span>
+21:         <span class="ruby-constant">Process</span>.<span class="ruby-identifier">setpriority</span>(<span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-constant">PRIO_PROCESS</span>, <span class="ruby-value">0</span>, <span class="ruby-value">19</span>)
+22: 
+23:         <span class="ruby-keyword kw">begin</span>
+24:           <span class="ruby-identifier">mark_employee</span>
+25: 
+26:           <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;HUP&quot;</span>) <span class="ruby-keyword kw">do</span>
+27:             <span class="ruby-identifier">mark_for_redo</span>
+28:           <span class="ruby-keyword kw">end</span>
+29: 
+30:           <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">call_path</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span>, *<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">args</span>)
+31:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-value">:result</span>, <span class="ruby-identifier">result</span>)
+32:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+33:           <span class="ruby-identifier">mark_exception</span>(<span class="ruby-identifier">exception</span>)
+34:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error running job ##{self.id}!&quot;</span>
+35:         <span class="ruby-keyword kw">ensure</span>
+36:           <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">mark_as_completed</span>
+37:             <span class="ruby-identifier">sleep</span>(<span class="ruby-value">1</span>)
+38:           <span class="ruby-keyword kw">end</span>
+39: 
+40:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Job ##{self.id} completed, exiting...&quot;</span>
+41:           <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">exit</span>
+42:         <span class="ruby-keyword kw">end</span>
+43:       <span class="ruby-keyword kw">end</span>
+44: 
+45:       <span class="ruby-constant">Process</span>.<span class="ruby-identifier">detach</span>(<span class="ruby-identifier">pid</span>)
+46:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mark-for-redo-method" class="method-detail ">
+				<a name="method-i-mark_for_redo"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_for_redo</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Clear out the job and put it back onto the queue for processing
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="mark-for-redo-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 49</span>
+49:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_for_redo</span>
+50:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload</span>
+51:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">started_at</span> = <span class="ruby-keyword kw">nil</span>
+52:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+53:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">completed_at</span> = <span class="ruby-keyword kw">nil</span>
+54:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">status</span> = <span class="ruby-keyword kw">nil</span>
+55:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">error_message</span> = <span class="ruby-keyword kw">nil</span>
+56:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">error_backtrace</span> = <span class="ruby-keyword kw">nil</span>
+57:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">employee_host</span> = <span class="ruby-keyword kw">nil</span>
+58:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">employee_pid</span> = <span class="ruby-keyword kw">nil</span>
+59:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">save</span>
+60:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="succeeded--method" class="method-detail ">
+				<a name="method-i-succeeded%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">succeeded?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Did the job succeed?
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="succeeded--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 79</span>
+79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">succeeded?</span>
+80:       <span class="ruby-identifier">completed_at</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'success'</span>)
+81:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="time-taken-method" class="method-detail ">
+				<a name="method-i-time_taken"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">time_taken</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+How long did the job take?
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="time-taken-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 84</span>
+84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">time_taken</span>
+85:       <span class="ruby-identifier">completed_at</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">started_at</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">completed_at</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">started_at</span>
+86:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
+
+		
+			<div id="mark-as-cancelled-method" class="method-detail ">
+				<a name="method-i-mark_as_cancelled"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_as_cancelled</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mark-as-cancelled-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 94</span>
+94:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_as_cancelled</span>
+95:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:cancelled_at</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+96:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mark-as-completed-method" class="method-detail ">
+				<a name="method-i-mark_as_completed"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_as_completed</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mark-as-completed-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 108</span>
+108:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_as_completed</span>
+109:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">'success'</span>
+110:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">completed_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+111:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">save</span>
+112:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mark-as-started-method" class="method-detail ">
+				<a name="method-i-mark_as_started"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_as_started</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mark-as-started-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 90</span>
+90:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_as_started</span>
+91:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:started_at</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+92:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mark-employee-method" class="method-detail ">
+				<a name="method-i-mark_employee"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_employee</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mark-employee-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 98</span>
+ 98:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_employee</span>
+ 99:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'socket'</span>
+100:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:employee_host</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostname</span>,
+101:                         <span class="ruby-value">:employee_pid</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span>)
+102:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="mark-exception-method" class="method-detail ">
+				<a name="method-i-mark_exception"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">mark_exception</span><span
+						class="method-args">(exception)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="mark-exception-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/job.rb, line 104</span>
+104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_exception</span>(<span class="ruby-identifier">exception</span>)
+105:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'error'</span>, <span class="ruby-value">:error_message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>, <span class="ruby-value">:error_backtrace</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>)
+106:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

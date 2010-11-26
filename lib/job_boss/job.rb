@@ -11,6 +11,7 @@ module JobBoss
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
 
+    # Method used by the boss to dispatch an employee
     def dispatch
       mark_as_started
       puts "Dispatching Job ##{self.id}"
@@ -44,6 +45,7 @@ module JobBoss
       Process.detach(pid)
     end
 
+    # Clear out the job and put it back onto the queue for processing
     def mark_for_redo
       self.reload
       self.started_at = nil
@@ -57,14 +59,28 @@ module JobBoss
       self.save
     end
 
+    # Is the job complete?
     def completed?
       !!completed_at
     end
 
+    # Mark the job as cancelled so that the boss won't run the job and so that
+    # the employee running the job gets stopped (if it's been dispatched)
+    def cancel
+      mark_as_cancelled
+    end
+
+    # Has the job been cancelled?
+    def cancelled?
+      !!cancelled_at
+    end
+
+    # Did the job succeed?
     def succeeded?
       completed_at && (status == 'success')
     end
 
+    # How long did the job take?
     def time_taken
       completed_at - started_at if completed_at && started_at
     end
@@ -72,7 +88,11 @@ module JobBoss
 private
 
     def mark_as_started
-      update_attributes(:started_at       => Time.now)
+      update_attributes(:started_at => Time.now)
+    end
+
+    def mark_as_cancelled
+      update_attributes(:cancelled_at => Time.now)
     end
 
     def mark_employee

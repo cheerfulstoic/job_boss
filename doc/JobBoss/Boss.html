@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: JobBoss::Boss</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/job_boss/boss_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/job_boss/boss.rb">lib/job_boss/boss.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-config">::config</a></li>
+					
+					<li><a href="#method-c-new">::new</a></li>
+					
+					<li><a href="#method-c-queue">::queue</a></li>
+					
+					<li><a href="#method-i-start">#start</a></li>
+					
+					<li><a href="#method-i-stop">#stop</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../Rakefile.html">Rakefile</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="../JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="../JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="../JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">JobBoss::Boss</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="config-method" class="method-detail ">
+				<a name="method-c-config"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">config</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Used to set <a href="Boss.html">Boss</a> configuration Usage:
+</p>
+<pre>
+  Boss.config.sleep_interval = 2</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="config-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 7</span>
+ 7:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>
+ 8:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/config'</span>
+ 9:         <span class="ruby-identifier">@@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>
+10:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="method-c-new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(options = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
+22:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">working_dir</span>          <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>]
+23:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:sleep_interval</span>]
+24:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">employee_limit</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:employee_limit</span>]
+25:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>   <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:database_yaml_path</span>]
+26:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>            <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:jobs_path</span>]
+27: 
+28:       <span class="ruby-ivar">@running_jobs</span> = []
+29:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="queue-method" class="method-detail ">
+				<a name="method-c-queue"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">queue</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Used to queue jobs Usage:
+</p>
+<pre>
+  Boss.queue.math.is_prime?(42)</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="queue-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 15</span>
+15:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue</span>
+16:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/queuer'</span>
+17:         <span class="ruby-identifier">@@queuer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Queuer</span>.<span class="ruby-identifier">new</span>
+18:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="start-method" class="method-detail ">
+				<a name="method-i-start"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">start</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Start the boss
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="start-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>
+33:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'active_record'</span>
+34:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'yaml'</span>
+35: 
+36:       <span class="ruby-identifier">connect</span>
+37: 
+38:       <span class="ruby-identifier">require_job_classes</span>
+39: 
+40:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/job'</span>
+41: 
+42:       <span class="ruby-identifier">migrate</span>
+43: 
+44:       <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;HUP&quot;</span>) <span class="ruby-keyword kw">do</span>
+45:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">stop</span>
+46:       <span class="ruby-keyword kw">end</span>
+47: 
+48:       <span class="ruby-identifier">at_exit</span> <span class="ruby-keyword kw">do</span>
+49:         <span class="ruby-identifier">stop</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span> <span class="ruby-operator">==</span> <span class="ruby-constant">BOSS_PID</span>
+50:       <span class="ruby-keyword kw">end</span>
+51: 
+52:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Job Boss started&quot;</span>
+53: 
+54:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+55:         <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">children_count</span> = <span class="ruby-identifier">available_employees</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+56:           <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>)
+57:           <span class="ruby-keyword kw">next</span>
+58:         <span class="ruby-keyword kw">end</span>
+59: 
+60:         <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending_paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+61:           <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">find_by_path</span>(<span class="ruby-identifier">path</span>)
+62:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">nil?</span>
+63: 
+64:           <span class="ruby-identifier">job</span>.<span class="ruby-identifier">dispatch</span>
+65:           <span class="ruby-ivar">@running_jobs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">job</span>
+66: 
+67:           <span class="ruby-identifier">children_count</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+68:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">children_count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+69:         <span class="ruby-keyword kw">end</span>
+70: 
+71:       <span class="ruby-keyword kw">end</span>
+72:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="stop-method" class="method-detail ">
+				<a name="method-i-stop"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">stop</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="stop-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 74</span>
+74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop</span>
+75:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Stopping #{@running_jobs.size} running employees...&quot;</span>
+76: 
+77:       <span class="ruby-identifier">shutdown_running_jobs</span>
+78: 
+79:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Job Boss stopped&quot;</span>
+80:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
