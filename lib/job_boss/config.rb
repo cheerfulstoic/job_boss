@@ -14,7 +14,7 @@ module JobBoss
       require 'optparse'
 
       OptionParser.new do |opts|
-        opts.banner = "Usage: job_boss [start|stop|restart|status|watch] [-- <options>]"
+        opts.banner = "Usage: job_boss [start|stop|restart|run|zap] [-- <options>]"
 
         opts.on("-r", "--application-root PATH", "Path for the application root upon which other paths depend (defaults to .)") do |path|
           @application_root = path
