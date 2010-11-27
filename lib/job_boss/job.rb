@@ -14,7 +14,7 @@ module JobBoss
     # Method used by the boss to dispatch an employee
     def dispatch
       mark_as_started
-      puts "Dispatching Job ##{self.id}"
+      Boss.logger.info "Dispatching Job ##{self.id}"
 
       pid = fork do
         $0 = "job_boss - employee (job ##{self.id})"
@@ -31,13 +31,13 @@ module JobBoss
           self.update_attribute(:result, result)
         rescue Exception => exception
           mark_exception(exception)
-          puts "Error running job ##{self.id}!"
+          Boss.logger.error "Error running job ##{self.id}!"
         ensure
           until mark_as_completed
             sleep(1)
           end
 
-          puts "Job ##{self.id} completed, exiting..."
+          Boss.logger.info "Job ##{self.id} completed, exiting..."
           Kernel.exit
         end
       end

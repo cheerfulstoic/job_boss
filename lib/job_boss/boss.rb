@@ -16,10 +16,16 @@ module JobBoss
         require 'job_boss/queuer'
         @@queuer ||= Queuer.new
       end
+
+      def logger
+        @@config.log_path = resolve_path(@@config.log_path)
+
+        @@logger ||= Logger.new(STDOUT)
+      end
     end
 
     def initialize(options = {})
-      @@config.working_dir          ||= options[:working_dir]
+      @@config.application_root     ||= options[:working_dir]
       @@config.sleep_interval       ||= options[:sleep_interval]
       @@config.employee_limit       ||= options[:employee_limit]
       @@config.database_yaml_path   ||= options[:database_yaml_path]
@@ -49,7 +55,7 @@ module JobBoss
         stop if Process.pid == BOSS_PID
       end
 
-      puts "Job Boss started"
+      Boss.logger.info "Job Boss started"
 
       while true
         unless (children_count = available_employees) > 0 && Job.pending.count > 0
@@ -72,11 +78,11 @@ module JobBoss
     end
 
     def stop
-      puts "Stopping #{@running_jobs.size} running employees..."
+      Boss.logger.info "Stopping #{@running_jobs.size} running employees..."
 
       shutdown_running_jobs
 
-      puts "Job Boss stopped"
+      Boss.logger.info "Job Boss stopped"
     end
 
 private
@@ -108,8 +114,17 @@ private
       @@config.employee_limit - @running_jobs.size
     end
 
+    # If path starts with '/', leave alone.  Otherwise, prepend application_root
+    def resolve_path(path)
+      if path == ?/
+        path
+      else
+        File.join(@@config.application_root, path)
+      end
+    end
+
     def establish_active_record_connection
-      @@config.database_yaml_path = File.join(@@config.working_dir, @@config.database_yaml_path) unless @@config.database_yaml_path[0] == ?/
+      @@config.database_yaml_path = resolve_path(@@config.database_yaml_path)
 
       raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
 
@@ -119,7 +134,7 @@ private
     end
 
     def require_job_classes
-      @@config.jobs_path = File.join(@@config.working_dir, @@config.jobs_path) unless @@config.jobs_path[0] == ?/
+      @@config.jobs_path = resolve_path(@@config.jobs_path)
 
       raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
 
