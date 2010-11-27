@@ -37,7 +37,7 @@ You can get command line options with the command:
 
 But since you don't want to do that right now, it looks something like this:
 
-    Usage: job_boss [start|stop|restart|status|watch] [-- <options>]
+    Usage: job_boss [start|stop|restart|run|zap] [-- <options>]
         -r, --application-root PATH      Path for the application root upon which other paths depend (defaults to .)
         -d, --database-yaml PATH         Path for database YAML (defaults to <application-root>/config/database.yml)
         -l, --log-path PATH              Path for log file (defaults to <application-root>/log/job_boss.log)
