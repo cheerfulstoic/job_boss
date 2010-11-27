@@ -32,7 +32,7 @@ module JobBoss
           @jobs_path = path
         end
 
-        opts.on("-e", "--environment ENV", "Rails environment to use in database YAML file (defaults to '#{@environment}')") do |env|
+        opts.on("-e", "--environment ENV", "Environment to use in database YAML file (defaults to '#{@environment}')") do |env|
           @environment = env
         end
 
