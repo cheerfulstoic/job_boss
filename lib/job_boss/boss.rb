@@ -5,7 +5,7 @@ module JobBoss
       # Usage:
       #   Boss.config.sleep_interval = 2
       def config
-        require 'job_boss/config'
+        require 'lib/job_boss/config'
         @@config ||= Config.new
       end
 
@@ -13,7 +13,7 @@ module JobBoss
       # Usage:
       #   Boss.queue.math.is_prime?(42)
       def queue
-        require 'job_boss/queuer'
+        require 'lib/job_boss/queuer'
         @@queuer ||= Queuer.new
       end
 
@@ -53,7 +53,7 @@ module JobBoss
 
       require_job_classes
 
-      require 'job_boss/job'
+      require 'lib/job_boss/job'
 
       migrate
 
@@ -126,7 +126,9 @@ private
 
     def establish_active_record_connection
       @@config.database_yaml_path = Boss.resolve_path(@@config.database_yaml_path)
-
+      puts @@config.database_yaml_path
+      puts Dir.pwd
+puts @@config.database_yaml_path
       raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
 
       config = YAML.load(File.read(@@config.database_yaml_path))
@@ -144,7 +146,7 @@ private
 
     def migrate
       unless Job.table_exists?
-        require 'migrate'
+        require 'lib/migrate'
         CreateJobs.up
       end
     end
