@@ -20,7 +20,17 @@ module JobBoss
       def logger
         @@config.log_path = resolve_path(@@config.log_path)
 
-        @@logger ||= Logger.new(STDOUT)
+        require 'logger'
+        @@logger ||= Logger.new(@@config.log_path)
+      end
+
+      # If path starts with '/', leave alone.  Otherwise, prepend application_root
+      def resolve_path(path)
+        if path == ?/
+          path
+        else
+          File.join(@@config.application_root, path)
+        end
       end
     end
 
@@ -114,17 +124,8 @@ private
       @@config.employee_limit - @running_jobs.size
     end
 
-    # If path starts with '/', leave alone.  Otherwise, prepend application_root
-    def resolve_path(path)
-      if path == ?/
-        path
-      else
-        File.join(@@config.application_root, path)
-      end
-    end
-
     def establish_active_record_connection
-      @@config.database_yaml_path = resolve_path(@@config.database_yaml_path)
+      @@config.database_yaml_path = Boss.resolve_path(@@config.database_yaml_path)
 
       raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
 
@@ -134,7 +135,7 @@ private
     end
 
     def require_job_classes
-      @@config.jobs_path = resolve_path(@@config.jobs_path)
+      @@config.jobs_path = Boss.resolve_path(@@config.jobs_path)
 
       raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
 

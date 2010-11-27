@@ -1,10 +1,11 @@
 module JobBoss
   class Config
-    attr_accessor :application_root, :database_yaml_path, :jobs_path, :sleep_interval, :employee_limit, :environment
+    attr_accessor :application_root, :database_yaml_path, :log_path, :jobs_path, :sleep_interval, :employee_limit, :environment
 
     def parse_args(argv, options = {})
       @application_root     = options[:working_dir] || Dir.pwd
       @database_yaml_path   = 'config/database.yml'
+      @log_path             = 'log/job_boss.log'
       @jobs_path            = 'app/jobs'
       @sleep_interval       = 0.5
       @employee_limit       = 4
@@ -19,23 +20,23 @@ module JobBoss
           @application_root = path
         end
 
-        opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to <application-root>/config/database.yml)") do |path|
+        opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to <application-root>/#{@database_yaml_path})") do |path|
           @database_yaml_path = path
         end
 
-        opts.on("-l", "--log-path PATH", "Path for log file (defaults to <application-root>/log/job_boss.log)") do |path|
+        opts.on("-l", "--log-path PATH", "Path for log file (defaults to <application-root>/#{@log_path})") do |path|
           @log_path = path
         end
 
-        opts.on("-j", "--jobs-path PATH", "Path to folder with job classes (defaults to <application-root>/app/jobs)") do |path|
+        opts.on("-j", "--jobs-path PATH", "Path to folder with job classes (defaults to <application-root>/#{@jobs_path})") do |path|
           @jobs_path = path
         end
 
-        opts.on("-e", "--environment ENV", "Rails environment to use in database YAML file (defaults to 'development')") do |env|
+        opts.on("-e", "--environment ENV", "Rails environment to use in database YAML file (defaults to '#{@environment}')") do |env|
           @environment = env
         end
 
-        opts.on("-s", "--sleep-interval INTERVAL", Integer, "Number of seconds for the boss to sleep between checks of the queue (default 0.5)") do |interval|
+        opts.on("-s", "--sleep-interval INTERVAL", Integer, "Number of seconds for the boss to sleep between checks of the queue (default #{@sleep_interval})") do |interval|
           @sleep_interval = interval
         end
 
