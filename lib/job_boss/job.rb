@@ -97,6 +97,7 @@ module JobBoss
       completed_at && (status == 'success')
     end
 
+    # Has the job been assigned to an employee?
     def assigned?
       # If the #assigned? method is being called for but the job hasn't been completed, reload
       # to check to see if it has been assigned
@@ -110,6 +111,8 @@ module JobBoss
       completed_at - started_at if completed_at && started_at
     end
 
+    # If the job raised an exception, this method will return the instance of that exception
+    # with the message and backtrace
     def error
       # If the error is being called for but the job hasn't been completed, reload
       # to check to see if there was a error

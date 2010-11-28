@@ -5,7 +5,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<title>Module: ActiveSupport</title>
+	<title>Class: SleepJobs</title>
 
 	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
 
@@ -19,7 +19,7 @@
 		charset="utf-8"></script>
 
 </head>
-<body class="module">
+<body class="class">
 
 	<div id="metadata">
 		<div id="home-metadata">
@@ -38,6 +38,9 @@
 				<div class="section-body">
 					<ul>
 					
+						<li><a href="./test/app_root/app/jobs/sleep_jobs_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="test/app_root/app/jobs/sleep_jobs.rb">test/app_root/app/jobs/sleep_jobs.rb</a></li>
+					
 					</ul>
 				</div>
 			</div>
@@ -49,20 +52,29 @@
 
 			<!-- Parent Class -->
 			
-
-			<!-- Namespace Contents -->
-			
-			<div id="namespace-list-section" class="section">
-				<h3 class="section-header">Namespace</h3>
-				<ul class="link-list">
-					
-					<li><span class="type">CLASS</span> <a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
-					
-				</ul>
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
 			</div>
 			
 
+			<!-- Namespace Contents -->
+			
+
 			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-do_not_never_sleep">#do_not_never_sleep</a></li>
+					
+					<li><a href="#method-i-sleep_for">#sleep_for</a></li>
+					
+				</ul>
+			</div>
 			
 
 			<!-- Included Modules -->
@@ -130,7 +142,7 @@
 	</div>
 
 	<div id="documentation">
-		<h1 class="module">ActiveSupport</h1>
+		<h1 class="class">SleepJobs</h1>
 
 		<div id="description">
 			
@@ -144,6 +156,80 @@
 
 		<!-- Methods -->
 		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="do-not-never-sleep-method" class="method-detail ">
+				<a name="method-i-do_not_never_sleep"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">do_not_never_sleep</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="do-not-never-sleep-source">
+<pre>
+   <span class="ruby-comment cmt"># File test/app_root/app/jobs/sleep_jobs.rb, line 6</span>
+6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_not_never_sleep</span>
+7:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;I can't not do that, Dave.&quot;</span>
+8:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="sleep-for-method" class="method-detail ">
+				<a name="method-i-sleep_for"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">sleep_for</span><span
+						class="method-args">(time)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="sleep-for-source">
+<pre>
+   <span class="ruby-comment cmt"># File test/app_root/app/jobs/sleep_jobs.rb, line 2</span>
+2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sleep_for</span>(<span class="ruby-identifier">time</span>)
+3:     <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">time</span>)
+4:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
 
 	</div>
 

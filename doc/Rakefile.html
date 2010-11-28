@@ -78,6 +78,12 @@
 				
 					<li><a href="./DaemonTest.html">DaemonTest</a></li>
 				
+					<li><a href="./MathJobs.html">MathJobs</a></li>
+				
+					<li><a href="./SleepJobs.html">SleepJobs</a></li>
+				
+					<li><a href="./StringJobs.html">StringJobs</a></li>
+				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
 			</div>
@@ -98,6 +104,7 @@ desc &#8216;Test the job_boss gem.&#8217; Rake::TestTask.new(:test) do |t|
 </p>
 <pre>
   t.libs &lt;&lt; 'test'
+  t.libs &lt;&lt; 'test/app_root/app/jobs'
 
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
