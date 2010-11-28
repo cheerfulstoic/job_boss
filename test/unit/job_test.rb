@@ -65,7 +65,6 @@ class DaemonTest < ActiveSupport::TestCase
     assert_equal ArgumentError, error.class
     assert_equal "I can't not do that, Dave.", error.message
     assert_equal Array, error.backtrace.class
-    puts error.backtrace
 
     stop_daemon
   end
