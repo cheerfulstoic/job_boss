@@ -62,4 +62,4 @@ Features:
  * Call the `cancel` method on a job to have the job boss cancel it
  * Call the `mark_for_redo` method on a job to have it processed again.  This is automatically run for all currently running jobs in the event that the boss has been told to stop
  * If a job throws an exception, it will be caught and recorded.  Call the `error` method on a job to find out what the error was
- * The job boss dispatches "employees" to work on jobs.  Viewing the processes, the process name is changed to reflect which jobs employees are working on for easy tracing (e.g. "[job_boss] employee (job #4)")
+ * The job boss dispatches "employees" to work on jobs.  Viewing the processes, the process name is changed to reflect which jobs employees are working on for easy tracing (e.g. `[job_boss] employee (job #4)`)
