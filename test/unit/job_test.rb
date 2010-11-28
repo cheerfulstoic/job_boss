@@ -36,6 +36,7 @@ class DaemonTest < ActiveSupport::TestCase
     assert_equal 'testofconcatenation', job.result
 
     assert job.time_taken > 0
+    assert_nil job.error
 
 
     # Test cancelling of a job

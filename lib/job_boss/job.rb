@@ -101,7 +101,7 @@ module JobBoss
     def assigned?
       # If the #assigned? method is being called for but the job hasn't been completed, reload
       # to check to see if it has been assigned
-      self.reload if !completed? && employee_pid.nil? && employee_host.nil?
+      self.reload if !completed? && employee_pid.nil?
 
       employee_pid && employee_host
     end
@@ -118,9 +118,11 @@ module JobBoss
       # to check to see if there was a error
       self.reload if !completed? && error_message.nil?
 
-      error = Kernel.const_get(error_class).new(error_message)
-      error.set_backtrace(error_backtrace)
-      error
+      if error_class && error_message && error_backtrace
+        error = Kernel.const_get(error_class).new(error_message)
+        error.set_backtrace(error_backtrace)
+        error
+      end
     end
 
     class << self
