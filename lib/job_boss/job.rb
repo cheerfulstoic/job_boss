@@ -53,6 +53,10 @@ module JobBoss
     end
 
     def result
+      # If the result is being called for but the job hasn't been completed, reload
+      # to check to see if there was a result
+      self.reload if !completed? && read_attribute(:result).nil?
+
       value = read_attribute(:result)
 
       value.is_a?(Array) ? value.first : value
@@ -113,6 +117,8 @@ module JobBoss
       def result_hash(jobs)
         jobs = [jobs] if jobs.is_a?(Job)
 
+        # the #result method automatically reloads the result here if needed but this will
+        # do it in one SQL call
         jobs = Job.find(jobs.collect(&:id))
 
         require 'yaml'
