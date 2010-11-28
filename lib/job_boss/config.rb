@@ -40,7 +40,7 @@ module JobBoss
           @sleep_interval = interval
         end
 
-        opts.on("-c", "--child-limit LIMIT", Integer, "Maximum number of employees (default 4)") do |limit|
+        opts.on("-c", "--employee-limit LIMIT", Integer, "Maximum number of employees (default 4)") do |limit|
           @employee_limit = limit
         end
       end.parse!(argv)

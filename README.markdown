@@ -44,7 +44,7 @@ But since you don't want to do that right now, it looks something like this:
         -j, --jobs-path PATH             Path to folder with job classes (defaults to <application-root>/app/jobs)
         -e, --environment ENV            Environment to use in database YAML file (defaults to 'development')
         -s, --sleep-interval INTERVAL    Number of seconds for the boss to sleep between checks of the queue (default 0.5)
-        -c, --child-limit LIMIT          Maximum number of employees (default 4)
+        -c, --employee-limit LIMIT          Maximum number of employees (default 4)
 
 From your Rails code or in a console (this functionality should probably be encapsulated in the job_boss gem):
 
