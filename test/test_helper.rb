@@ -57,13 +57,20 @@ class ActiveSupport::TestCase
     output.match(/job_boss: process with pid (\d+) started./)[1].to_i
   end
 
-  def wait_for_file(file_path, wait_time = 5)
+  def wait_for_file(file_path, timeout = 5)
     i = 0
     until File.exist?(file_path)
       sleep(1)
 
-      raise "File failed to appear!" if i > wait_time
+      raise "File failed to appear!" if i > timeout
       i += 1
+    end
+  end
+
+  def wait_until_job_assigned(job, wait_interval = 0.5)
+    until job.employee_pid && job.employee_host
+      sleep(wait_interval)
+      job.reload
     end
   end
 

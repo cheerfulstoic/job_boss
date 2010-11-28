@@ -14,6 +14,7 @@ class DaemonTest < ActiveSupport::TestCase
 
     ActiveRecord::Base.establish_connection(config['development'])
 
+    # Test returning results from a number of jobs
     jobs = (0..10).collect do |i|
       JobBoss::Boss.queue.math.is_prime?(i)
     end
@@ -26,11 +27,27 @@ class DaemonTest < ActiveSupport::TestCase
       assert_equal MathJobs.new.is_prime?(args.first), result
     end
 
+
+    # Test functions with multiple arguments
     job = JobBoss::Boss.queue.string.concatenate('test', 'of', 'concatenation')
     JobBoss::Job.wait_for_jobs(job)
     assert_equal 12, JobBoss::Job.completed.count
 
     assert_equal 'testofconcatenation', job.result
+
+
+
+    # Test cancelling of a job
+    job = JobBoss::Boss.queue.sleep.sleep_for(20)
+
+    wait_until_job_assigned(job)
+
+    assert_pid_running(job.employee_pid)
+
+    job.cancel
+
+    sleep(2)
+    assert_pid_not_running(job.employee_pid)
 
     stop_daemon
   end
