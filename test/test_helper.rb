@@ -23,6 +23,16 @@ class ActiveSupport::TestCase
     Dir.glob(File.join(@app_root_path, 'log', '*')).each {|path| File.unlink(path) }
   end
 
+  def assert_pid_running(pid)
+    assert Process.kill(0, pid)
+  end
+
+  def assert_pid_not_running(pid)
+    assert_raise Errno::ESRCH do
+      Process.kill(0, pid)
+    end
+  end
+
   def start_daemon(options)
     clean_app_environment
 
@@ -36,7 +46,7 @@ class ActiveSupport::TestCase
 
     @daemon_pid = output.match(/job_boss: process with pid (\d+) started./)[1].to_i # Output PID
 
-    assert Process.kill(0, @daemon_pid) # Check that the process is running
+    assert_pid_running(@daemon_pid)
 
     @daemon_pid
   end
@@ -54,11 +64,6 @@ class ActiveSupport::TestCase
   def stop_daemon
     `bin/job_boss stop`
 
-    if @daemon_pid
-      # Check that the process is stopped
-      assert_raise Errno::ESRCH do
-        Process.kill(0, @daemon_pid)
-      end
-    end
+    assert_pid_not_running(@daemon_pid) if @daemon_pid
   end
 end
