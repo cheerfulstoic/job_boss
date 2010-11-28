@@ -30,7 +30,6 @@ class DaemonTest < ActiveSupport::TestCase
     JobBoss::Job.wait_for_jobs(job)
     assert_equal 12, JobBoss::Job.completed.count
 
-    job.reload
     assert_equal 'testofconcatenation', job.result
 
     stop_daemon
