@@ -38,7 +38,7 @@ class DaemonTest < ActiveSupport::TestCase
 
 
     # Test cancelling of a job
-    job = JobBoss::Boss.queue.sleep.sleep_for(20)
+    job = JobBoss::Boss.queue.sleep.sleep_for(10)
 
     wait_until_job_assigned(job)
 
@@ -47,8 +47,12 @@ class DaemonTest < ActiveSupport::TestCase
     job.cancel
 
     sleep(2)
+
     assert_pid_not_running(job.employee_pid)
 
+    job.reload
+    assert job.cancelled?
+    assert_not_nil job.cancelled_at
     stop_daemon
   end
 end
