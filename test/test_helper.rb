@@ -32,7 +32,13 @@ class ActiveSupport::TestCase
       '--' + key.to_s.gsub('_', '-') + " " + value.to_s
     end
 
-    `bin/job_boss start -- #{option_string.join(' ')}`
+    output = `bin/job_boss start -- #{option_string.join(' ')}`
+
+    @daemon_pid = output.match(/job_boss: process with pid (\d+) started./)[1].to_i # Output PID
+
+    assert Process.kill(0, @daemon_pid) # Check that the process is running
+
+    @daemon_pid
   end
 
   def wait_for_file(file_path, wait_time = 5)
@@ -47,5 +53,12 @@ class ActiveSupport::TestCase
 
   def stop_daemon
     `bin/job_boss stop`
+
+    if @daemon_pid
+      # Check that the process is stopped
+      assert_raise Errno::ESRCH do
+        Process.kill(0, @daemon_pid)
+      end
+    end
   end
 end
