@@ -97,6 +97,14 @@ module JobBoss
       completed_at && (status == 'success')
     end
 
+    def assigned?
+      # If the #assigned? method is being called for but the job hasn't been completed, reload
+      # to check to see if it has been assigned
+      self.reload if !completed? && employee_pid.nil? && employee_host.nil?
+
+      employee_pid && employee_host
+    end
+
     # How long did the job take?
     def time_taken
       completed_at - started_at if completed_at && started_at

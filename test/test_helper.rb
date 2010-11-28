@@ -69,7 +69,7 @@ class ActiveSupport::TestCase
   end
 
   def wait_until_job_assigned(job, wait_interval = 0.5)
-    until job.employee_pid && job.employee_host
+    until job.assigned?
       sleep(wait_interval)
       job.reload
     end
