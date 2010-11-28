@@ -111,6 +111,8 @@ module JobBoss
       end
 
       def result_hash(jobs)
+        jobs = [jobs] if jobs.is_a?(Job)
+
         jobs = Job.find(jobs.collect(&:id))
 
         require 'yaml'
