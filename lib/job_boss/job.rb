@@ -102,6 +102,16 @@ module JobBoss
       completed_at - started_at if completed_at && started_at
     end
 
+    def error
+      # If the error is being called for but the job hasn't been completed, reload
+      # to check to see if there was a error
+      self.reload if !completed? && error_message.nil?
+
+      error = Kernel.const_get(error_class).new(error_message)
+      error.set_backtrace(error_backtrace)
+      error
+    end
+
     class << self
       def wait_for_jobs(jobs, sleep_interval = 0.5)
         jobs = [jobs] if jobs.is_a?(Job)
