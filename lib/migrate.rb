@@ -8,6 +8,8 @@ class CreateJobs < ActiveRecord::Migration
       t.datetime :cancelled_at
       t.datetime :completed_at
       t.string :status
+
+      t.string :error_class
       t.string :error_message
       t.text :error_backtrace
 

@@ -145,7 +145,7 @@ private
     end
 
     def mark_exception(exception)
-      update_attributes(:status => 'error', :error_message => exception.message, :error_backtrace => exception.backtrace)
+      update_attributes(:status => 'error', :error_class => exception.class.to_s, :error_message => exception.message, :error_backtrace => exception.backtrace)
     end
 
     def mark_as_completed
