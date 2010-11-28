@@ -1,11 +1,14 @@
+require 'active_support'
+
 module JobBoss
   class Boss
     class << self
+      extend ActiveSupport::Memoizable
       # Used to set Boss configuration
       # Usage:
       #   Boss.config.sleep_interval = 2
       def config
-        require 'lib/job_boss/config'
+        require 'job_boss/config'
         @@config ||= Config.new
       end
 
@@ -13,7 +16,7 @@ module JobBoss
       # Usage:
       #   Boss.queue.math.is_prime?(42)
       def queue
-        require 'lib/job_boss/queuer'
+        require 'job_boss/queuer'
         @@queuer ||= Queuer.new
       end
 
@@ -21,12 +24,13 @@ module JobBoss
         @@config.log_path = resolve_path(@@config.log_path)
 
         require 'logger'
-        @@logger ||= Logger.new(@@config.log_path)
+        Logger.new(@@config.log_path)
       end
+      memoize :logger
 
       # If path starts with '/', leave alone.  Otherwise, prepend application_root
       def resolve_path(path)
-        if path == ?/
+        if path == ?/ || path.match(/^#{@@config.application_root}/)
           path
         else
           File.join(@@config.application_root, path)
@@ -53,7 +57,7 @@ module JobBoss
 
       require_job_classes
 
-      require 'lib/job_boss/job'
+      require 'job_boss/job'
 
       migrate
 
@@ -126,9 +130,7 @@ private
 
     def establish_active_record_connection
       @@config.database_yaml_path = Boss.resolve_path(@@config.database_yaml_path)
-      puts @@config.database_yaml_path
-      puts Dir.pwd
-puts @@config.database_yaml_path
+
       raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
 
       config = YAML.load(File.read(@@config.database_yaml_path))
@@ -146,7 +148,7 @@ puts @@config.database_yaml_path
 
     def migrate
       unless Job.table_exists?
-        require 'lib/migrate'
+        require 'migrate'
         CreateJobs.up
       end
     end
