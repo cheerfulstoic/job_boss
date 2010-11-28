@@ -15,7 +15,8 @@ daemons_options = {
 Daemons.run_proc('job_boss', daemons_options) do
   Dir.chdir(working_dir)
 
-  require 'lib/job_boss/boss'
+  $: << File.expand_path('../../lib', __FILE__)
+  require 'job_boss/boss'
 
   command, daemon_options, app_options = Daemons::Controller.split_argv(ARGV)
 
