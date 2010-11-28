@@ -17,6 +17,7 @@ class ActiveSupport::TestCase
     @app_root_path = File.join('test', 'app_root')
     @db_path = File.join(@app_root_path, 'db')
     @log_path = File.join(@app_root_path, 'log', 'job_boss.log')
+    @db_yaml_path = File.join(@app_root_path, 'config', 'database.yml')
   end
 
   def clean_app_environment

@@ -7,6 +7,7 @@ task :default => :test
 desc 'Test the job_boss gem.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
+  t.libs << 'test/app_root/app/jobs'
 
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true

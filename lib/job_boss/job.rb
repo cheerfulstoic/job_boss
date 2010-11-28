@@ -27,8 +27,9 @@ module JobBoss
             mark_for_redo
           end
 
-          result = self.class.call_path(self.path, *self.args)
-          self.update_attribute(:result, result)
+          value = self.class.call_path(self.path, *self.args)
+
+          self.update_attribute(:result, value)
         rescue Exception => exception
           mark_exception(exception)
           Boss.logger.error "Error running job ##{self.id}!"
@@ -43,6 +44,18 @@ module JobBoss
       end
 
       Process.detach(pid)
+    end
+
+    # Store result as first and only value of an array so that the value always gets serialized
+    # Was having issues with the boolean value of false getting stored as the string "f"
+    def result=(value)
+      write_attribute(:result, [value])
+    end
+
+    def result
+      value = read_attribute(:result)
+
+      value.is_a?(Array) ? value.first : value
     end
 
     # Clear out the job and put it back onto the queue for processing
@@ -87,9 +100,10 @@ module JobBoss
 
     class << self
       def wait_for_jobs(jobs, sleep_interval = 0.5)
-        running_jobs = jobs.dup
+        jobs = [jobs] if jobs.is_a?(Job)
 
-        until Job.running.find_all_by_id(running_jobs.collect(&:id)).empty?
+        ids = jobs.collect(&:id)
+        until Job.completed.find_all_by_id(ids).count == jobs.size
           sleep(sleep_interval)
         end
 
@@ -97,6 +111,9 @@ module JobBoss
       end
 
       def result_hash(jobs)
+        jobs = Job.find(jobs.collect(&:id))
+
+        require 'yaml'
         jobs.inject({}) do |hash, job|
           hash.merge(job.args => job.result)
         end
