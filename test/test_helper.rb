@@ -44,11 +44,15 @@ class ActiveSupport::TestCase
 
     output = `bin/job_boss start -- #{option_string.join(' ')}`
 
-    @daemon_pid = output.match(/job_boss: process with pid (\d+) started./)[1].to_i # Output PID
+    @daemon_pid = get_pid_from_startup(output)
 
     assert_pid_running(@daemon_pid)
 
     @daemon_pid
+  end
+
+  def get_pid_from_startup(output)
+    output.match(/job_boss: process with pid (\d+) started./)[1].to_i
   end
 
   def wait_for_file(file_path, wait_time = 5)
@@ -65,5 +69,17 @@ class ActiveSupport::TestCase
     `bin/job_boss stop`
 
     assert_pid_not_running(@daemon_pid) if @daemon_pid
+  end
+
+  def restart_daemon
+    assert_pid_running(@daemon_pid)
+
+    output = `bin/job_boss restart`
+
+    assert_pid_not_running(@daemon_pid)
+
+    @daemon_pid = get_pid_from_startup(output)
+
+    assert_pid_running(@daemon_pid)
   end
 end
