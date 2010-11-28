@@ -12,6 +12,7 @@ class ActiveSupport::TestCase
 
   setup :setup_paths
   teardown :clean_app_environment
+  teardown :stop_daemon
 
   def setup_paths
     @app_root_path = File.join('test', 'app_root')
