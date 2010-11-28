@@ -12,7 +12,7 @@ class CreateJobs < ActiveRecord::Migration
       t.text :error_backtrace
 
       t.string :employee_host
-      t.string :employee_pid
+      t.integer :employee_pid
 
       t.timestamps
     end
