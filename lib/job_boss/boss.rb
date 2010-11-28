@@ -77,6 +77,8 @@ module JobBoss
           next
         end
 
+        # Go through each pending path so that we don't get stuck just processing
+        # long running jobs which would leave quicker jobs to suffocate
         Job.pending_paths.each do |path|
           job = Job.pending.find_by_path(path)
           next if job.nil?
