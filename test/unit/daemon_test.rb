@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class DaemonTest < ActiveSupport::TestCase
-  setup :setup_paths
-
   test "daemon options" do
     start_daemon(:application_root => @app_root_path)
 

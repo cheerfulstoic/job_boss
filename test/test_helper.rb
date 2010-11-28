@@ -10,6 +10,7 @@ require 'active_support'
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
+  setup :setup_paths
   teardown :clean_app_environment
 
   def setup_paths
