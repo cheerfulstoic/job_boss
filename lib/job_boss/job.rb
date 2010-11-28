@@ -17,7 +17,7 @@ module JobBoss
       Boss.logger.info "Dispatching Job ##{self.id}"
 
       pid = fork do
-        $0 = "job_boss - employee (job ##{self.id})"
+        $0 = "[job_boss] employee (job ##{self.id})"
         Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
         begin
