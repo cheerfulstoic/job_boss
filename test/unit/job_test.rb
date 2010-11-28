@@ -53,6 +53,20 @@ class DaemonTest < ActiveSupport::TestCase
     job.reload
     assert job.cancelled?
     assert_not_nil job.cancelled_at
+
+
+
+    # Test raising of errors
+    job = JobBoss::Boss.queue.sleep.do_not_never_sleep
+    JobBoss::Job.wait_for_jobs(job)
+    job.reload
+
+    error = job.error
+    assert_equal ArgumentError, error.class
+    assert_equal "I can't not do that, Dave.", error.message
+    assert_equal Array, error.backtrace.class
+    puts error.backtrace
+
     stop_daemon
   end
 end
