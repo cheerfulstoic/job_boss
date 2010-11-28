@@ -117,7 +117,13 @@
 				
 					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
 				
+					<li><a href="../ActiveSupport.html">ActiveSupport</a></li>
+				
+					<li><a href="../ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+				
 					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+					<li><a href="../DaemonTest.html">DaemonTest</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -177,27 +183,29 @@
 10: 
 11:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">method_name</span>)
 12:           <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/job'</span>
-13:           <span class="ruby-constant">Job</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@controller}##{method_name}&quot;</span>,
-14:                       <span class="ruby-value">:args</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">args</span>)
-15: 
-16:           <span class="ruby-ivar">@class</span> = <span class="ruby-keyword kw">nil</span>
-17:           <span class="ruby-ivar">@controller</span> = <span class="ruby-keyword kw">nil</span>
-18:         <span class="ruby-keyword kw">else</span>
-19:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid action&quot;</span>
-20:         <span class="ruby-keyword kw">end</span>
-21:       <span class="ruby-keyword kw">else</span>
-22:         <span class="ruby-comment cmt"># Check to see if there's a jobs class</span>
-23:         <span class="ruby-keyword kw">begin</span>
-24:           <span class="ruby-ivar">@class</span> = <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;#{method_name.classify}Jobs&quot;</span>).<span class="ruby-identifier">new</span>
-25: 
-26:           <span class="ruby-ivar">@controller</span> = <span class="ruby-identifier">method_name</span>
-27:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
-28:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid controller&quot;</span>
-29:         <span class="ruby-keyword kw">end</span>
-30: 
-31:         <span class="ruby-keyword kw">self</span>
-32:       <span class="ruby-keyword kw">end</span>
-33:     <span class="ruby-keyword kw">end</span></pre>
+13:           <span class="ruby-identifier">path</span> = <span class="ruby-node">&quot;#{@controller}##{method_name}&quot;</span>
+14: 
+15:           <span class="ruby-ivar">@class</span> = <span class="ruby-keyword kw">nil</span>
+16:           <span class="ruby-ivar">@controller</span> = <span class="ruby-keyword kw">nil</span>
+17: 
+18:           <span class="ruby-constant">Job</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>,
+19:                      <span class="ruby-value">:args</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">args</span>)
+20:         <span class="ruby-keyword kw">else</span>
+21:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid action&quot;</span>
+22:         <span class="ruby-keyword kw">end</span>
+23:       <span class="ruby-keyword kw">else</span>
+24:         <span class="ruby-comment cmt"># Check to see if there's a jobs class</span>
+25:         <span class="ruby-keyword kw">begin</span>
+26:           <span class="ruby-ivar">@class</span> = <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;#{method_name.classify}Jobs&quot;</span>).<span class="ruby-identifier">new</span>
+27: 
+28:           <span class="ruby-ivar">@controller</span> = <span class="ruby-identifier">method_name</span>
+29:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+30:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Invalid controller&quot;</span>
+31:         <span class="ruby-keyword kw">end</span>
+32: 
+33:         <span class="ruby-keyword kw">self</span>
+34:       <span class="ruby-keyword kw">end</span>
+35:     <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

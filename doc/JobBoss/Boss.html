@@ -71,9 +71,27 @@
 					
 					<li><a href="#method-c-config">::config</a></li>
 					
+					<li><a href="#method-c-logger">::logger</a></li>
+					
 					<li><a href="#method-c-new">::new</a></li>
 					
 					<li><a href="#method-c-queue">::queue</a></li>
+					
+					<li><a href="#method-c-resolve_path">::resolve_path</a></li>
+					
+					<li><a href="#method-i-available_employees">#available_employees</a></li>
+					
+					<li><a href="#method-i-cleanup_running_jobs">#cleanup_running_jobs</a></li>
+					
+					<li><a href="#method-i-establish_active_record_connection">#establish_active_record_connection</a></li>
+					
+					<li><a href="#method-i-kill_job">#kill_job</a></li>
+					
+					<li><a href="#method-i-migrate">#migrate</a></li>
+					
+					<li><a href="#method-i-require_job_classes">#require_job_classes</a></li>
+					
+					<li><a href="#method-i-shutdown_running_jobs">#shutdown_running_jobs</a></li>
 					
 					<li><a href="#method-i-start">#start</a></li>
 					
@@ -125,7 +143,13 @@
 				
 					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
 				
+					<li><a href="../ActiveSupport.html">ActiveSupport</a></li>
+				
+					<li><a href="../ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+				
 					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+					<li><a href="../DaemonTest.html">DaemonTest</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -178,11 +202,48 @@ Used to set <a href="Boss.html">Boss</a> configuration Usage:
 					<div class="method-source-code"
 						id="config-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 7</span>
- 7:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>
- 8:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/config'</span>
- 9:         <span class="ruby-identifier">@@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>
-10:       <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 10</span>
+10:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>
+11:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/config'</span>
+12:         <span class="ruby-identifier">@@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>
+13:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="logger-method" class="method-detail ">
+				<a name="method-c-logger"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">logger</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="logger-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 23</span>
+23:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logger</span>
+24:         <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">log_path</span> = <span class="ruby-identifier">resolve_path</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">log_path</span>)
+25: 
+26:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'logger'</span>
+27:         <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">log_path</span>)
+28:       <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -213,16 +274,16 @@ Used to set <a href="Boss.html">Boss</a> configuration Usage:
 					<div class="method-source-code"
 						id="new-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 21</span>
-21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
-22:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">working_dir</span>          <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>]
-23:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:sleep_interval</span>]
-24:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">employee_limit</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:employee_limit</span>]
-25:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>   <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:database_yaml_path</span>]
-26:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>            <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:jobs_path</span>]
-27: 
-28:       <span class="ruby-ivar">@running_jobs</span> = []
-29:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 41</span>
+41:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
+42:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">application_root</span>     <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>]
+43:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:sleep_interval</span>]
+44:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">employee_limit</span>       <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:employee_limit</span>]
+45:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>   <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:database_yaml_path</span>]
+46:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>            <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:jobs_path</span>]
+47: 
+48:       <span class="ruby-ivar">@running_jobs</span> = []
+49:     <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -257,11 +318,52 @@ Used to queue jobs Usage:
 					<div class="method-source-code"
 						id="queue-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 15</span>
-15:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue</span>
-16:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/queuer'</span>
-17:         <span class="ruby-identifier">@@queuer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Queuer</span>.<span class="ruby-identifier">new</span>
-18:       <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue</span>
+19:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/queuer'</span>
+20:         <span class="ruby-identifier">@@queuer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Queuer</span>.<span class="ruby-identifier">new</span>
+21:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="resolve-path-method" class="method-detail ">
+				<a name="method-c-resolve_path"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">resolve_path</span><span
+						class="method-args">(path)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If path starts with &#8217;/&#8217;, leave alone.  Otherwise, prepend
+application_root
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="resolve-path-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 32</span>
+32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resolve_path</span>(<span class="ruby-identifier">path</span>)
+33:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-value">//</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">match</span>(<span class="ruby-node">/^#{@@config.application_root}/</span>)
+34:           <span class="ruby-identifier">path</span>
+35:         <span class="ruby-keyword kw">else</span>
+36:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">application_root</span>, <span class="ruby-identifier">path</span>)
+37:         <span class="ruby-keyword kw">end</span>
+38:       <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -300,48 +402,48 @@ Start the boss
 					<div class="method-source-code"
 						id="start-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 32</span>
-32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>
-33:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'active_record'</span>
-34:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'yaml'</span>
-35: 
-36:       <span class="ruby-identifier">connect</span>
-37: 
-38:       <span class="ruby-identifier">require_job_classes</span>
-39: 
-40:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/job'</span>
-41: 
-42:       <span class="ruby-identifier">migrate</span>
-43: 
-44:       <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;HUP&quot;</span>) <span class="ruby-keyword kw">do</span>
-45:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">stop</span>
-46:       <span class="ruby-keyword kw">end</span>
-47: 
-48:       <span class="ruby-identifier">at_exit</span> <span class="ruby-keyword kw">do</span>
-49:         <span class="ruby-identifier">stop</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span> <span class="ruby-operator">==</span> <span class="ruby-constant">BOSS_PID</span>
-50:       <span class="ruby-keyword kw">end</span>
-51: 
-52:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Job Boss started&quot;</span>
-53: 
-54:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
-55:         <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">children_count</span> = <span class="ruby-identifier">available_employees</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-56:           <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>)
-57:           <span class="ruby-keyword kw">next</span>
-58:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 52</span>
+52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>
+53:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'active_record'</span>
+54:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'yaml'</span>
+55: 
+56:       <span class="ruby-identifier">establish_active_record_connection</span>
+57: 
+58:       <span class="ruby-identifier">require_job_classes</span>
 59: 
-60:         <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending_paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-61:           <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">find_by_path</span>(<span class="ruby-identifier">path</span>)
-62:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">nil?</span>
+60:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'job_boss/job'</span>
+61: 
+62:       <span class="ruby-identifier">migrate</span>
 63: 
-64:           <span class="ruby-identifier">job</span>.<span class="ruby-identifier">dispatch</span>
-65:           <span class="ruby-ivar">@running_jobs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">job</span>
-66: 
-67:           <span class="ruby-identifier">children_count</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
-68:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">children_count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-69:         <span class="ruby-keyword kw">end</span>
-70: 
-71:       <span class="ruby-keyword kw">end</span>
-72:     <span class="ruby-keyword kw">end</span></pre>
+64:       <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;HUP&quot;</span>) <span class="ruby-keyword kw">do</span>
+65:         <span class="ruby-identifier">stop</span>
+66:       <span class="ruby-keyword kw">end</span>
+67: 
+68:       <span class="ruby-identifier">at_exit</span> <span class="ruby-keyword kw">do</span>
+69:         <span class="ruby-identifier">stop</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span> <span class="ruby-operator">==</span> <span class="ruby-constant">BOSS_PID</span>
+70:       <span class="ruby-keyword kw">end</span>
+71: 
+72:       <span class="ruby-constant">Boss</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-value str">&quot;Job Boss started&quot;</span>
+73: 
+74:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+75:         <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">children_count</span> = <span class="ruby-identifier">available_employees</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+76:           <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">sleep_interval</span>)
+77:           <span class="ruby-keyword kw">next</span>
+78:         <span class="ruby-keyword kw">end</span>
+79: 
+80:         <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending_paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+81:           <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">pending</span>.<span class="ruby-identifier">find_by_path</span>(<span class="ruby-identifier">path</span>)
+82:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">nil?</span>
+83: 
+84:           <span class="ruby-identifier">job</span>.<span class="ruby-identifier">dispatch</span>
+85:           <span class="ruby-ivar">@running_jobs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">job</span>
+86: 
+87:           <span class="ruby-identifier">children_count</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+88:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">children_count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+89:         <span class="ruby-keyword kw">end</span>
+90: 
+91:       <span class="ruby-keyword kw">end</span>
+92:     <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -372,14 +474,302 @@ Start the boss
 					<div class="method-source-code"
 						id="stop-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 74</span>
-74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop</span>
-75:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Stopping #{@running_jobs.size} running employees...&quot;</span>
-76: 
-77:       <span class="ruby-identifier">shutdown_running_jobs</span>
-78: 
-79:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Job Boss stopped&quot;</span>
-80:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 94</span>
+ 94:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop</span>
+ 95:       <span class="ruby-constant">Boss</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Stopping #{@running_jobs.size} running employees...&quot;</span>
+ 96: 
+ 97:       <span class="ruby-identifier">shutdown_running_jobs</span>
+ 98: 
+ 99:       <span class="ruby-constant">Boss</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-value str">&quot;Job Boss stopped&quot;</span>
+100:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
+
+		
+			<div id="available-employees-method" class="method-detail ">
+				<a name="method-i-available_employees"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">available_employees</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Total number of employees which can be run
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="available-employees-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 125</span>
+125:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">available_employees</span>
+126:       <span class="ruby-identifier">cleanup_running_jobs</span>
+127: 
+128:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">employee_limit</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@running_jobs</span>.<span class="ruby-identifier">size</span>
+129:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="cleanup-running-jobs-method" class="method-detail ">
+				<a name="method-i-cleanup_running_jobs"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">cleanup_running_jobs</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Cleans up @running_jobs variable, getting rid of jobs which have completed,
+which have been cancelled, or which went MIA
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="cleanup-running-jobs-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 105</span>
+105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanup_running_jobs</span>
+106:       <span class="ruby-constant">Job</span>.<span class="ruby-identifier">uncached</span> <span class="ruby-keyword kw">do</span>
+107:         <span class="ruby-ivar">@running_jobs</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">running</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value str">'id in (?)'</span>, <span class="ruby-ivar">@running_jobs</span>)
+108: 
+109:         <span class="ruby-identifier">cancelled_jobs</span> = <span class="ruby-ivar">@running_jobs</span>.<span class="ruby-identifier">select</span>(&amp;<span class="ruby-value">:cancelled?</span>)
+110:         <span class="ruby-identifier">cancelled_jobs</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span> <span class="ruby-identifier">kill_job</span>(<span class="ruby-identifier">job</span>) }
+111:         <span class="ruby-ivar">@running_jobs</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">cancelled_jobs</span>
+112: 
+113:         <span class="ruby-comment cmt"># Clean out any jobs whos processes have stopped running for some reason</span>
+114:         <span class="ruby-ivar">@running_jobs</span> = <span class="ruby-ivar">@running_jobs</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span>
+115:           <span class="ruby-keyword kw">begin</span>
+116:             <span class="ruby-constant">Process</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">job</span>.<span class="ruby-identifier">employee_pid</span>.<span class="ruby-identifier">to_i</span>)
+117:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ESRCH</span>
+118:             <span class="ruby-keyword kw">nil</span>
+119:           <span class="ruby-keyword kw">end</span>
+120:         <span class="ruby-keyword kw">end</span>
+121:       <span class="ruby-keyword kw">end</span>
+122:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="establish-active-record-connection-method" class="method-detail ">
+				<a name="method-i-establish_active_record_connection"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">establish_active_record_connection</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="establish-active-record-connection-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 131</span>
+131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">establish_active_record_connection</span>
+132:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span> = <span class="ruby-constant">Boss</span>.<span class="ruby-identifier">resolve_path</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>)
+133: 
+134:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Database YAML file missing (#{@@config.database_yaml_path})&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>)
+135: 
+136:       <span class="ruby-identifier">config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">database_yaml_path</span>))
+137: 
+138:       <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">establish_connection</span>(<span class="ruby-identifier">config</span>[<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">environment</span>])
+139:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="kill-job-method" class="method-detail ">
+				<a name="method-i-kill_job"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">kill_job</span><span
+						class="method-args">(job)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="kill-job-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 156</span>
+156:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">kill_job</span>(<span class="ruby-identifier">job</span>)
+157:       <span class="ruby-keyword kw">begin</span>
+158:         <span class="ruby-constant">Process</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-value str">&quot;HUP&quot;</span>, <span class="ruby-identifier">job</span>.<span class="ruby-identifier">employee_pid</span>.<span class="ruby-identifier">to_i</span>)
+159:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ESRCH</span>
+160:         <span class="ruby-keyword kw">nil</span>
+161:       <span class="ruby-keyword kw">end</span>
+162:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="migrate-method" class="method-detail ">
+				<a name="method-i-migrate"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">migrate</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="migrate-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 149</span>
+149:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">migrate</span>
+150:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Job</span>.<span class="ruby-identifier">table_exists?</span>
+151:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'migrate'</span>
+152:         <span class="ruby-constant">CreateJobs</span>.<span class="ruby-identifier">up</span>
+153:       <span class="ruby-keyword kw">end</span>
+154:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="require-job-classes-method" class="method-detail ">
+				<a name="method-i-require_job_classes"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">require_job_classes</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="require-job-classes-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 141</span>
+141:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_job_classes</span>
+142:       <span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span> = <span class="ruby-constant">Boss</span>.<span class="ruby-identifier">resolve_path</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>)
+143: 
+144:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Jobs path missing (#{@@config.jobs_path})&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>)
+145: 
+146:       <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">@@config</span>.<span class="ruby-identifier">jobs_path</span>, <span class="ruby-value str">'*.rb'</span>)).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">job_class</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">job_class</span> }
+147:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="shutdown-running-jobs-method" class="method-detail ">
+				<a name="method-i-shutdown_running_jobs"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">shutdown_running_jobs</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="shutdown-running-jobs-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/job_boss/boss.rb, line 164</span>
+164:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shutdown_running_jobs</span>
+165:       <span class="ruby-identifier">cleanup_running_jobs</span>
+166: 
+167:       <span class="ruby-ivar">@running_jobs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">job</span><span class="ruby-operator">|</span>
+168:         <span class="ruby-identifier">kill_job</span>(<span class="ruby-identifier">job</span>)
+169:         <span class="ruby-identifier">job</span>.<span class="ruby-identifier">mark_for_redo</span>
+170:       <span class="ruby-keyword kw">end</span>
+171:     <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

@@ -70,7 +70,13 @@
 				
 					<li><a href="./JobBoss/Queuer.html">JobBoss::Queuer</a></li>
 				
+					<li><a href="./ActiveSupport.html">ActiveSupport</a></li>
+				
+					<li><a href="./ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+				
 					<li><a href="./CreateJobs.html">CreateJobs</a></li>
+				
+					<li><a href="./DaemonTest.html">DaemonTest</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -82,20 +88,41 @@
 
 	<div id="documentation">
 		<p>
-require &#8216;job_boss&#8216;
+require &#8220;rake/testtask&#8220; require &#8220;rake/rdoctask&#8220;
+</p>
+<p>
+desc &#8216;Default: run unit tests.&#8217; task :default => :test
+</p>
+<p>
+desc &#8216;Test the job_boss gem.&#8217; Rake::TestTask.new(:test) do |t|
+</p>
+<pre>
+  t.libs &lt;&lt; 'test'
+
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+</pre>
+<p>
+end
+</p>
+<p>
+desc &#8216;Generate documentation for the job_boss gem.&#8217;
+Rake::RDocTask.new(:rdoc) do |rdoc|
+</p>
+<pre>
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'job_boss'
+  rdoc.options &lt;&lt; '--line-numbers' &lt;&lt; '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+</pre>
+<p>
+end
 </p>
 <p>
 namespace :job_boss do
 </p>
 <pre>
-  task :start do
-    boss = JobBoss.new
-    boss.start
-  end
-
-  task :stop do
-  end
-
   task :restart do
   end
 </pre>

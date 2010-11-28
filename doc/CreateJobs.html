@@ -119,7 +119,13 @@
 				
 					<li><a href="./JobBoss/Queuer.html">JobBoss::Queuer</a></li>
 				
+					<li><a href="./ActiveSupport.html">ActiveSupport</a></li>
+				
+					<li><a href="./ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+				
 					<li><a href="./CreateJobs.html">CreateJobs</a></li>
+				
+					<li><a href="./DaemonTest.html">DaemonTest</a></li>
 				
 				</ul>
 				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -168,10 +174,10 @@
 					<div class="method-source-code"
 						id="down-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/migrate.rb, line 23</span>
-23:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">down</span>
-24:     <span class="ruby-identifier">drop_table</span> <span class="ruby-value">:jobs</span>
-25:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/migrate.rb, line 24</span>
+24:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">down</span>
+25:     <span class="ruby-identifier">drop_table</span> <span class="ruby-value">:jobs</span>
+26:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -209,20 +215,21 @@
  5:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:args</span>
  6:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:result</span>
  7:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:started_at</span>
- 8:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:completed_at</span>
- 9:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:status</span>
-10:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:error_message</span>
-11:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:error_backtrace</span>
-12: 
-13:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_host</span>
-14:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_pid</span>
-15: 
-16:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
-17:     <span class="ruby-keyword kw">end</span>
-18: 
-19:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:path</span>
-20:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:status</span>
-21:   <span class="ruby-keyword kw">end</span></pre>
+ 8:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:cancelled_at</span>
+ 9:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">datetime</span> <span class="ruby-value">:completed_at</span>
+10:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:status</span>
+11:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:error_message</span>
+12:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span> <span class="ruby-value">:error_backtrace</span>
+13: 
+14:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_host</span>
+15:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:employee_pid</span>
+16: 
+17:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
+18:     <span class="ruby-keyword kw">end</span>
+19: 
+20:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:path</span>
+21:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:status</span>
+22:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

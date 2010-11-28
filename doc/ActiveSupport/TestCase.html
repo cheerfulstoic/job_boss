@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: ActiveSupport::TestCase</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../test/test_helper_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="test/test_helper.rb">test/test_helper.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-clean_app_environment">#clean_app_environment</a></li>
+					
+					<li><a href="#method-i-setup_paths">#setup_paths</a></li>
+					
+					<li><a href="#method-i-start_daemon">#start_daemon</a></li>
+					
+					<li><a href="#method-i-stop_daemon">#stop_daemon</a></li>
+					
+					<li><a href="#method-i-wait_for_file">#wait_for_file</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../Rakefile.html">Rakefile</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../JobBoss.html">JobBoss</a></li>
+				
+					<li><a href="../JobBoss/Boss.html">JobBoss::Boss</a></li>
+				
+					<li><a href="../JobBoss/Config.html">JobBoss::Config</a></li>
+				
+					<li><a href="../JobBoss/Job.html">JobBoss::Job</a></li>
+				
+					<li><a href="../JobBoss/Queuer.html">JobBoss::Queuer</a></li>
+				
+					<li><a href="../ActiveSupport.html">ActiveSupport</a></li>
+				
+					<li><a href="../ActiveSupport/TestCase.html">ActiveSupport::TestCase</a></li>
+				
+					<li><a href="../CreateJobs.html">CreateJobs</a></li>
+				
+					<li><a href="../DaemonTest.html">DaemonTest</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">ActiveSupport::TestCase</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="clean-app-environment-method" class="method-detail ">
+				<a name="method-i-clean_app_environment"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">clean_app_environment</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="clean-app-environment-source">
+<pre>
+    <span class="ruby-comment cmt"># File test/test_helper.rb, line 21</span>
+21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clean_app_environment</span>
+22:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@db_path</span>, <span class="ruby-value str">'*'</span>)).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">path</span>) }
+23:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@app_root_path</span>, <span class="ruby-value str">'log'</span>, <span class="ruby-value str">'*'</span>)).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">path</span>) }
+24:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="setup-paths-method" class="method-detail ">
+				<a name="method-i-setup_paths"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">setup_paths</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="setup-paths-source">
+<pre>
+    <span class="ruby-comment cmt"># File test/test_helper.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_paths</span>
+16:     <span class="ruby-ivar">@app_root_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'test'</span>, <span class="ruby-value str">'app_root'</span>)
+17:     <span class="ruby-ivar">@db_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@app_root_path</span>, <span class="ruby-value str">'db'</span>)
+18:     <span class="ruby-ivar">@log_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@app_root_path</span>, <span class="ruby-value str">'log'</span>, <span class="ruby-value str">'job_boss.log'</span>)
+19:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="start-daemon-method" class="method-detail ">
+				<a name="method-i-start_daemon"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">start_daemon</span><span
+						class="method-args">(options)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="start-daemon-source">
+<pre>
+    <span class="ruby-comment cmt"># File test/test_helper.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_daemon</span>(<span class="ruby-identifier">options</span>)
+27:     <span class="ruby-identifier">clean_app_environment</span>
+28: 
+29:     <span class="ruby-identifier">stop_daemon</span>
+30: 
+31:     <span class="ruby-identifier">option_string</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+32:       <span class="ruby-value str">'--'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'_'</span>, <span class="ruby-value str">'-'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>
+33:     <span class="ruby-keyword kw">end</span>
+34: 
+35:     <span class="ruby-node">`bin/job_boss start -- #{option_string.join(' ')}`</span>
+36:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="stop-daemon-method" class="method-detail ">
+				<a name="method-i-stop_daemon"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">stop_daemon</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="stop-daemon-source">
+<pre>
+    <span class="ruby-comment cmt"># File test/test_helper.rb, line 48</span>
+48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop_daemon</span>
+49:     <span class="ruby-value">`bin/job_boss stop`</span>
+50:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="wait-for-file-method" class="method-detail ">
+				<a name="method-i-wait_for_file"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">wait_for_file</span><span
+						class="method-args">(file_path, wait_time = 5)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="wait-for-file-source">
+<pre>
+    <span class="ruby-comment cmt"># File test/test_helper.rb, line 38</span>
+38:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait_for_file</span>(<span class="ruby-identifier">file_path</span>, <span class="ruby-identifier">wait_time</span> = <span class="ruby-value">5</span>)
+39:     <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+40:     <span class="ruby-keyword kw">until</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file_path</span>)
+41:       <span class="ruby-identifier">sleep</span>(<span class="ruby-value">1</span>)
+42: 
+43:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;File failed to appear!&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">wait_time</span>
+44:       <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+45:     <span class="ruby-keyword kw">end</span>
+46:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
