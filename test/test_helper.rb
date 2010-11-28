@@ -10,6 +10,8 @@ require 'active_support'
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
+  teardown :clean_app_environment
+
   def setup_paths
     @app_root_path = File.join('test', 'app_root')
     @db_path = File.join(@app_root_path, 'db')
