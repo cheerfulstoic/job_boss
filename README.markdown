@@ -55,7 +55,7 @@ From your Rails code or in a console (this functionality should probably be enca
 
     JobBoss::Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
 
-    JobBoss::Job.result_hash(jobs) # => {[0]=>"f", [1]=>"f", [2]=>true, [3]=>true, [4]=>"f", ... }
+    JobBoss::Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
 
 Features:
 
