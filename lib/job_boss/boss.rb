@@ -157,7 +157,7 @@ private
 
     def kill_job(job)
       begin
-        Process.kill("HUP", job.employee_pid.to_i)
+        Process.kill("TERM", job.employee_pid.to_i)
       rescue Errno::ESRCH
         nil
       end

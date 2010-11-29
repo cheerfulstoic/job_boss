@@ -23,10 +23,6 @@ module JobBoss
         begin
           mark_employee
 
-          Signal.trap("HUP") do
-            mark_for_redo
-          end
-
           value = self.class.call_path(self.path, *self.args)
 
           self.update_attribute(:result, value)
