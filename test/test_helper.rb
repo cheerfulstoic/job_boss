@@ -26,13 +26,27 @@ class ActiveSupport::TestCase
     Dir.glob(File.join(@app_root_path, 'log', '*')).each {|path| File.unlink(path) }
   end
 
-  def assert_pid_running(pid)
-    assert Process.kill(0, pid)
+  def assert_pid_running(pid, message="")
+    full_message = build_message(message, "PID <?> expected to be running.", pid)
+    assert_block(full_message) do
+      begin
+        Process.kill(0, pid)
+        true
+      rescue
+        false
+      end
+    end
   end
 
-  def assert_pid_not_running(pid)
-    assert_raise Errno::ESRCH do
-      Process.kill(0, pid)
+  def assert_pid_not_running(pid, message="")
+    full_message = build_message(message, "PID <?> expected to not be running.", pid)
+    assert_block(full_message) do
+      begin
+        Process.kill(0, pid)
+        false
+      rescue
+        true
+      end
     end
   end
 
