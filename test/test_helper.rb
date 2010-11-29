@@ -30,7 +30,7 @@ class ActiveSupport::TestCase
     full_message = build_message(message, "PID <?> expected to be running.", pid)
     assert_block(full_message) do
       begin
-        Process.kill(0, pid)
+        Process.kill(0, pid.to_i)
         true
       rescue
         false
@@ -42,7 +42,7 @@ class ActiveSupport::TestCase
     full_message = build_message(message, "PID <?> expected to not be running.", pid)
     assert_block(full_message) do
       begin
-        Process.kill(0, pid)
+        Process.kill(0, pid.to_i)
         false
       rescue
         true
