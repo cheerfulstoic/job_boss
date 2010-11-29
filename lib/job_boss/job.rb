@@ -7,7 +7,7 @@ module JobBoss
     serialize :result
     serialize :error_backtrace
 
-    scope :pending, where('started_at IS NULL')
+    scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
 
