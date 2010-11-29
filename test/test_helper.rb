@@ -92,6 +92,8 @@ class ActiveSupport::TestCase
   def stop_daemon
     `bin/job_boss stop`
 
+    # Give the daemon a bit of time to stop
+#    sleep(0.5)
     assert_pid_not_running(@daemon_pid) if @daemon_pid
   end
 
@@ -100,6 +102,8 @@ class ActiveSupport::TestCase
 
     output = `bin/job_boss restart`
 
+    # Give the daemon a bit of time to stop
+#    sleep(0.5)
     assert_pid_not_running(@daemon_pid)
 
     @daemon_pid = get_pid_from_startup(output)
