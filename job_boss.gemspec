@@ -4,7 +4,7 @@ $:.unshift lib unless $:.include?(lib)
 
 Gem::Specification.new do |s|
   s.name        = "job_boss"
-  s.version     = '0.4'
+  s.version     = '0.4.1'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Brian Underwood"]
   s.email       = ["ml+job_boss@semi-sentient.com"]
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activerecord"
   s.add_dependency "activesupport"
   s.add_dependency "daemons-mikehale"
-  s.add_dependency "sqlite3-ruby" # For testing
 
   s.files              = `git ls-files`.split("\n")
   s.test_files         = `git ls-files -- {test,spec,features}/*`.split("\n")
