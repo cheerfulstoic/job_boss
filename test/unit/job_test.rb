@@ -28,12 +28,12 @@ class DaemonTest < ActiveSupport::TestCase
     end
 
 
-    # Test functions with multiple arguments
+    # Test functions with multiple arguments and a complex return value (an Array in this case)
     job = JobBoss::Boss.queue.string.concatenate('test', 'of', 'concatenation')
     JobBoss::Job.wait_for_jobs(job)
     assert_equal 12, JobBoss::Job.completed.count
 
-    assert_equal 'testofconcatenation', job.result
+    assert_equal ['testofconcatenation', 3], job.result
 
     assert job.time_taken > 0
     assert_nil job.error
