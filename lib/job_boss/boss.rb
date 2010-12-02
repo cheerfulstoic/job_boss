@@ -20,6 +20,15 @@ module JobBoss
         @@queuer ||= Queuer.new
       end
 
+      # Used to queue jobs
+      # Usage:
+      #   Boss.queue_path('math#in_prime?', 42)
+      def queue_path(path, *args)
+        controller, action = path.split('#')
+
+        queue.send(controller).send(action, *args)
+      end
+
       def logger
         @@config.log_path = resolve_path(@@config.log_path)
 

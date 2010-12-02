@@ -39,6 +39,13 @@ class DaemonTest < ActiveSupport::TestCase
     assert_nil job.error
 
 
+    # Test `queue_path` method
+    job = JobBoss::Boss.queue_path('string#concatenate', 'test', 'of', 'concatenation')
+    JobBoss::Job.wait_for_jobs(job)
+    assert_equal 13, JobBoss::Job.completed.count
+
+    assert_equal ['testofconcatenation', 3], job.result
+
     # Test cancelling of a job
     job = JobBoss::Boss.queue.sleep.sleep_for(10)
 
