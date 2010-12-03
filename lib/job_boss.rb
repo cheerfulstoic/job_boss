@@ -5,3 +5,5 @@ module JobBoss
   autoload :Boss, 'job_boss/boss'
   autoload :Job, 'job_boss/job'
 end
+
+include JobBoss
