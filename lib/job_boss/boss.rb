@@ -146,6 +146,7 @@ private
 
       config = YAML.load(File.read(@@config.database_yaml_path))
 
+      ActiveRecord::Base.remove_connection
       ActiveRecord::Base.establish_connection(config[@@config.environment])
     end
 

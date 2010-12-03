@@ -17,6 +17,7 @@ module JobBoss
       Boss.logger.info "Dispatching Job ##{self.id}"
 
       pid = fork do
+        ActiveRecord::Base.connection.reconnect!
         $0 = "[job_boss] employee (job ##{self.id})"
         Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
@@ -38,8 +39,8 @@ module JobBoss
           Kernel.exit
         end
       end
-
       Process.detach(pid)
+      ActiveRecord::Base.connection.reconnect!
     end
 
     # Store result as first and only value of an array so that the value always gets serialized
