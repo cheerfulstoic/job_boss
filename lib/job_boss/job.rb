@@ -127,8 +127,10 @@ module JobBoss
         jobs = [jobs] if jobs.is_a?(Job)
 
         ids = jobs.collect(&:id)
-        until Job.completed.find_all_by_id(ids).count == jobs.size
-          sleep(sleep_interval)
+        Job.uncached do
+          until Job.completed.find_all_by_id(ids).count == jobs.size
+            sleep(sleep_interval)
+          end
         end
 
         true
