@@ -18,7 +18,7 @@ module JobBoss
 
       pid = fork do
         ActiveRecord::Base.connection.reconnect!
-        $0 = "[job_boss] employee (job ##{self.id})"
+        $0 = "[job_boss employee] job ##{self.id} #{self.path}(#{self.args.join(', ')})"
         Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
         begin
