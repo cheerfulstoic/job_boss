@@ -48,14 +48,14 @@ But since you don't want to do that right now, it looks something like this:
 
 From your Rails code or in a console (this functionality should probably be encapsulated in the job_boss gem):
 
-    require 'job_boss/boss'
+    require 'job_boss'
     jobs = (0..1000).collect do |i|
-        JobBoss::Boss.queue.math.is_prime?(i)
+        Boss.queue.math.is_prime?(i)
     end
 
-    JobBoss::Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
+    Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
 
-    JobBoss::Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
+    Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
 
 Features:
 
