@@ -12,7 +12,6 @@ job_boss allows you to have a daemon much in the same way as workling which allo
 
  * job_boss uses ActiveRecord to store/poll it's queue.  It's not dependent on Rails, but if it sees that it's being run in a Rails environment, it will automatically load the environment.rb file
  * Loading up the environment.rb file isn't a big deal because job_boss's model has a main "boss" process which is a deamon.  The boss forks employees as needed to execute jobs.
- * The boss forks so that we very quickly have another process which has the Rails environment loaded (if Rails is loaded)
  * Employees only exist for the span of one job, so there's less concern about a build up in memory from leaks (not that we shouldn't be addressing leaks...)
  * The boss is independent and always polling, so it can look for jobs which have been marked an cancelled and kill the employee during processing
 
