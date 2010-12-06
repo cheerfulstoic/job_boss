@@ -2,7 +2,7 @@
 
 ## Credits
 
-The idea for this gem came from trying to use working/starling and not having much success with stability.  I created job_boss after some discussions with my colleagues (Neil Cook and Justin Hahn).  Thanks also to my employer, [RBM Technologies http://www.rbmtechnologies.com/] for letting me take some of this work open-source.
+The idea for this gem came from trying to use working/starling and not having much success with stability.  I created job_boss after some discussions with my colleagues (Neil Cook and Justin Hahn).  Thanks also to my employer, [RBM Technologies](http://www.rbmtechnologies.com) for letting me take some of this work open-source.
 
 ## Purpose
 
