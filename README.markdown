@@ -8,6 +8,14 @@ The idea for this gem came from trying to use working/starling and not having mu
 
 job_boss allows you to have a daemon much in the same way as workling which allows you to process a series of jobs asynchronously.   job_boss, however, uses ActiveRecord to store queued job requests in a database thus simplifying dependencies.  This allows for us to process chunks of work in parallel, across multiple servers, without needing much setup
 
+## Overview
+
+ * job_boss uses ActiveRecord to store/poll it's queue.  It's not dependent on Rails, but if it sees that it's being run in a Rails environment, it will automatically load the environment.rb file
+ * Loading up the environment.rb file isn't a big deal because job_boss's model has a main "boss" process which is a deamon.  The boss forks employees as needed to execute jobs.
+ * The boss forks so that we very quickly have another process which has the Rails environment loaded (if Rails is loaded)
+ * Employees only exist for the span of one job, so there's less concern about a build up in memory from leaks (not that we shouldn't be addressing leaks...)
+ * The boss is independent and always polling, so it can look for jobs which have been marked an cancelled and kill the employee during processing
+
 ## Usage
 
 Add the gem to your Gemfile
@@ -63,4 +71,5 @@ Features:
  * Call the `mark_for_redo` method on a job to have it processed again.  This is automatically run for all currently running jobs in the event that the boss has been told to stop
  * If a job throws an exception, it will be caught and recorded.  Call the `error` method on a job to find out what the error was
  * Find out how long the job took by calling the `time_taken` method on a job
- * The job boss dispatches "employees" to work on jobs.  Viewing the processes, the process name is changed to reflect which jobs employees are working on for easy tracing (e.g. `[job_boss] employee (job #4)`)
+ * The job boss dispatches "employees" to work on jobs.  Viewing the processes, the process name is changed to reflect which jobs employees are working on for easy tracing (e.g. `[job_boss employee] job #4 math#is_prime?(4)`)
+ 
