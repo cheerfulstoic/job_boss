@@ -21,6 +21,12 @@ class CreateJobs < ActiveRecord::Migration
 
     add_index :jobs, :path
     add_index :jobs, :status
+
+    postgres = (ActiveRecord::Base.connection.adapter_name == 'PostgreSQL')
+
+    ['started_at', 'cancelled_at', 'completed_at'].each do |field|
+      execute "CREATE INDEX IF NOT EXISTS jobs_#{field}_is_null ON jobs (#{field})" + (postgres ? " WHERE #{field} IS NULL" : '')
+    end
   end
 
   def self.down
