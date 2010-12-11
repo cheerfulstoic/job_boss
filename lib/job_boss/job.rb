@@ -158,6 +158,12 @@ module JobBoss
           hash.merge(job.args => job.result)
         end
       end
+
+      # Given a time object
+      # Delete all jobs which were completed earlier than that time
+      def delete_jobs_before(time)
+        completed.where('completed_at < ?', time).delete_all
+      end
     end
 
 private

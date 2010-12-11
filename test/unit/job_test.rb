@@ -1,7 +1,6 @@
 require 'test_helper'
 require 'active_record'
-require 'job_boss/boss'
-require 'job_boss/job'
+require 'job_boss'
 
 Dir.chdir('test/app_root')
 
@@ -20,22 +19,22 @@ class DaemonTest < ActiveSupport::TestCase
 
     # Test returning results from a number of jobs
     jobs = (0..10).collect do |i|
-      JobBoss::Boss.queue.math.is_prime?(i)
+      Boss.queue.math.is_prime?(i)
     end
 
-    JobBoss::Job.wait_for_jobs(jobs)
+    Job.wait_for_jobs(jobs)
 
-    assert_equal 11, JobBoss::Job.completed.count
+    assert_equal 11, Job.completed.count
 
-    JobBoss::Job.result_hash(jobs).each do |args, result|
+    Job.result_hash(jobs).each do |args, result|
       assert_equal MathJobs.new.is_prime?(args.first), result
     end
 
 
     # Test functions with multiple arguments and a complex return value (an Array in this case)
-    job = JobBoss::Boss.queue.string.concatenate('test', 'of', 'concatenation')
-    JobBoss::Job.wait_for_jobs(job)
-    assert_equal 12, JobBoss::Job.completed.count
+    job = Boss.queue.string.concatenate('test', 'of', 'concatenation')
+    Job.wait_for_jobs(job)
+    assert_equal 12, Job.completed.count
 
     assert_equal ['testofconcatenation', 3], job.result
 
@@ -43,25 +42,25 @@ class DaemonTest < ActiveSupport::TestCase
     assert_nil job.error
 
 
-    job = JobBoss::Boss.queue.penguin.snooze(3)
+    job = Boss.queue.penguin.snooze(3)
     time = Benchmark.realtime do
-      JobBoss::Job.wait_for_jobs(job)
+      Job.wait_for_jobs(job)
     end
 
-    assert_equal 13, JobBoss::Job.completed.count
+    assert_equal 13, Job.completed.count
 
     assert job.time_taken > 3
     assert_equal 'ZzZzZzzz', job.result
 
     # Test `queue_path` method
-    job = JobBoss::Boss.queue_path('string#concatenate', 'test', 'of', 'concatenation')
-    JobBoss::Job.wait_for_jobs(job)
-    assert_equal 14, JobBoss::Job.completed.count
+    job = Boss.queue_path('string#concatenate', 'test', 'of', 'concatenation')
+    Job.wait_for_jobs(job)
+    assert_equal 14, Job.completed.count
 
     assert_equal ['testofconcatenation', 3], job.result
 
     # Test cancelling of a job
-    job = JobBoss::Boss.queue.sleep.sleep_for(10)
+    job = Boss.queue.sleep.sleep_for(10)
 
     wait_until_job_assigned(job)
 
@@ -77,11 +76,14 @@ class DaemonTest < ActiveSupport::TestCase
     assert job.cancelled?
     assert_not_nil job.cancelled_at
 
-
+    Job.delete_jobs_before(20.seconds.ago)
+    assert Job.completed.count > 0
+    Job.delete_jobs_before(1.second.ago)
+    assert_equal 0, Job.completed.count
 
     # Test raising of errors
-    job = JobBoss::Boss.queue.sleep.do_not_never_sleep
-    JobBoss::Job.wait_for_jobs(job)
+    job = Boss.queue.sleep.do_not_never_sleep
+    Job.wait_for_jobs(job)
     job.reload
 
     error = job.error

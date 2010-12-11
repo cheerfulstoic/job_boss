@@ -84,6 +84,10 @@ job_boss also makes it easy to wait for the jobs to be done and to collect the r
 
     Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
 
+For performance, it is recommended that you keep your jobs table clean scheduling execution of the `delete_jobs_before` command on the Job model, which will clean all jobs completed before the specified time:
+
+    Job.delete_jobs_before(2.days.ago)
+
 Features:
 
  * Call the `cancel` method on a job to have the job boss cancel it
