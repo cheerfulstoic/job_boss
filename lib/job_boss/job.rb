@@ -127,6 +127,9 @@ module JobBoss
     end
 
     class << self
+      # Given a job or an array of jobs
+      # Will cause the process to sleep until all specified jobs have completed
+      # sleep_interval specifies polling period
       def wait_for_jobs(jobs, sleep_interval = 0.5)
         jobs = [jobs] if jobs.is_a?(Job)
 
@@ -140,6 +143,9 @@ module JobBoss
         true
       end
 
+      # Given a job or an array of jobs
+      # Returns a hash where the keys are the job method arguments and the values are the
+      # results of the job processing
       def result_hash(jobs)
         jobs = [jobs] if jobs.is_a?(Job)
 

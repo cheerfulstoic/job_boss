@@ -88,6 +88,10 @@
 				<h3 class="section-header">Files</h3>
 				<ul>
 				
+					<li class="file"><a href="./Gemfile.html">Gemfile</a></li>
+				
+					<li class="file"><a href="./MIT-LICENSE.html">MIT-LICENSE</a></li>
+				
 					<li class="file"><a href="./Rakefile.html">Rakefile</a></li>
 				
 				</ul>
@@ -128,6 +132,8 @@
 					<li><a href="./DaemonTest.html">DaemonTest</a></li>
 				
 					<li><a href="./MathJobs.html">MathJobs</a></li>
+				
+					<li><a href="./Penguin.html">Penguin</a></li>
 				
 					<li><a href="./SleepJobs.html">SleepJobs</a></li>
 				
@@ -180,10 +186,10 @@
 					<div class="method-source-code"
 						id="down-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/migrate.rb, line 26</span>
-26:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">down</span>
-27:     <span class="ruby-identifier">drop_table</span> <span class="ruby-value">:jobs</span>
-28:   <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/migrate.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">down</span>
+33:     <span class="ruby-identifier">drop_table</span> <span class="ruby-value">:jobs</span>
+34:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>
@@ -237,7 +243,13 @@
 21: 
 22:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:path</span>
 23:     <span class="ruby-identifier">add_index</span> <span class="ruby-value">:jobs</span>, <span class="ruby-value">:status</span>
-24:   <span class="ruby-keyword kw">end</span></pre>
+24: 
+25:     <span class="ruby-identifier">postgres</span> = (<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">adapter_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'PostgreSQL'</span>)
+26: 
+27:     [<span class="ruby-value str">'started_at'</span>, <span class="ruby-value str">'cancelled_at'</span>, <span class="ruby-value str">'completed_at'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+28:       <span class="ruby-identifier">execute</span> <span class="ruby-node">&quot;CREATE INDEX IF NOT EXISTS jobs_#{field}_is_null ON jobs (#{field})&quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">postgres</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot; WHERE #{field} IS NULL&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">''</span>)
+29:     <span class="ruby-keyword kw">end</span>
+30:   <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

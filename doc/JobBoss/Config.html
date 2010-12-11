@@ -86,6 +86,10 @@
 				<h3 class="section-header">Files</h3>
 				<ul>
 				
+					<li class="file"><a href="../Gemfile.html">Gemfile</a></li>
+				
+					<li class="file"><a href="../MIT-LICENSE.html">MIT-LICENSE</a></li>
+				
 					<li class="file"><a href="../Rakefile.html">Rakefile</a></li>
 				
 				</ul>
@@ -126,6 +130,8 @@
 					<li><a href="../DaemonTest.html">DaemonTest</a></li>
 				
 					<li><a href="../MathJobs.html">MathJobs</a></li>
+				
+					<li><a href="../Penguin.html">Penguin</a></li>
 				
 					<li><a href="../SleepJobs.html">SleepJobs</a></li>
 				
@@ -305,7 +311,7 @@
 <pre>
     <span class="ruby-comment cmt"># File lib/job_boss/config.rb, line 5</span>
  5:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_args</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">options</span> = {})
- 6:       <span class="ruby-ivar">@application_root</span>     = <span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
+ 6:       <span class="ruby-ivar">@application_root</span>     = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
  7:       <span class="ruby-ivar">@database_yaml_path</span>   = <span class="ruby-value str">'config/database.yml'</span>
  8:       <span class="ruby-ivar">@log_path</span>             = <span class="ruby-value str">'log/job_boss.log'</span>
  9:       <span class="ruby-ivar">@jobs_path</span>            = <span class="ruby-value str">'app/jobs'</span>
@@ -319,7 +325,7 @@
 17:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;Usage: job_boss [start|stop|restart|run|zap] [-- &lt;options&gt;]&quot;</span>
 18: 
 19:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-r&quot;</span>, <span class="ruby-value str">&quot;--application-root PATH&quot;</span>, <span class="ruby-value str">&quot;Path for the application root upon which other paths depend (defaults to .)&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-20:           <span class="ruby-ivar">@application_root</span> = <span class="ruby-identifier">path</span>
+20:           <span class="ruby-ivar">@application_root</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
 21:         <span class="ruby-keyword kw">end</span>
 22: 
 23:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-d&quot;</span>, <span class="ruby-value str">&quot;--database-yaml PATH&quot;</span>, <span class="ruby-node">&quot;Path for database YAML (defaults to &lt;application-root&gt;/#{@database_yaml_path})&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
