@@ -6,6 +6,7 @@ require 'fileutils'
 FileUtils.cd(File.expand_path('../..', __FILE__))
 
 require 'active_support'
+require 'active_record'
 
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
@@ -15,7 +16,8 @@ class ActiveSupport::TestCase
   teardown :stop_daemon
 
   def setup_paths
-    @app_root_path = File.join('test', 'app_root')
+    @job_boss_bin_path = File.expand_path('../../bin/job_boss', __FILE__)
+    @app_root_path = File.expand_path('../app_root', __FILE__)
     @db_path = File.join(@app_root_path, 'db')
     @log_path = File.join(@app_root_path, 'log', 'job_boss.log')
     @db_yaml_path = File.join(@app_root_path, 'config', 'database.yml')
@@ -59,7 +61,7 @@ class ActiveSupport::TestCase
       '--' + key.to_s.gsub('_', '-') + " " + value.to_s
     end
 
-    output = `bin/job_boss start -- #{option_string.join(' ')}`
+    output = `#{@job_boss_bin_path} start -- #{option_string.join(' ')}`
 
     @daemon_pid = get_pid_from_startup(output)
 
@@ -90,7 +92,7 @@ class ActiveSupport::TestCase
   end
 
   def stop_daemon
-    `bin/job_boss stop`
+    `#{@job_boss_bin_path} stop`
 
     # Give the daemon a bit of time to stop
 #    sleep(0.5)
@@ -100,7 +102,7 @@ class ActiveSupport::TestCase
   def restart_daemon
     assert_pid_running(@daemon_pid)
 
-    output = `bin/job_boss restart`
+    output = `#{@job_boss_bin_path} restart`
 
     # Give the daemon a bit of time to stop
 #    sleep(0.5)

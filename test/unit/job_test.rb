@@ -2,7 +2,11 @@ require 'test_helper'
 require 'active_record'
 require 'job_boss/boss'
 require 'job_boss/job'
-Dir.glob('test/app_root/app/jobs/*_jobs.rb').each {|lib| require lib }
+
+Dir.chdir('test/app_root')
+
+Dir.glob('app/jobs/*_jobs.rb').each {|lib| require lib }
+Dir.glob('app/models/*.rb').each {|lib| require lib }
 
 class DaemonTest < ActiveSupport::TestCase
   test "job queuing" do
@@ -39,10 +43,20 @@ class DaemonTest < ActiveSupport::TestCase
     assert_nil job.error
 
 
+    job = JobBoss::Boss.queue.penguin.snooze(3)
+    time = Benchmark.realtime do
+      JobBoss::Job.wait_for_jobs(job)
+    end
+
+    assert_equal 13, JobBoss::Job.completed.count
+
+    assert job.time_taken > 3
+    assert_equal 'ZzZzZzzz', job.result
+
     # Test `queue_path` method
     job = JobBoss::Boss.queue_path('string#concatenate', 'test', 'of', 'concatenation')
     JobBoss::Job.wait_for_jobs(job)
-    assert_equal 13, JobBoss::Job.completed.count
+    assert_equal 14, JobBoss::Job.completed.count
 
     assert_equal ['testofconcatenation', 3], job.result
 

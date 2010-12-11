@@ -34,6 +34,17 @@ Create a directory to store classes which define code which can be executed by t
         end
     end
 
+If you're using Rails, much of the logic that you'll want to queue may already be in models or other application classes.  You can queue class methods rather that needing to wrap them in a Job class:
+
+    # app/models/article.rb
+    class Article < ActiveRecord::Base
+        class << self
+            def refresh_cache(article_ids)
+                # code to refresh article cache
+            end
+        end
+    end
+
 Start up your boss:
 
     job_boss start -- <options>
@@ -53,12 +64,21 @@ But since you don't want to do that right now, it looks something like this:
         -s, --sleep-interval INTERVAL    Number of seconds for the boss to sleep between checks of the queue (default 0.5)
         -c, --employee-limit LIMIT          Maximum number of employees (default 4)
 
-From your Rails code or in a console (this functionality should probably be encapsulated in the job_boss gem):
+From your Rails code or in a console:
 
     require 'job_boss'
     jobs = (0..1000).collect do |i|
         Boss.queue.math.is_prime?(i)
     end
+
+Or:
+
+    jobs = []
+    Article.select('id').find_in_batches(:batch_size => 10) do |articles|
+        jobs << Boss.queue.article.refresh_cache(articles.collect(&:id))
+    end
+
+job_boss also makes it easy to wait for the jobs to be done and to collect the results into a hash:
 
     Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
 

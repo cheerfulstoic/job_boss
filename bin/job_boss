@@ -15,14 +15,16 @@ daemons_options = {
 Daemons.run_proc('job_boss', daemons_options) do
   Dir.chdir(working_dir)
 
-  require 'config/environment' if File.exist?('config/environment.rb')
-
   $: << File.expand_path('../../lib', __FILE__)
   require 'job_boss/boss'
 
   command, daemon_options, app_options = Daemons::Controller.split_argv(ARGV)
 
   JobBoss::Boss.config.parse_args(app_options, :working_dir => working_dir)
+
+  Dir.chdir(JobBoss::Boss.config.application_root)
+
+  require 'config/environment' if File.exist?('config/environment.rb')
 
   boss = JobBoss::Boss.new
 

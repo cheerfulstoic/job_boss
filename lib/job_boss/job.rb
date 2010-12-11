@@ -105,6 +105,10 @@ module JobBoss
 
     # How long did the job take?
     def time_taken
+      # If the #time_taken method is being called for but the job doesn't seem to have started/completed
+      # reload to see if it has
+      self.reload if started_at.nil? || completed_at.nil?
+
       completed_at - started_at if completed_at && started_at
     end
 
@@ -186,10 +190,14 @@ private
         controller_object = begin
           Kernel.const_get("#{controller.classify}Jobs").new
         rescue NameError
-          raise ArgumentError, "Invalid controller"
+          begin
+            Kernel.const_get("#{controller.classify}")
+          rescue NameError
+            raise ArgumentError, "Invalid controller: #{controller}"
+          end
         end
     
-        raise ArgumentError, "Invalid path action" unless controller_object.respond_to?(action)
+        raise ArgumentError, "Invalid path action: #{action}" unless controller_object.respond_to?(action)
     
         controller_object.send(action, *args)
       end

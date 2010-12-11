@@ -21,13 +21,21 @@ module JobBoss
           raise ArgumentError, "Invalid action"
         end
       else
-        # Check to see if there's a jobs class
+        # Check to see if there's a class
         begin
+          # If we find a class that ends in "Jobs", we instanciate it and call an instance method
           @class = Kernel.const_get("#{method_name.classify}Jobs").new
 
           @controller = method_name
         rescue NameError
-          raise ArgumentError, "Invalid controller"
+          begin
+            # If we don't find a class that ends in "Jobs", we're going to call a class method
+            @class = Kernel.const_get("#{method_name.classify}")
+
+            @controller = method_name
+          rescue
+            raise ArgumentError, "Invalid controller"
+          end
         end
 
         self

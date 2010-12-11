@@ -3,7 +3,7 @@ module JobBoss
     attr_accessor :application_root, :database_yaml_path, :log_path, :jobs_path, :sleep_interval, :employee_limit, :environment
 
     def parse_args(argv, options = {})
-      @application_root     = options[:working_dir] || Dir.pwd
+      @application_root     = File.expand_path(options[:working_dir] || Dir.pwd)
       @database_yaml_path   = 'config/database.yml'
       @log_path             = 'log/job_boss.log'
       @jobs_path            = 'app/jobs'
@@ -17,7 +17,7 @@ module JobBoss
         opts.banner = "Usage: job_boss [start|stop|restart|run|zap] [-- <options>]"
 
         opts.on("-r", "--application-root PATH", "Path for the application root upon which other paths depend (defaults to .)") do |path|
-          @application_root = path
+          @application_root = File.expand_path(path)
         end
 
         opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to <application-root>/#{@database_yaml_path})") do |path|
