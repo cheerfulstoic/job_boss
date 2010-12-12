@@ -2,6 +2,7 @@ module JobBoss
   class Queuer
     def method_missing(method_id, *args)
       require 'active_support'
+      require 'job_boss/job'
 
       method_name = method_id.id2name
 

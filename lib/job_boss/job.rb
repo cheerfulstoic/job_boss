@@ -12,9 +12,9 @@ module JobBoss
     scope :completed, where('completed_at IS NOT NULL')
 
     # Method used by the boss to dispatch an employee
-    def dispatch
+    def dispatch(boss)
       mark_as_started
-      Boss.logger.info "Dispatching Job ##{self.id}"
+      boss.logger.info "Dispatching Job ##{self.id}"
 
       pid = fork do
         ActiveRecord::Base.connection.reconnect!
@@ -29,7 +29,7 @@ module JobBoss
           self.update_attribute(:result, value)
         rescue Exception => exception
           mark_exception(exception)
-          Boss.logger.error "Error running job ##{self.id}!"
+          boss.logger.error "Error running job ##{self.id}!"
         ensure
           until mark_as_completed
             sleep(1)

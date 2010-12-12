@@ -1,15 +1,17 @@
+require 'active_support/core_ext/string'
+
 module JobBoss
   class Config
     attr_accessor :application_root, :database_yaml_path, :log_path, :jobs_path, :sleep_interval, :employee_limit, :environment
 
     def parse_args(argv, options = {})
-      @application_root     = File.expand_path(options[:working_dir] || Dir.pwd)
-      @database_yaml_path   = 'config/database.yml'
-      @log_path             = 'log/job_boss.log'
-      @jobs_path            = 'app/jobs'
-      @sleep_interval       = 0.5
-      @employee_limit       = 4
-      @environment          = 'development'
+      @application_root     = File.expand_path(ENV['JB_APPLICATION_ROOT'] || options[:working_dir] || Dir.pwd)
+      @database_yaml_path   = ENV['JB_DATABASE_YAML_PATH'] || 'config/database.yml'
+      @log_path             = ENV['JB_LOG_PATH'] || 'log/job_boss.log'
+      @jobs_path            = ENV['JB_JOBS_PATH'] || 'app/jobs'
+      @sleep_interval       = ENV['JB_SLEEP_INTERVAL'].blank? ? 0.5 : ENV['JB_SLEEP_INTERVAL'].to_f
+      @employee_limit       = ENV['JB_EMPLOYEE_LIMIT'].blank? ? 4 : ENV['JB_EMPLOYEE_LIMIT'].to_i
+      @environment          = ENV['JB_ENVIRONMENT'] || 'development'
 
       require 'optparse'
 

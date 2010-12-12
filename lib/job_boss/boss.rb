@@ -2,6 +2,8 @@ require 'active_support'
 
 module JobBoss
   class Boss
+    extend ActiveSupport::Memoizable
+
     class << self
       extend ActiveSupport::Memoizable
       # Used to set Boss configuration
@@ -9,16 +11,18 @@ module JobBoss
       #   Boss.config.sleep_interval = 2
       def config
         require 'job_boss/config'
-        @@config ||= Config.new
+        Config.new
       end
+      memoize :config
 
       # Used to queue jobs
       # Usage:
       #   Boss.queue.math.is_prime?(42)
       def queue
         require 'job_boss/queuer'
-        @@queuer ||= Queuer.new
+        Queuer.new
       end
+      memoize :queue
 
       # Used to queue jobs
       # Usage:
@@ -29,30 +33,34 @@ module JobBoss
         queue.send(controller).send(action, *args)
       end
 
-      def logger
-        @@config.log_path = resolve_path(@@config.log_path)
-
-        require 'logger'
-        Logger.new(@@config.log_path)
-      end
-      memoize :logger
-
       # If path starts with '/', leave alone.  Otherwise, prepend application_root
       def resolve_path(path)
-        if path == ?/ || path.match(/^#{@@config.application_root}/)
+        if path == ?/ || path.match(/^#{config.application_root}/)
           path
         else
-          File.join(@@config.application_root, path)
+          File.join(config.application_root, path)
         end
       end
     end
 
+    def config
+      Boss.config
+    end
+
+    def logger
+      config.log_path = Boss.resolve_path(config.log_path)
+
+      require 'logger'
+      Logger.new(config.log_path)
+    end
+    memoize :logger
+
     def initialize(options = {})
-      @@config.application_root     ||= options[:working_dir]
-      @@config.sleep_interval       ||= options[:sleep_interval]
-      @@config.employee_limit       ||= options[:employee_limit]
-      @@config.database_yaml_path   ||= options[:database_yaml_path]
-      @@config.jobs_path            ||= options[:jobs_path]
+      config.application_root     ||= options[:working_dir]
+      config.sleep_interval       ||= options[:sleep_interval]
+      config.employee_limit       ||= options[:employee_limit]
+      config.database_yaml_path   ||= options[:database_yaml_path]
+      config.jobs_path            ||= options[:jobs_path]
 
       @running_jobs = []
     end
@@ -63,12 +71,9 @@ module JobBoss
       require 'yaml'
 
       establish_active_record_connection
+      logger.info "Started ActiveRecord connection in '#{config.environment}' environment from database YAML: #{config.database_yaml_path}"
 
       require_job_classes
-
-      require 'job_boss/job'
-
-      migrate
 
       Signal.trap("HUP") do
         stop
@@ -78,11 +83,12 @@ module JobBoss
         stop if Process.pid == BOSS_PID
       end
 
-      Boss.logger.info "Job Boss started"
+      logger.info "Job Boss started"
+      logger.info "Employee limit: #{Boss.config.employee_limit}"
 
       while true
         unless (children_count = available_employees) > 0 && Job.pending.count > 0
-          sleep(@@config.sleep_interval)
+          sleep(config.sleep_interval)
           next
         end
 
@@ -92,7 +98,7 @@ module JobBoss
           job = Job.pending.find_by_path(path)
           next if job.nil?
 
-          job.dispatch
+          job.dispatch(self)
           @running_jobs << job
 
           children_count -= 1
@@ -103,11 +109,11 @@ module JobBoss
     end
 
     def stop
-      Boss.logger.info "Stopping #{@running_jobs.size} running employees..."
+      logger.info "Stopping #{@running_jobs.size} running employees..."
 
       shutdown_running_jobs
 
-      Boss.logger.info "Job Boss stopped"
+      logger.info "Job Boss stopped"
     end
 
 private
@@ -136,33 +142,32 @@ private
     def available_employees
       cleanup_running_jobs
 
-      @@config.employee_limit - @running_jobs.size
+      config.employee_limit - @running_jobs.size
     end
 
     def establish_active_record_connection
-      @@config.database_yaml_path = Boss.resolve_path(@@config.database_yaml_path)
+      config.database_yaml_path = Boss.resolve_path(config.database_yaml_path)
 
-      raise "Database YAML file missing (#{@@config.database_yaml_path})" unless File.exist?(@@config.database_yaml_path)
+      raise "Database YAML file missing (#{config.database_yaml_path})" unless File.exist?(config.database_yaml_path)
 
-      config = YAML.load(File.read(@@config.database_yaml_path))
+      config_data = YAML.load(File.read(config.database_yaml_path))
 
       ActiveRecord::Base.remove_connection
-      ActiveRecord::Base.establish_connection(config[@@config.environment])
-    end
+      ActiveRecord::Base.establish_connection(config_data[config.environment])
 
-    def require_job_classes
-      @@config.jobs_path = Boss.resolve_path(@@config.jobs_path)
-
-      raise "Jobs path missing (#{@@config.jobs_path})" unless File.exist?(@@config.jobs_path)
-
-      Dir.glob(File.join(@@config.jobs_path, '*.rb')).each {|job_class| require job_class }
-    end
-
-    def migrate
+      require 'job_boss/job'
       unless Job.table_exists?
         require 'migrate'
         CreateJobs.up
       end
+    end
+
+    def require_job_classes
+      config.jobs_path = Boss.resolve_path(config.jobs_path)
+
+      raise "Jobs path missing (#{config.jobs_path})" unless File.exist?(config.jobs_path)
+
+      Dir.glob(File.join(config.jobs_path, '*.rb')).each {|job_class| require job_class }
     end
 
     def kill_job(job)

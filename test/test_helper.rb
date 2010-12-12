@@ -52,7 +52,7 @@ class ActiveSupport::TestCase
     end
   end
 
-  def start_daemon(options)
+  def start_daemon(options = {})
     clean_app_environment
 
     stop_daemon
