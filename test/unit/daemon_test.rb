@@ -37,6 +37,7 @@ class DaemonTest < ActiveSupport::TestCase
     custom_log_path = File.join('log', 'loggity.log')
     full_custom_log_path = File.join(@app_root_path, custom_log_path)
 
+    ENV['JB_EMPLOYEE_LIMIT'] = '2' # Make sure application setting overrides environment variable
     start_daemon(:application_root => @app_root_path, :log_path => custom_log_path, :environment => 'production', :employee_limit => 3)
     wait_for_file(full_custom_log_path)
 
@@ -49,5 +50,7 @@ class DaemonTest < ActiveSupport::TestCase
     restart_daemon
 
     stop_daemon
+
+    ENV['JB_EMPLOYEE_LIMIT'] = nil
   end
 end
