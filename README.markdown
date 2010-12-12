@@ -56,13 +56,13 @@ You can get command line options with the command:
 But since you don't want to do that right now, it looks something like this:
 
     Usage: job_boss [start|stop|restart|run|zap] [-- <options>]
-        -r, --application-root PATH      Path for the application root upon which other paths depend (defaults to .)
-        -d, --database-yaml PATH         Path for database YAML (defaults to <application-root>/config/database.yml)
-        -l, --log-path PATH              Path for log file (defaults to <application-root>/log/job_boss.log)
-        -j, --jobs-path PATH             Path to folder with job classes (defaults to <application-root>/app/jobs)
-        -e, --environment ENV            Environment to use in database YAML file (defaults to 'development')
-        -s, --sleep-interval INTERVAL    Number of seconds for the boss to sleep between checks of the queue (default 0.5)
-        -c, --employee-limit LIMIT          Maximum number of employees (default 4)
+        -r, --application-root PATH      Path for the application root upon which other paths depend (defaults to .)  Environment variable: JB_APPLICATION_ROOT
+        -d, --database-yaml PATH         Path for database YAML (defaults to <application-root>/config/database.yml) Environment variable: JB_DATABASE_YAML_PATH
+        -l, --log-path PATH              Path for log file (defaults to <application-root>/log/job_boss.log) Environment variable: JB_LOG_PATH
+        -j, --jobs-path PATH             Path to folder with job classes (defaults to <application-root>/app/jobs) Environment variable: JB_JOBS_PATH
+        -e, --environment ENV            Environment to use in database YAML file (defaults to 'development') Environment variable: JB_ENVIRONMENT
+        -s, --sleep-interval INTERVAL    Number of seconds for the boss to sleep between checks of the queue (default 0.5) Environment variable: JB_SLEEP_INTERVAL
+        -c, --employee-limit LIMIT       Maximum number of employees (default 4) Environment variable: JB_EMPLOYEE_LIMIT
 
 From your Rails code or in a console:
 

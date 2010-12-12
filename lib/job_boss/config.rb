@@ -18,31 +18,31 @@ module JobBoss
       OptionParser.new do |opts|
         opts.banner = "Usage: job_boss [start|stop|restart|run|zap] [-- <options>]"
 
-        opts.on("-r", "--application-root PATH", "Path for the application root upon which other paths depend (defaults to .)") do |path|
+        opts.on("-r", "--application-root PATH", "Path for the application root upon which other paths depend (defaults to .)  Environment variable: JB_APPLICATION_ROOT") do |path|
           @application_root = File.expand_path(path)
         end
 
-        opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to <application-root>/#{@database_yaml_path})") do |path|
+        opts.on("-d", "--database-yaml PATH", "Path for database YAML (defaults to <application-root>/#{@database_yaml_path}) Environment variable: JB_DATABASE_YAML_PATH") do |path|
           @database_yaml_path = path
         end
 
-        opts.on("-l", "--log-path PATH", "Path for log file (defaults to <application-root>/#{@log_path})") do |path|
+        opts.on("-l", "--log-path PATH", "Path for log file (defaults to <application-root>/#{@log_path}) Environment variable: JB_LOG_PATH") do |path|
           @log_path = path
         end
 
-        opts.on("-j", "--jobs-path PATH", "Path to folder with job classes (defaults to <application-root>/#{@jobs_path})") do |path|
+        opts.on("-j", "--jobs-path PATH", "Path to folder with job classes (defaults to <application-root>/#{@jobs_path}) Environment variable: JB_JOBS_PATH") do |path|
           @jobs_path = path
         end
 
-        opts.on("-e", "--environment ENV", "Environment to use in database YAML file (defaults to '#{@environment}')") do |env|
+        opts.on("-e", "--environment ENV", "Environment to use in database YAML file (defaults to '#{@environment}') Environment variable: JB_ENVIRONMENT") do |env|
           @environment = env
         end
 
-        opts.on("-s", "--sleep-interval INTERVAL", Integer, "Number of seconds for the boss to sleep between checks of the queue (default #{@sleep_interval})") do |interval|
+        opts.on("-s", "--sleep-interval INTERVAL", Integer, "Number of seconds for the boss to sleep between checks of the queue (default #{@sleep_interval}) Environment variable: JB_SLEEP_INTERVAL") do |interval|
           @sleep_interval = interval
         end
 
-        opts.on("-c", "--employee-limit LIMIT", Integer, "Maximum number of employees (default 4)") do |limit|
+        opts.on("-c", "--employee-limit LIMIT", Integer, "Maximum number of employees (default 4) Environment variable: JB_EMPLOYEE_LIMIT") do |limit|
           @employee_limit = limit
         end
       end.parse!(argv)

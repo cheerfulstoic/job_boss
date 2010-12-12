@@ -309,50 +309,50 @@
 					<div class="method-source-code"
 						id="parse-args-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/job_boss/config.rb, line 5</span>
- 5:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_args</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">options</span> = {})
- 6:       <span class="ruby-ivar">@application_root</span>     = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
- 7:       <span class="ruby-ivar">@database_yaml_path</span>   = <span class="ruby-value str">'config/database.yml'</span>
- 8:       <span class="ruby-ivar">@log_path</span>             = <span class="ruby-value str">'log/job_boss.log'</span>
- 9:       <span class="ruby-ivar">@jobs_path</span>            = <span class="ruby-value str">'app/jobs'</span>
-10:       <span class="ruby-ivar">@sleep_interval</span>       = <span class="ruby-value">0.5</span>
-11:       <span class="ruby-ivar">@employee_limit</span>       = <span class="ruby-value">4</span>
-12:       <span class="ruby-ivar">@environment</span>          = <span class="ruby-value str">'development'</span>
-13: 
-14:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'optparse'</span>
+    <span class="ruby-comment cmt"># File lib/job_boss/config.rb, line 7</span>
+ 7:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_args</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">options</span> = {})
+ 8:       <span class="ruby-ivar">@application_root</span>     = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_APPLICATION_ROOT'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:working_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+ 9:       <span class="ruby-ivar">@database_yaml_path</span>   = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_DATABASE_YAML_PATH'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'config/database.yml'</span>
+10:       <span class="ruby-ivar">@log_path</span>             = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_LOG_PATH'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'log/job_boss.log'</span>
+11:       <span class="ruby-ivar">@jobs_path</span>            = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_JOBS_PATH'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'app/jobs'</span>
+12:       <span class="ruby-ivar">@sleep_interval</span>       = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_SLEEP_INTERVAL'</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-operator">?</span> <span class="ruby-value">0.5</span> <span class="ruby-operator">:</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_SLEEP_INTERVAL'</span>].<span class="ruby-identifier">to_f</span>
+13:       <span class="ruby-ivar">@employee_limit</span>       = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_EMPLOYEE_LIMIT'</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-operator">?</span> <span class="ruby-value">4</span> <span class="ruby-operator">:</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_EMPLOYEE_LIMIT'</span>].<span class="ruby-identifier">to_i</span>
+14:       <span class="ruby-ivar">@environment</span>          = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'JB_ENVIRONMENT'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'development'</span>
 15: 
-16:       <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
-17:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;Usage: job_boss [start|stop|restart|run|zap] [-- &lt;options&gt;]&quot;</span>
-18: 
-19:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-r&quot;</span>, <span class="ruby-value str">&quot;--application-root PATH&quot;</span>, <span class="ruby-value str">&quot;Path for the application root upon which other paths depend (defaults to .)&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-20:           <span class="ruby-ivar">@application_root</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
-21:         <span class="ruby-keyword kw">end</span>
-22: 
-23:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-d&quot;</span>, <span class="ruby-value str">&quot;--database-yaml PATH&quot;</span>, <span class="ruby-node">&quot;Path for database YAML (defaults to &lt;application-root&gt;/#{@database_yaml_path})&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-24:           <span class="ruby-ivar">@database_yaml_path</span> = <span class="ruby-identifier">path</span>
-25:         <span class="ruby-keyword kw">end</span>
-26: 
-27:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-l&quot;</span>, <span class="ruby-value str">&quot;--log-path PATH&quot;</span>, <span class="ruby-node">&quot;Path for log file (defaults to &lt;application-root&gt;/#{@log_path})&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-28:           <span class="ruby-ivar">@log_path</span> = <span class="ruby-identifier">path</span>
-29:         <span class="ruby-keyword kw">end</span>
-30: 
-31:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-j&quot;</span>, <span class="ruby-value str">&quot;--jobs-path PATH&quot;</span>, <span class="ruby-node">&quot;Path to folder with job classes (defaults to &lt;application-root&gt;/#{@jobs_path})&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-32:           <span class="ruby-ivar">@jobs_path</span> = <span class="ruby-identifier">path</span>
-33:         <span class="ruby-keyword kw">end</span>
-34: 
-35:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-e&quot;</span>, <span class="ruby-value str">&quot;--environment ENV&quot;</span>, <span class="ruby-node">&quot;Environment to use in database YAML file (defaults to '#{@environment}')&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">env</span><span class="ruby-operator">|</span>
-36:           <span class="ruby-ivar">@environment</span> = <span class="ruby-identifier">env</span>
-37:         <span class="ruby-keyword kw">end</span>
-38: 
-39:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-s&quot;</span>, <span class="ruby-value str">&quot;--sleep-interval INTERVAL&quot;</span>, <span class="ruby-constant">Integer</span>, <span class="ruby-node">&quot;Number of seconds for the boss to sleep between checks of the queue (default #{@sleep_interval})&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">interval</span><span class="ruby-operator">|</span>
-40:           <span class="ruby-ivar">@sleep_interval</span> = <span class="ruby-identifier">interval</span>
-41:         <span class="ruby-keyword kw">end</span>
-42: 
-43:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-c&quot;</span>, <span class="ruby-value str">&quot;--employee-limit LIMIT&quot;</span>, <span class="ruby-constant">Integer</span>, <span class="ruby-value str">&quot;Maximum number of employees (default 4)&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">limit</span><span class="ruby-operator">|</span>
-44:           <span class="ruby-ivar">@employee_limit</span> = <span class="ruby-identifier">limit</span>
-45:         <span class="ruby-keyword kw">end</span>
-46:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">argv</span>)
-47:     <span class="ruby-keyword kw">end</span></pre>
+16:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'optparse'</span>
+17: 
+18:       <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+19:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;Usage: job_boss [start|stop|restart|run|zap] [-- &lt;options&gt;]&quot;</span>
+20: 
+21:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-r&quot;</span>, <span class="ruby-value str">&quot;--application-root PATH&quot;</span>, <span class="ruby-value str">&quot;Path for the application root upon which other paths depend (defaults to .)  Environment variable: JB_APPLICATION_ROOT&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+22:           <span class="ruby-ivar">@application_root</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
+23:         <span class="ruby-keyword kw">end</span>
+24: 
+25:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-d&quot;</span>, <span class="ruby-value str">&quot;--database-yaml PATH&quot;</span>, <span class="ruby-node">&quot;Path for database YAML (defaults to &lt;application-root&gt;/#{@database_yaml_path}) Environment variable: JB_DATABASE_YAML_PATH&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+26:           <span class="ruby-ivar">@database_yaml_path</span> = <span class="ruby-identifier">path</span>
+27:         <span class="ruby-keyword kw">end</span>
+28: 
+29:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-l&quot;</span>, <span class="ruby-value str">&quot;--log-path PATH&quot;</span>, <span class="ruby-node">&quot;Path for log file (defaults to &lt;application-root&gt;/#{@log_path}) Environment variable: JB_LOG_PATH&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+30:           <span class="ruby-ivar">@log_path</span> = <span class="ruby-identifier">path</span>
+31:         <span class="ruby-keyword kw">end</span>
+32: 
+33:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-j&quot;</span>, <span class="ruby-value str">&quot;--jobs-path PATH&quot;</span>, <span class="ruby-node">&quot;Path to folder with job classes (defaults to &lt;application-root&gt;/#{@jobs_path}) Environment variable: JB_JOBS_PATH&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+34:           <span class="ruby-ivar">@jobs_path</span> = <span class="ruby-identifier">path</span>
+35:         <span class="ruby-keyword kw">end</span>
+36: 
+37:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-e&quot;</span>, <span class="ruby-value str">&quot;--environment ENV&quot;</span>, <span class="ruby-node">&quot;Environment to use in database YAML file (defaults to '#{@environment}') Environment variable: JB_ENVIRONMENT&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">env</span><span class="ruby-operator">|</span>
+38:           <span class="ruby-ivar">@environment</span> = <span class="ruby-identifier">env</span>
+39:         <span class="ruby-keyword kw">end</span>
+40: 
+41:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-s&quot;</span>, <span class="ruby-value str">&quot;--sleep-interval INTERVAL&quot;</span>, <span class="ruby-constant">Integer</span>, <span class="ruby-node">&quot;Number of seconds for the boss to sleep between checks of the queue (default #{@sleep_interval}) Environment variable: JB_SLEEP_INTERVAL&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">interval</span><span class="ruby-operator">|</span>
+42:           <span class="ruby-ivar">@sleep_interval</span> = <span class="ruby-identifier">interval</span>
+43:         <span class="ruby-keyword kw">end</span>
+44: 
+45:         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-c&quot;</span>, <span class="ruby-value str">&quot;--employee-limit LIMIT&quot;</span>, <span class="ruby-constant">Integer</span>, <span class="ruby-value str">&quot;Maximum number of employees (default 4) Environment variable: JB_EMPLOYEE_LIMIT&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">limit</span><span class="ruby-operator">|</span>
+46:           <span class="ruby-ivar">@employee_limit</span> = <span class="ruby-identifier">limit</span>
+47:         <span class="ruby-keyword kw">end</span>
+48:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">argv</span>)
+49:     <span class="ruby-keyword kw">end</span></pre>
 					</div>
 					
 				</div>

@@ -423,7 +423,7 @@
 				<div class="method-heading">
 				
 					<span class="method-name">start_daemon</span><span
-						class="method-args">(options)</span>
+						class="method-args">(options = {})</span>
 					<span class="method-click-advice">click to toggle source</span>
 				
 				</div>
@@ -438,7 +438,7 @@
 						id="start-daemon-source">
 <pre>
     <span class="ruby-comment cmt"># File test/test_helper.rb, line 55</span>
-55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_daemon</span>(<span class="ruby-identifier">options</span>)
+55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_daemon</span>(<span class="ruby-identifier">options</span> = {})
 56:     <span class="ruby-identifier">clean_app_environment</span>
 57: 
 58:     <span class="ruby-identifier">stop_daemon</span>
