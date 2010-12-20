@@ -199,21 +199,26 @@ private
         raise ArgumentError, "Invalid path (must have #)" unless path.match(/.#./)
         controller, action = path.split('#')
     
-        controller_object = begin
-          Kernel.const_get("#{controller.classify}Jobs").new
+        controller_objects = []
+        begin
+          controller_objects << Kernel.const_get("#{controller.classify}Jobs").new
         rescue NameError
-          begin
-            Kernel.const_get("#{controller.classify}")
-          rescue NameError
-            raise ArgumentError, "Invalid controller: #{controller}"
-          end
         end
-    
-        raise ArgumentError, "Invalid path action: #{action}" unless controller_object.respond_to?(action)
-    
+
+        begin
+          controller_objects << Kernel.const_get("#{controller.classify}")
+        rescue NameError
+        end
+
+        raise ArgumentError, "Invalid controller: #{controller}" if controller_objects.empty?
+
+        controller_object = controller_objects.detect {|controller_object| controller_object.respond_to?(action) }
+
+        raise ArgumentError, "Invalid path action: #{action}" if !controller_object
+
         controller_object.send(action, *args)
       end
-    
+
       def pending_paths
         self.pending.except(:order).select('DISTINCT path').collect(&:path)
       end

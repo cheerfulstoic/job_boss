@@ -91,6 +91,16 @@ class DaemonTest < ActiveSupport::TestCase
     assert_equal "I can't not do that, Dave.", error.message
     assert_equal Array, error.backtrace.class
 
+
+
+    # Test calling method where there is both a Sleep model and a SleepJobs class
+    job = Boss.queue.sleep.add_snoozes(2, 5)
+
+    Job.wait_for_jobs(job)
+
+    assert_equal 7, job.result
+
+
     stop_daemon
   end
 end

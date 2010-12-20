@@ -6,10 +6,11 @@ module JobBoss
 
       method_name = method_id.id2name
 
-      if @class && @controller
+      if @classes && @controller
         # In here, we've already figured out the class, so assume the method_missing call is to the method
+        actionable_class = @classes.detect {|controller_class| controller_class.respond_to?(method_name) }
 
-        if @class.respond_to?(method_name)
+        if actionable_class
           require 'job_boss/job'
           path = "#{@controller}##{method_name}"
 
@@ -23,21 +24,20 @@ module JobBoss
         end
       else
         # Check to see if there's a class
+        @classes = []
         begin
-          # If we find a class that ends in "Jobs", we instanciate it and call an instance method
-          @class = Kernel.const_get("#{method_name.classify}Jobs").new
-
-          @controller = method_name
+          @classes << Kernel.const_get("#{method_name.classify}Jobs").new
         rescue NameError
-          begin
-            # If we don't find a class that ends in "Jobs", we're going to call a class method
-            @class = Kernel.const_get("#{method_name.classify}")
-
-            @controller = method_name
-          rescue
-            raise ArgumentError, "Invalid controller"
-          end
         end
+
+        begin
+          @classes << Kernel.const_get("#{method_name.classify}")
+        rescue
+        end
+
+        raise ArgumentError, "Invalid controller" if @classes.blank?
+
+        @controller = method_name
 
         self
       end
