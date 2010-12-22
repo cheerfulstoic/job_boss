@@ -10,6 +10,7 @@ module JobBoss
     scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
+    scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     # Method used by the boss to dispatch an employee
     def dispatch(boss)
@@ -92,6 +93,16 @@ module JobBoss
     # Did the job succeed?
     def succeeded?
       completed_at && (status == 'success')
+    end
+
+    def mark_as_mia
+      self.completed_at = Time.now
+      self.status = 'mia'
+      self.save
+    end
+
+    def mia?
+      completed_at && (status == 'mia')
     end
 
     # Has the job been assigned to an employee?

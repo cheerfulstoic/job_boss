@@ -76,6 +76,30 @@ class DaemonTest < ActiveSupport::TestCase
     assert job.cancelled?
     assert_not_nil job.cancelled_at
 
+
+    # Test recording of MIA jobs
+    job = Boss.queue.sleep.sleep_for(20)
+
+    wait_until_job_assigned(job)
+
+    assert_pid_running(job.employee_pid)
+
+    Process.kill(9, job.employee_pid)
+
+    sleep(1)
+
+    assert_pid_not_running(job.employee_pid)
+
+    job.reload
+    assert job.mia?
+    assert_equal [job.id], Job.mia.collect(&:id)
+
+
+    # Test deleting of old jobs
+
+    # Sleep for 1 second so that the upcoming deletions work correctly
+    sleep(1)
+
     Job.delete_jobs_before(20.seconds.ago)
     assert Job.completed.count > 0
     Job.delete_jobs_before(1.second.ago)
