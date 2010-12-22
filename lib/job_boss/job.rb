@@ -12,14 +12,18 @@ module JobBoss
     scope :completed, where('completed_at IS NOT NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
+    def prototype
+      self.path + "(#{self.args.join(', ')})"
+    end
+
     # Method used by the boss to dispatch an employee
     def dispatch(boss)
       mark_as_started
-      boss.logger.info "Dispatching Job ##{self.id}"
+      boss.logger.info "Dispatching Job ##{self.id}: #{self.prototype}"
 
       pid = fork do
         ActiveRecord::Base.connection.reconnect!
-        $0 = "[job_boss employee] job ##{self.id} #{self.path}(#{self.args.join(', ')})"
+        $0 = "[job_boss employee] job ##{self.id} #{self.prototype})"
         Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
         begin
@@ -36,7 +40,7 @@ module JobBoss
             sleep(1)
           end
 
-          boss.logger.info "Job ##{self.id} completed, exiting..."
+          boss.logger.info "Job ##{self.id} completed in #{self.time_taken} seconds, exiting..."
           Kernel.exit
         end
       end

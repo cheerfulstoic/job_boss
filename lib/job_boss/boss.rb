@@ -132,6 +132,7 @@ private
           begin
             Process.kill(0, job.employee_pid.to_i)
           rescue Errno::ESRCH
+            logger.warn "Job ##{job.id} MIA!"
             job.mark_as_mia
             nil
           end
