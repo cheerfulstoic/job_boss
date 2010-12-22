@@ -124,7 +124,10 @@ private
         @running_jobs = Job.running.where('id in (?)', @running_jobs)
 
         cancelled_jobs = @running_jobs.select(&:cancelled?)
-        cancelled_jobs.each {|job| kill_job(job) }
+        cancelled_jobs.each do |job|
+          logger.warn "Cancelling job ##{job.id}"
+          kill_job(job)
+        end
         @running_jobs -= cancelled_jobs
 
         # Clean out any jobs whos processes have stopped running for some reason
@@ -176,6 +179,7 @@ private
       begin
         Process.kill("TERM", job.employee_pid.to_i)
       rescue Errno::ESRCH
+        logger.error "Could not kill job ##{job.id}!"
         nil
       end
     end
