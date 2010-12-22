@@ -100,7 +100,7 @@ class DaemonTest < ActiveSupport::TestCase
 
     progresses = []
     Job.wait_for_jobs(jobs) do |progress|
-      puts progress
+#      puts progress
       progresses << progress
     end
 
