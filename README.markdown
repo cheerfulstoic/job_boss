@@ -84,6 +84,12 @@ job_boss also makes it easy to wait for the jobs to be done and to collect the r
 
     Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
 
+You can even define a block to provide updates on progress (the value which is passed into the block is a float between 0.0 and 100.0):
+
+    Job.wait_for_jobs(jobs) do |progress|
+        puts "We're now at #{progress}%"
+    end
+
 For performance, it is recommended that you keep your jobs table clean scheduling execution of the `delete_jobs_before` command on the Job model, which will clean all jobs completed before the specified time:
 
     Job.delete_jobs_before(2.days.ago)

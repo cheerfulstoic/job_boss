@@ -94,6 +94,19 @@ class DaemonTest < ActiveSupport::TestCase
     assert job.mia?
     assert_equal [job.id], Job.mia.collect(&:id)
 
+    jobs = (0..10).collect do |i|
+      job = Boss.queue.sleep.sleep_for(1)
+    end
+
+    progresses = []
+    Job.wait_for_jobs(jobs) do |progress|
+      puts progress
+      progresses << progress
+    end
+
+    assert_equal progresses, progresses.sort
+    assert progresses.all? {|progress| 0.0 <= progress && progress <= 100.0 }
+    assert progresses.any? {|progress| progress > 1.0 }
 
     # Test deleting of old jobs
 

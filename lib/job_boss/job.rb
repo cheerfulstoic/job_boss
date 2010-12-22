@@ -148,6 +148,10 @@ module JobBoss
         Job.uncached do
           until Job.completed.find_all_by_id(ids).count == jobs.size
             sleep(sleep_interval)
+
+            if block_given?
+              yield ((Job.where('id in (?)', ids).completed.count.to_f / jobs.size.to_f) * 100.0)
+            end
           end
         end
 
