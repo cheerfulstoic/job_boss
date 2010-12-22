@@ -35,7 +35,7 @@ module JobBoss
             sleep(1)
           end
 
-          Boss.logger.info "Job ##{self.id} completed, exiting..."
+          boss.logger.info "Job ##{self.id} completed, exiting..."
           Kernel.exit
         end
       end
