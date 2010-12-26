@@ -13,7 +13,7 @@ module JobBoss
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     def prototype
-      self.path + "(#{self.args.join(', ')})"
+      self.path + "(#{self.args.collect(&:inspect).join(', ')})"
     end
 
     # Method used by the boss to dispatch an employee
