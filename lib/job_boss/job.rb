@@ -154,7 +154,7 @@ module JobBoss
             sleep(sleep_interval)
 
             if block_given?
-              yield ((Job.where('id in (?)', ids).completed.count.to_f / jobs.size.to_f) * 100.0)
+              yield((Job.where('id in (?)', ids).completed.count.to_f / jobs.size.to_f) * 100.0)
             end
           end
         end
