@@ -144,6 +144,7 @@ class DaemonTest < ActiveSupport::TestCase
     jobs = (0..10).collect do |i|
       batch.queue.math.is_prime?(i)
     end
+    assert_equal 0.0, batch.completed_percent
 
     batch.wait_for_jobs
 
@@ -151,6 +152,9 @@ class DaemonTest < ActiveSupport::TestCase
       assert_equal MathJobs.new.is_prime?(args.first), result
     end
 
+    assert_equal Job.result_hash(jobs), batch.result_hash
+    assert_equal 1.0, batch.completed_percent
+    assert batch.time_taken > 0.5
 
     # Test to make sure that different batches run in parallel where non-batched jobs don't
 

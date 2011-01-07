@@ -171,8 +171,9 @@ module JobBoss
       # Given a job or an array of jobs
       # Will cause the process to sleep until all specified jobs have completed
       # sleep_interval specifies polling period
-      def wait_for_jobs(jobs, sleep_interval = 0.5)
+      def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
         jobs = [jobs] if jobs.is_a?(Job)
+        jobs = self.scoped if jobs.nil?
 
         ids = jobs.collect(&:id)
         Job.uncached do
@@ -191,8 +192,9 @@ module JobBoss
       # Given a job or an array of jobs
       # Returns a hash where the keys are the job method arguments and the values are the
       # results of the job processing
-      def result_hash(jobs)
+      def result_hash(jobs = nil)
         jobs = [jobs] if jobs.is_a?(Job)
+        jobs = self.scoped if jobs.nil?
 
         # the #result method automatically reloads the result here if needed but this will
         # do it in one SQL call

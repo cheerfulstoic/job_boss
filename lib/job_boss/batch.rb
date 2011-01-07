@@ -23,14 +23,11 @@ module JobBoss
       Job.where('batch_id = ?', @batch_id)
     end
 
-    # Sleeps until jobs in batch are complete
-    def wait_for_jobs
-      Job.wait_for_jobs(jobs)
-    end
-
-    # Returns a hash with arguments as keys and results as values for jobs in batch
-    def result_hash
-      Job.result_hash(jobs)
+    # Allow calling of Job class methods from a batch which will be called
+    # on in the scope of the jobs for the batch
+    # Examples: wait_for_jobs, result_hash, time_taken, completed_percent
+    def method_missing(sym, *args, &block)
+      jobs.send(sym, *args, &block)
     end
 
   private
