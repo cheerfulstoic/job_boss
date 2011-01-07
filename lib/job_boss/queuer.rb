@@ -1,5 +1,9 @@
 module JobBoss
   class Queuer
+    def initialize(attributes = nil)
+      @attributes = attributes || {}
+    end
+  
     def method_missing(method_id, *args)
       require 'active_support'
       require 'job_boss/job'
@@ -17,8 +21,8 @@ module JobBoss
           @class = nil
           @controller = nil
 
-          Job.create(:path => path,
-                     :args => args)
+          Job.create(@attributes.merge(:path => path,
+                                        :args => args))
         else
           raise ArgumentError, "Invalid action"
         end

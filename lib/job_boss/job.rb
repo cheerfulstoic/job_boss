@@ -54,6 +54,10 @@ module JobBoss
       write_attribute(:result, [value])
     end
 
+    def batch
+      self.batch_id && Batch.new(self.batch_id)
+    end
+
     def result
       # If the result is being called for but the job hasn't been completed, reload
       # to check to see if there was a result
@@ -116,6 +120,15 @@ module JobBoss
       self.reload if !completed? && employee_pid.nil?
 
       employee_pid && employee_host
+    end
+
+    # Is the job running?
+    def running?
+      # If the #running? method is being called for but the job hasn't started, reload
+      # to check to see if it has been assigned
+      self.reload if started_at.nil? || completed_at.nil?
+
+      started_at && !completed_at
     end
 
     # How long did the job take?
@@ -236,10 +249,6 @@ private
         raise ArgumentError, "Invalid path action: #{action}" if !controller_object
 
         controller_object.send(action, *args)
-      end
-
-      def pending_paths
-        self.pending.except(:order).select('DISTINCT path').collect(&:path)
       end
     end
   end

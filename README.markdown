@@ -67,26 +67,28 @@ But since you don't want to do that right now, it looks something like this:
 From your Rails code or in a console:
 
     require 'job_boss'
+    batch = Batch.new
     jobs = (0..1000).collect do |i|
-        Boss.queue.math.is_prime?(i)
+        batch.queue.math.is_prime?(i)
     end
 
 Or:
 
     jobs = []
+    batch = Batch.new
     Article.select('id').find_in_batches(:batch_size => 10) do |articles|
-        jobs << Boss.queue.article.refresh_cache(articles.collect(&:id))
+        jobs << batch.queue.article.refresh_cache(articles.collect(&:id))
     end
 
 job_boss also makes it easy to wait for the jobs to be done and to collect the results into a hash:
 
-    Job.wait_for_jobs(jobs) # Will sleep until the jobs are all complete
+    batch.wait_for_jobs # Will sleep until the jobs are all complete
 
-    Job.result_hash(jobs) # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
+    batch.result_hash # => {[0]=>false, [1]=>false, [2]=>true, [3]=>true, [4]=>false, ... }
 
 You can even define a block to provide updates on progress (the value which is passed into the block is a float between 0.0 and 100.0):
 
-    Job.wait_for_jobs(jobs) do |progress|
+    batch.wait_for_jobs do |progress|
         puts "We're now at #{progress}%"
     end
 

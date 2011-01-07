@@ -138,6 +138,64 @@ class DaemonTest < ActiveSupport::TestCase
     assert_equal 7, job.result
 
 
+    # Test Batch class
+    batch = Batch.new
+
+    jobs = (0..10).collect do |i|
+      batch.queue.math.is_prime?(i)
+    end
+
+    batch.wait_for_jobs
+
+    batch.result_hash.each do |args, result|
+      assert_equal MathJobs.new.is_prime?(args.first), result
+    end
+
+
+    # Test to make sure that different batches run in parallel where non-batched jobs don't
+
+    batch1 = Batch.new
+
+    first_jobs = (0..3).collect do
+      batch1.queue.sleep.sleep_for(3)
+    end
+
+    batch2 = Batch.new
+    job2 = batch2.queue.sleep.sleep_for(3)
+
+    sleep(1)
+
+    assert first_jobs[0,3].all? {|job| job.running? }
+    assert !first_jobs.last.running?
+    assert job2.running?
+
+    sleep(3)
+
+    assert first_jobs[0,3].all? {|job| !job.running? }
+    assert first_jobs.last.running?
+    assert !job2.running?
+
+    sleep(3)
+
+    assert !first_jobs.last.running?
+
+
+    first_jobs = (0..3).collect do
+      Boss.queue.sleep.sleep_for(3)
+    end
+    job2 = Boss.queue.sleep.sleep_for(3)
+
+    sleep(1)
+
+    assert first_jobs.all? {|job| job.running? }
+    assert !job2.running?
+    sleep(3)
+    assert first_jobs.all? {|job| !job.running? }
+    assert job2.running?
+    sleep(3)
+    assert first_jobs.all? {|job| !job.running? }
+    assert !job2.running?
+
     stop_daemon
   end
 end

@@ -2,6 +2,8 @@ class CreateJobs < ActiveRecord::Migration
   def self.up
     create_table :jobs do |t|
       t.string :path
+      t.string :batch_id
+
       t.text :args
       t.text :result
       t.datetime :started_at
@@ -20,6 +22,7 @@ class CreateJobs < ActiveRecord::Migration
     end
 
     add_index :jobs, :path
+    add_index :jobs, :batch_id
     add_index :jobs, :status
 
     postgres = (ActiveRecord::Base.connection.adapter_name == 'PostgreSQL')
