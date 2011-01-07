@@ -140,6 +140,19 @@ module JobBoss
       completed_at - started_at if completed_at && started_at
     end
 
+    # How long did have set of jobs taken?
+    # Returns nil if not all jobs are complete
+    def self.time_taken
+      return nil if self.completed.count != self.count
+
+      self.maximum(:completed_at) - self.minimum(:started_at)
+    end
+
+    # Returns the completion percentage of a set of jobs
+    def self.completed_percent
+      self.completed.count.to_f / self.count.to_f
+    end
+
     # If the job raised an exception, this method will return the instance of that exception
     # with the message and backtrace
     def error
