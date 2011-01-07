@@ -146,6 +146,8 @@ class DaemonTest < ActiveSupport::TestCase
     end
     assert_equal 0.0, batch.completed_percent
 
+    assert_equal batch.batch_id, jobs.first.batch.batch_id
+
     batch.wait_for_jobs
 
     batch.result_hash.each do |args, result|
