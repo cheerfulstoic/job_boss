@@ -172,6 +172,10 @@ module JobBoss
       # Will cause the process to sleep until all specified jobs have completed
       # sleep_interval specifies polling period
       def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
+        Signal.trap("HUP") do
+          jobs.each(&:cancel)
+        end
+
         jobs = [jobs] if jobs.is_a?(Job)
         jobs = self.scoped if jobs.nil?
 
