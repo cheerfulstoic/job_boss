@@ -94,7 +94,7 @@ module JobBoss
 
         # Go through each pending path / batch so that we don't get stuck just processing
         # long running jobs which would leave quicker jobs to suffocate
-        Job.pending.select('DISTINCT path, batch_id').each do |distinct_job|
+        Job.unscoped.pending.select('DISTINCT path, batch_id').each do |distinct_job|
           job = Job.pending.order('id').find_by_path_and_batch_id(distinct_job.path, distinct_job.batch_id)
           next if job.nil?
 
