@@ -14,6 +14,15 @@ module JobBoss
     end
     memoize :queue
 
+    # Used to queue jobs in a batch
+    # Usage:
+    #   batch.queue_path('math#in_prime?', 42)
+    def queue_path(path, *args)
+      controller, action = path.split('#')
+
+      queue.send(controller).send(action, *args)
+    end
+
     def initialize(batch_id = nil)
       @batch_id = batch_id || Batch.generate_batch_id
     end
