@@ -75,6 +75,7 @@ module JobBoss
       self.result = nil
       self.completed_at = nil
       self.status = nil
+      self.error_class = nil
       self.error_message = nil
       self.error_backtrace = nil
       self.employee_host = nil
