@@ -18,9 +18,9 @@ module JobBoss
       # Used to queue jobs
       # Usage:
       #   Boss.queue.math.is_prime?(42)
-      def queue
+      def queue(attributes = {})
         require 'job_boss/queuer'
-        Queuer.new
+        Queuer.new(attributes)
       end
       memoize :queue
 
@@ -86,26 +86,43 @@ module JobBoss
       logger.info "Job Boss started"
       logger.info "Employee limit: #{Boss.config.employee_limit}"
 
+      jobs = []
       while true
-        unless (children_count = available_employees) > 0 && Job.pending.count > 0
-          sleep(config.sleep_interval)
-          next
-        end
+        available_employee_count = wait_for_available_employees
 
-        # Go through each pending path / batch so that we don't get stuck just processing
-        # long running jobs which would leave quicker jobs to suffocate
-        Job.pending.select('DISTINCT path, batch_id').reorder(nil).each do |distinct_job|
-          job = Job.pending.order('id').find_by_path_and_batch_id(distinct_job.path, distinct_job.batch_id)
-          next if job.nil?
+        jobs = dequeue_jobs if jobs.empty?
 
+        [available_employee_count, jobs.size].min.times do
+          job = jobs.shift
           job.dispatch(self)
           @running_jobs << job
-
-          children_count -= 1
-          break unless children_count > 0
         end
 
       end
+    end
+
+    # Waits until there is at least one available employee and then returns count
+    def wait_for_available_employees
+      until (employee_count = available_employees) > 0 && Job.pending.count > 0
+        sleep(config.sleep_interval)
+      end
+
+      employee_count
+    end
+
+    # Dequeues next set of jobs based on prioritized round robin algorithm
+    # Priority of a particular queue determines how many jobs get pulled from that queue each time we dequeue
+    # A priority adjustment is also done to give greater priority to sets of jobs which have been running longer
+    def dequeue_jobs
+      logger.info "Dequeuing jobs"
+      Job.pending.select('DISTINCT priority, path, batch_id').reorder(nil).collect do |distinct_job|
+        queue_scope = Job.where(:path => distinct_job.path, :batch_id => distinct_job.batch_id)
+
+        # Give queues which have are further along more priority to reduce latency
+        priority_adjustment = ((queue_scope.completed.count.to_f / queue_scope.count) * config.employee_limit).floor
+
+        queue_scope.pending.limit(distinct_job.priority + priority_adjustment)
+      end.flatten.sort_by(&:id)
     end
 
     def stop

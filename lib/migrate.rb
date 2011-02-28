@@ -11,6 +11,8 @@ class CreateJobs < ActiveRecord::Migration
       t.datetime :completed_at
       t.string :status
 
+      t.integer :priority, :default => 1, :null => false
+
       t.string :error_class
       t.string :error_message
       t.text :error_backtrace

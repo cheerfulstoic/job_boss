@@ -92,6 +92,14 @@ You can even define a block to provide updates on progress (the value which is p
         puts "We're now at #{progress * 100}%"
     end
 
+Prioritization of jobs is also supported.  If a particular batch is more important than others, you can specify a higher priority
+
+    batch = Batch.new(:priority => 3)
+
+In practical terms, the priority represents the number of jobs which are pulled from the queue to be processed each cycle, so by wary of increasing your priority beyond your maximum number of employees.  No job queue will suffer from resource starvation, but you can greatly decrease the performance of other queues by over-prioritizing one.
+
+Also note that job_boss uses a prioritized round-robin approach to scheduling jobs, the priority for jobs is increased throughout the run of the job queue, providing an approximation of a first-come first-serve approach to reduce latency.
+
 For performance, it is recommended that you keep your jobs table clean scheduling execution of the `delete_jobs_before` command on the Job model, which will clean all jobs completed before the specified time:
 
     Job.delete_jobs_before(2.days.ago)

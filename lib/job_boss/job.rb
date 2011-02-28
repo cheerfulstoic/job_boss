@@ -55,7 +55,7 @@ module JobBoss
     end
 
     def batch
-      self.batch_id && Batch.new(self.batch_id)
+      self.batch_id && Batch.new(:batch_id => self.batch_id, :priority => self.priority)
     end
 
     def result

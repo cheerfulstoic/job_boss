@@ -2,15 +2,15 @@ require 'active_support'
 
 module JobBoss
   class Batch
-    attr_accessor :batch_id
+    attr_accessor :batch_id, :priority
 
     extend ActiveSupport::Memoizable
     # Used to queue jobs in a batch
     # Usage:
     #   batch.queue.math.is_prime?(42)
-    def queue
+    def queue(attributes = {})
       require 'job_boss/queuer'
-      Queuer.new(:batch_id => @batch_id)
+      Queuer.new({:priority => @priority, :batch_id => @batch_id}.merge(attributes))
     end
     memoize :queue
 
@@ -23,8 +23,11 @@ module JobBoss
       queue.send(controller).send(action, *args)
     end
 
-    def initialize(batch_id = nil)
-      @batch_id = batch_id || Batch.generate_batch_id
+    def initialize(options = {})
+      options[:priority] ||= 1
+
+      @priority = options[:priority]
+      @batch_id = options[:batch_id] || Batch.generate_batch_id
     end
 
     # Returns ActiveRecord::Relation representing query for jobs in batch

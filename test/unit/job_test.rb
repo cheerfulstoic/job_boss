@@ -187,20 +187,77 @@ class DaemonTest < ActiveSupport::TestCase
 
 
     first_jobs = (0..3).collect do
-      Boss.queue.sleep.sleep_for(3)
+      Boss.queue.sleep.sleep_for(4)
     end
-    job2 = Boss.queue.sleep.sleep_for(3)
+    job2 = Boss.queue.sleep.sleep_for(4)
 
-    sleep(1)
+    sleep(2)
 
     assert first_jobs.all? {|job| job.running? }
     assert !job2.running?
-    sleep(3)
+    sleep(4)
     assert first_jobs.all? {|job| !job.running? }
     assert job2.running?
-    sleep(3)
+    sleep(4)
     assert first_jobs.all? {|job| !job.running? }
     assert !job2.running?
+
+
+
+    # Testing queue prioritization
+    first_batch = Batch.new
+    first_jobs = (0..2).collect do
+      first_batch.queue.sleep.sleep_for(4)
+    end
+    second_batch = Batch.new(:priority => 3)
+    second_jobs = (0..2).collect do
+      second_batch.queue.sleep.sleep_for(4)
+    end
+
+    sleep(2)
+
+    assert first_jobs.first.running?
+    assert first_jobs[1..-1].all? {|job| !job.running? }
+    assert second_jobs.all? {|job| job.running? }
+
+    sleep(4)
+
+    assert !first_jobs.first.running?
+    assert first_jobs[1..-1].all? {|job| job.running? }
+    assert second_jobs.all? {|job| !job.running? }
+
+    sleep(4)
+
+
+
+
+    # Testing adjusted priority which prioritizes jobs which are further along
+    first_batch = Batch.new
+    first_jobs = (0..7).collect do
+      first_batch.queue.sleep.sleep_for(4)
+    end
+
+    sleep(4)
+
+    assert first_jobs[0,4].all? {|job| job.running? }
+    assert first_jobs[4,4].all? {|job| !job.running? }
+
+    second_batch = Batch.new
+    second_jobs = (0..3).collect do
+      second_batch.queue.sleep.sleep_for(4)
+    end
+
+    sleep(2)
+
+    assert first_jobs[0,4].all? {|job| !job.running? }
+    assert first_jobs[4,3].all? {|job| job.running? } # First queue gets an extra employee since it's halfway done
+    assert !first_jobs.last.running?
+    assert second_jobs.first.running?
+    assert second_jobs[1,3].all? {|job| !job.running? }
+
+
+
+
 
     stop_daemon
   end

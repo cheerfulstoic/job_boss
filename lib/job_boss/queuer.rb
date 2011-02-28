@@ -1,6 +1,7 @@
 module JobBoss
   class Queuer
     def initialize(attributes = nil)
+      attributes[:priority] ||= 1
       @attributes = attributes || {}
     end
   
