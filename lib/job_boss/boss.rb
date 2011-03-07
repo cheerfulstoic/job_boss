@@ -182,8 +182,10 @@ private
 
       require 'job_boss/job'
       unless Job.table_exists?
-        require 'migrate'
-        CreateJobs.up
+        Job.transaction do
+          require 'migrate'
+          CreateJobs.up
+        end
       end
     end
 
