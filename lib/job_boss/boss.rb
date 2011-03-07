@@ -90,7 +90,10 @@ module JobBoss
       while true
         available_employee_count = wait_for_available_employees
 
-        jobs = dequeue_jobs if jobs.empty?
+        if jobs.empty?
+          jobs = dequeue_jobs
+          jobs.each {|job| job.update_attributes(:started_at => Time.now) }
+        end
 
         [available_employee_count, jobs.size].min.times do
           job = jobs.shift
