@@ -11,7 +11,7 @@ module JobBoss
       @jobs_path            = ENV['JB_JOBS_PATH'] || 'app/jobs'
       @sleep_interval       = ENV['JB_SLEEP_INTERVAL'].blank? ? 0.5 : ENV['JB_SLEEP_INTERVAL'].to_f
       @employee_limit       = ENV['JB_EMPLOYEE_LIMIT'].blank? ? 4 : ENV['JB_EMPLOYEE_LIMIT'].to_i
-      @environment          = ENV['JB_ENVIRONMENT'] || 'development'
+      @environment          = ENV['JB_ENVIRONMENT'] || ENV['RAILS_ENV'] || 'development'
 
       require 'optparse'
 
