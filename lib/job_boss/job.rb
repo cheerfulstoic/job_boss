@@ -211,6 +211,14 @@ module JobBoss
         end
       end
 
+      def cancelled?(jobs = nil)
+        if jobs
+          count = Job.where('id in (?)', jobs).where('cancelled_at IS NULL').count
+
+          !(count > 0)
+        end
+      end
+
       # Given a time object
       # Delete all jobs which were completed earlier than that time
       def delete_jobs_before(time)
@@ -225,7 +233,7 @@ private
     end
 
     def mark_as_cancelled
-      update_attributes(:cancelled_at => Time.now)
+      update_attributes(:cancelled_at => Time.now, :completed_at => Time.now, :status => 'cancelled')
     end
 
     def mark_employee

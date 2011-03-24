@@ -37,7 +37,7 @@ module JobBoss
 
     # Allow calling of Job class methods from a batch which will be called
     # on in the scope of the jobs for the batch
-    # Examples: wait_for_jobs, result_hash, time_taken, completed_percent
+    # Examples: wait_for_jobs, result_hash, time_taken, completed_percent, cancelled?
     def method_missing(sym, *args, &block)
       jobs.send(sym, *args, &block)
     end
