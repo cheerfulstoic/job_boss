@@ -219,6 +219,12 @@ module JobBoss
         end
       end
 
+      def cancel(jobs = nil)
+        if jobs
+          jobs.each(&:cancel)
+        end
+      end
+
       # Given a time object
       # Delete all jobs which were completed earlier than that time
       def delete_jobs_before(time)
