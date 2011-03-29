@@ -24,9 +24,19 @@ Daemons.run_proc('job_boss', daemons_options) do
 
   Dir.chdir(JobBoss::Boss.config.application_root)
 
-  require 'config/environment' if File.exist?('config/environment.rb')
-
   boss = JobBoss::Boss.new
+
+  if File.exist?('config/environment.rb')
+    boss.logger.info "Requiring 'config/environment.rb'"
+    require 'config/environment'
+  end
+
+  at_exit do
+    if BOSS_PID == Process.pid
+      boss.stop
+      boss = JobBoss::Boss.new
+    end
+  end
 
   boss.start
 end
