@@ -10,6 +10,7 @@ module JobBoss
     scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
+    scope :not_cancelled, where('cancelled_at IS NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     def prototype
@@ -173,7 +174,7 @@ module JobBoss
       # Will cause the process to sleep until all specified jobs have completed
       # sleep_interval specifies polling period
       def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
-        Signal.trap("HUP") do
+        at_exit do
           jobs.each(&:cancel)
         end
 
@@ -182,7 +183,7 @@ module JobBoss
 
         ids = jobs.collect(&:id)
         Job.uncached do
-          until Job.completed.find_all_by_id(ids).count == jobs.size
+          until Job.completed.not_cancelled.find_all_by_id(ids).count == jobs.size
             sleep(sleep_interval)
 
             if block_given?
@@ -239,7 +240,7 @@ private
     end
 
     def mark_as_cancelled
-      update_attributes(:cancelled_at => Time.now, :completed_at => Time.now, :status => 'cancelled')
+      update_attributes(:cancelled_at => Time.now)
     end
 
     def mark_employee
