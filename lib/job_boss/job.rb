@@ -10,7 +10,6 @@ module JobBoss
     scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
-    scope :not_cancelled, where('cancelled_at IS NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     def prototype
@@ -178,12 +177,11 @@ module JobBoss
           jobs.each(&:cancel)
         end
 
-        jobs = [jobs] if jobs.is_a?(Job)
-        jobs = self.scoped if jobs.nil?
+        jobs = get_jobs(jobs)
 
         ids = jobs.collect(&:id)
         Job.uncached do
-          until Job.completed.not_cancelled.find_all_by_id(ids).count == jobs.size
+          until Job.pending.find_all_by_id(ids).count == 0
             sleep(sleep_interval)
 
             if block_given?
@@ -199,7 +197,7 @@ module JobBoss
       # Returns a hash where the keys are the job method arguments and the values are the
       # results of the job processing
       def result_hash(jobs = nil)
-        get_jobs(jobs)
+        jobs = get_jobs(jobs)
 
         # the #result method automatically reloads the result here if needed but this will
         # do it in one SQL call
@@ -211,16 +209,14 @@ module JobBoss
         end
       end
 
-      def cancelled?(jobs = nil)
-        get_jobs(jobs)
-
+      def cancelled?
         count = self.where('cancelled_at IS NULL').count
 
         !(count > 0)
       end
 
       def cancel(jobs = nil)
-        get_jobs(jobs)
+        jobs = get_jobs(jobs)
 
         self.all.each(&:cancel)
       end
