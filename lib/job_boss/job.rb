@@ -199,8 +199,7 @@ module JobBoss
       # Returns a hash where the keys are the job method arguments and the values are the
       # results of the job processing
       def result_hash(jobs = nil)
-        jobs = [jobs] if jobs.is_a?(Job)
-        jobs = self.scoped if jobs.nil?
+        get_jobs(jobs)
 
         # the #result method automatically reloads the result here if needed but this will
         # do it in one SQL call
@@ -213,17 +212,23 @@ module JobBoss
       end
 
       def cancelled?(jobs = nil)
-        if jobs
-          count = Job.where('id in (?)', jobs).where('cancelled_at IS NULL').count
+        get_jobs(jobs)
 
-          !(count > 0)
-        end
+        count = self.where('cancelled_at IS NULL').count
+
+        !(count > 0)
       end
 
       def cancel(jobs = nil)
-        if jobs
-          jobs.each(&:cancel)
-        end
+        get_jobs(jobs)
+
+        self.all.each(&:cancel)
+      end
+
+      def get_jobs(jobs)
+        jobs = [jobs] if jobs.is_a?(Job)
+        jobs = self.scoped if jobs.nil?
+        jobs
       end
 
       # Given a time object
