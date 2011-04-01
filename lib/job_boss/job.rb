@@ -10,6 +10,7 @@ module JobBoss
     scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
+    scope :not_completed, where('completed_at IS NOT NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     def prototype
@@ -175,7 +176,7 @@ module JobBoss
       # sleep_interval specifies polling period
       def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
         at_exit do
-          jobs.each(&:cancel)
+          Job.not_completed.find(jobs).each(&:cancel)
         end
 
         jobs = get_jobs(jobs)
