@@ -11,6 +11,7 @@ module JobBoss
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
     scope :not_completed, where('completed_at IS NOT NULL')
+    scope :unfinished, where('completed_at IS NULL AND cancelled_at IS NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
     def prototype
@@ -183,7 +184,7 @@ module JobBoss
 
         ids = jobs.collect(&:id)
         Job.uncached do
-          until Job.pending.find_all_by_id(ids).count == 0
+          until Job.unfinished.find_all_by_id(ids).count == 0
             sleep(sleep_interval)
 
             if block_given?
