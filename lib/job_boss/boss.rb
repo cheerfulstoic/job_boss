@@ -106,7 +106,7 @@ module JobBoss
 
     # Waits until there is at least one available employee and then returns count
     def wait_for_available_employees
-      until (employee_count = available_employees) > 0 && Job.pending.count > 0
+      until (employee_count = available_employees) > 0
         sleep(config.sleep_interval)
       end
 
