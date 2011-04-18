@@ -117,7 +117,6 @@ module JobBoss
     # Priority of a particular queue determines how many jobs get pulled from that queue each time we dequeue
     # A priority adjustment is also done to give greater priority to sets of jobs which have been running longer
     def dequeue_jobs
-      logger.info "Dequeuing jobs"
       Job.pending.select('DISTINCT priority, path, batch_id').reorder(nil).collect do |distinct_job|
         queue_scope = Job.where(:path => distinct_job.path, :batch_id => distinct_job.batch_id)
 
