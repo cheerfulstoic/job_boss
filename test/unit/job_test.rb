@@ -7,7 +7,7 @@ Dir.chdir('test/app_root')
 Dir.glob('app/jobs/*_jobs.rb').each {|lib| require lib }
 Dir.glob('app/models/*.rb').each {|lib| require lib }
 
-class DaemonTest < ActiveSupport::TestCase
+class JobTest < ActiveSupport::TestCase
   test "job queuing" do
     start_daemon(:application_root => @app_root_path)
 
