@@ -91,7 +91,7 @@ module JobBoss
         available_employee_count = wait_for_available_employees
 
         if jobs.empty?
-          jobs = dequeue_jobs
+          jobs = wait_for_jobs
           jobs.each {|job| job.update_attributes(:started_at => Time.now) }
         end
 
@@ -111,6 +111,14 @@ module JobBoss
       end
 
       employee_count
+    end
+
+    def wait_for_jobs
+      while (jobs = dequeue_jobs).empty?
+        sleep(config.sleep_interval)
+      end
+
+      jobs
     end
 
     # Dequeues next set of jobs based on prioritized round robin algorithm
