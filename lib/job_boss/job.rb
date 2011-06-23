@@ -177,7 +177,7 @@ module JobBoss
       # sleep_interval specifies polling period
       def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
         at_exit do
-          Job.not_completed.where('id in (?)', jobs).cancel
+          Job.not_completed.find(jobs).each(&:cancel)
         end
 
         jobs = get_jobs(jobs)
@@ -213,7 +213,9 @@ module JobBoss
       end
 
       def cancelled?
-        self.where('cancelled_at IS NOT NULL').count == 0
+        count = self.where('cancelled_at IS NULL').count
+
+        !(count > 0)
       end
 
       def cancel(jobs = nil)
