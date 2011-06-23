@@ -92,7 +92,8 @@ module JobBoss
 
         if jobs.empty?
           jobs = wait_for_jobs
-          jobs.each {|job| job.update_attributes(:started_at => Time.now) }
+          jobs = Job.pending.find(jobs)
+          Job.update_all(['started_at = ?', Time.now], ['id in (?)', jobs])
         end
 
         [available_employee_count, jobs.size].min.times do
