@@ -20,30 +20,31 @@ module JobBoss
 
     # Method used by the boss to dispatch an employee
     def dispatch(boss)
-      mark_as_started
-      boss.logger.info "Dispatching Job ##{self.id}: #{self.prototype}"
+      if mark_as_started
+        boss.logger.info "Dispatching Job ##{self.id}: #{self.prototype}"
 
-      pid = fork do
-        ActiveRecord::Base.connection.reconnect!
-        $0 = "[job_boss employee] job ##{self.id} #{self.prototype})"
-        Process.setpriority(Process::PRIO_PROCESS, 0, 19)
+        pid = fork do
+          ActiveRecord::Base.connection.reconnect!
+          $0 = "[job_boss employee] job ##{self.id} #{self.prototype})"
+          Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
-        begin
-          mark_employee
+          begin
+            mark_employee
 
-          value = self.class.call_path(self.path, *self.args)
+            value = self.class.call_path(self.path, *self.args)
 
-          self.update_attribute(:result, value)
-        rescue Exception => exception
-          mark_exception(exception)
-          boss.logger.error "Error running job ##{self.id}!"
-        ensure
-          until mark_as_completed
-            sleep(1)
+            self.update_attribute(:result, value)
+          rescue Exception => exception
+            mark_exception(exception)
+            boss.logger.error "Error running job ##{self.id}!"
+          ensure
+            until mark_as_completed
+              sleep(1)
+            end
+
+            boss.logger.info "Job ##{self.id} completed in #{self.time_taken} seconds, exiting..."
+            Kernel.exit
           end
-
-          boss.logger.info "Job ##{self.id} completed in #{self.time_taken} seconds, exiting..."
-          Kernel.exit
         end
       end
       Process.detach(pid)
@@ -240,7 +241,7 @@ module JobBoss
 private
 
     def mark_as_started
-      update_attributes(:started_at => Time.now)
+      Job.update_all(['started_at = ?', Time.now], ['started_at IS NULL AND id = ?', job]) > 0
     end
 
     def mark_as_cancelled
