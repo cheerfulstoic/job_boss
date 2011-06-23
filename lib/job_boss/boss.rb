@@ -92,6 +92,7 @@ module JobBoss
 
         if jobs.empty?
           jobs = wait_for_jobs
+          jobs = jobs.to_a.select(&:mark_as_started)
         end
 
         [available_employee_count, jobs.size].min.times do

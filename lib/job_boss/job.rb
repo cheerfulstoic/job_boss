@@ -20,33 +20,32 @@ module JobBoss
 
     # Method used by the boss to dispatch an employee
     def dispatch(boss)
-      if mark_as_started
-        boss.logger.info "Dispatching Job ##{self.id}: #{self.prototype}"
+      boss.logger.info "Dispatching Job ##{self.id}: #{self.prototype}"
 
-        pid = fork do
-          ActiveRecord::Base.connection.reconnect!
-          $0 = "[job_boss employee] job ##{self.id} #{self.prototype})"
-          Process.setpriority(Process::PRIO_PROCESS, 0, 19)
+      pid = fork do
+        ActiveRecord::Base.connection.reconnect!
+        $0 = "[job_boss employee] job ##{self.id} #{self.prototype})"
+        Process.setpriority(Process::PRIO_PROCESS, 0, 19)
 
-          begin
-            mark_employee
+        begin
+          mark_employee
 
-            value = self.class.call_path(self.path, *self.args)
+          value = self.class.call_path(self.path, *self.args)
 
-            self.update_attribute(:result, value)
-          rescue Exception => exception
-            mark_exception(exception)
-            boss.logger.error "Error running job ##{self.id}!"
-          ensure
-            until mark_as_completed
-              sleep(1)
-            end
-
-            boss.logger.info "Job ##{self.id} completed in #{self.time_taken} seconds, exiting..."
-            Kernel.exit
+          self.update_attribute(:result, value)
+        rescue Exception => exception
+          mark_exception(exception)
+          boss.logger.error "Error running job ##{self.id}!"
+        ensure
+          until mark_as_completed
+            sleep(1)
           end
+
+          boss.logger.info "Job ##{self.id} completed in #{self.time_taken} seconds, exiting..."
+          Kernel.exit
         end
       end
+
       Process.detach(pid)
       ActiveRecord::Base.connection.reconnect!
     end
@@ -178,7 +177,7 @@ module JobBoss
       # sleep_interval specifies polling period
       def wait_for_jobs(jobs = nil, sleep_interval = 0.5)
         at_exit do
-          Job.not_completed.find(jobs).each(&:cancel)
+          Job.not_completed.where('id in (?)', jobs).cancel
         end
 
         jobs = get_jobs(jobs)
@@ -214,9 +213,7 @@ module JobBoss
       end
 
       def cancelled?
-        count = self.where('cancelled_at IS NULL').count
-
-        !(count > 0)
+        self.where('cancelled_at IS NOT NULL').count == 0
       end
 
       def cancel(jobs = nil)
@@ -238,11 +235,11 @@ module JobBoss
       end
     end
 
-private
-
     def mark_as_started
-      Job.update_all(['started_at = ?', Time.now], ['started_at IS NULL AND id = ?', job]) > 0
+      Job.update_all(['started_at = ?', Time.now], ['started_at IS NULL AND id = ?', self.id]) > 0
     end
+
+private
 
     def mark_as_cancelled
       update_attributes(:cancelled_at => Time.now)
