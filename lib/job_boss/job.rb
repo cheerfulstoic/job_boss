@@ -10,7 +10,7 @@ module JobBoss
     scope :pending, where('started_at IS NULL AND cancelled_at IS NULL')
     scope :running, where('started_at IS NOT NULL AND completed_at IS NULL')
     scope :completed, where('completed_at IS NOT NULL')
-    scope :not_completed, where('completed_at IS NOT NULL')
+    scope :not_completed, where('completed_at IS NULL')
     scope :unfinished, where('completed_at IS NULL AND cancelled_at IS NULL')
     scope :mia, where("completed_at IS NOT NULL AND status = 'mia'")
 
@@ -213,9 +213,7 @@ module JobBoss
       end
 
       def cancelled?
-        count = self.where('cancelled_at IS NULL').count
-
-        !(count > 0)
+        !!self.where('cancelled_at IS NOT NULL').first
       end
 
       def cancel(jobs = nil)
